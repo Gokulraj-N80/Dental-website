@@ -26,6 +26,9 @@ const TESTIMONIALS_DATA = [
 ];
 
 export default function Testimonials() {
+  // Duplicate data to ensure seamless infinite looping marquee
+  const doubleTestimonials = [...TESTIMONIALS_DATA, ...TESTIMONIALS_DATA];
+
   return (
     <section className="testimonials-section section">
       <div className="section-header">
@@ -36,22 +39,24 @@ export default function Testimonials() {
         </p>
       </div>
 
-      <div className="grid-3">
-        {TESTIMONIALS_DATA.map((t) => (
-          <div key={t.id} className="testimonial-card">
-            <Quote size={32} className="testimonial-quote-icon" />
-            <div className="testimonial-stars">
-              {[...Array(t.stars)].map((_, i) => (
-                <Star key={i} size={16} fill="var(--color-secondary)" color="var(--color-secondary)" />
-              ))}
+      <div className="marquee-wrapper">
+        <div className="marquee-track">
+          {doubleTestimonials.map((t, idx) => (
+            <div key={`${t.id}-${idx}`} className="testimonial-card" style={{ width: '360px', flexShrink: 0 }}>
+              <Quote size={32} className="testimonial-quote-icon" />
+              <div className="testimonial-stars">
+                {[...Array(t.stars)].map((_, i) => (
+                  <Star key={i} size={16} fill="var(--color-secondary)" color="var(--color-secondary)" />
+                ))}
+              </div>
+              <p className="testimonial-text">"{t.text}"</p>
+              <div className="testimonial-author">
+                <h4 className="author-name">{t.name}</h4>
+                <span className="author-role">{t.role}</span>
+              </div>
             </div>
-            <p className="testimonial-text">"{t.text}"</p>
-            <div className="testimonial-author">
-              <h4 className="author-name">{t.name}</h4>
-              <span className="author-role">{t.role}</span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

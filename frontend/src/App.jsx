@@ -76,6 +76,19 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        setScrollProgress((window.scrollY / totalScroll) * 100);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   if (isPreloading) {
     return (
       <div className="preloader-overlay">
@@ -88,6 +101,15 @@ export default function App() {
 
   return (
     <div className="app-container">
+      {/* Premium Apple-style top scroll indicator */}
+      <div className="scroll-progress-indicator" style={{ width: `${scrollProgress}%` }} />
+
+      {/* Dynamic drifting background particles / mesh blur blooms */}
+      <div className="ambient-glow-container" aria-hidden="true">
+        <div className="ambient-blob ambient-blob-1" />
+        <div className="ambient-blob ambient-blob-2" />
+      </div>
+
       <Navbar
         currentTab={currentTab}
         setCurrentTab={(tab) => {

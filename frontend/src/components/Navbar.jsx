@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 import Logo from './Logo';
 
@@ -9,8 +9,17 @@ const DENTAL_TREATMENTS = [
 ];
 
 export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, theme, setTheme }) {
+  const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null); // 'treatments' | null
   const [isThemeDropdownOpen, setIsThemeDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+    window.addEventListener('scroll', checkScroll, { passive: true });
+    return () => window.removeEventListener('scroll', checkScroll);
+  }, []);
 
   const handleNavClick = (tab) => {
     setCurrentTab(tab);
@@ -40,8 +49,10 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+
+
   return (
-    <nav className="navbar-container">
+    <nav className={`navbar-container ${scrolled ? 'scrolled-glass-shadow' : ''}`}>
       <div className="navbar-wrapper">
         {/* Logo */}
         <div className="navbar-logo" onClick={() => handleNavClick('home')}>
@@ -51,14 +62,14 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
         {/* Desktop Links */}
         <div className="navbar-links">
           <button 
-            className="nav-link-neemz"
+            className={`nav-link-neemz ${currentTab === 'home' ? 'active' : ''}`}
             onClick={() => handleNavClick('home')}
           >
             HOME
           </button>
 
           <button 
-            className="nav-link-neemz"
+            className={`nav-link-neemz ${currentTab === 'about' ? 'active' : ''}`}
             onClick={() => handleNavClick('about')}
           >
             ABOUT US
@@ -93,21 +104,21 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
           </div>
 
           <button 
-            className="nav-link-neemz"
+            className={`nav-link-neemz ${currentTab === 'blog' ? 'active' : ''}`}
             onClick={() => handleNavClick('blog')}
           >
             BLOG
           </button>
           
           <button 
-            className="nav-link-neemz"
+            className={`nav-link-neemz ${currentTab === 'doctors' ? 'active' : ''}`}
             onClick={() => handleNavClick('doctors')}
           >
             OUR DOCTORS
           </button>
           
           <button 
-            className="nav-link-neemz"
+            className={`nav-link-neemz ${currentTab === 'admin' ? 'active' : ''}`}
             onClick={() => handleNavClick('admin')}
           >
             ADMIN

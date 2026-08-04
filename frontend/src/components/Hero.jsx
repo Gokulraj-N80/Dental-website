@@ -34,11 +34,29 @@ export default function Hero({ onBookClick, onServicesClick }) {
   const patientsCount = useCounter(1500, 1800);
   const experienceCount = useCounter(10, 1000);
 
+  const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const { innerWidth, innerHeight } = window;
+      const x = (e.clientX - innerWidth / 2) / 30; // Max offset 30px
+      const y = (e.clientY - innerHeight / 2) / 30;
+      setMouseOffset({ x, y });
+    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <section className="hero-split-section">
 
       {/* ─── LEFT COLUMN ─── */}
-      <div className="hero-split-left">
+      <div 
+        className="hero-split-left"
+        style={{
+          transform: `translate(${mouseOffset.x * 0.3}px, ${mouseOffset.y * 0.3}px)`
+        }}
+      >
 
         <div className="hero-tag-premium animate-fade-in-down delay-1">
           <Sparkles size={13} className="hero-tag-icon" />
@@ -84,18 +102,33 @@ export default function Hero({ onBookClick, onServicesClick }) {
       </div>
 
       {/* ─── RIGHT COLUMN — Image ─── */}
-      <div className="hero-split-right animate-fade-in-right delay-3">
+      <div 
+        className="hero-split-right animate-fade-in-right delay-3"
+        style={{
+          transform: `translate(${mouseOffset.x * -0.6}px, ${mouseOffset.y * -0.6}px)`
+        }}
+      >
         {/* Decorative ring behind image */}
         <div className="hero-img-ring" />
         <div className="hero-img-ring hero-img-ring-2" />
 
         {/* Floating stat badges */}
-        <div className="hero-float-badge hero-badge-top animate-float delay-1">
+        <div 
+          className="hero-float-badge hero-badge-top animate-float delay-1"
+          style={{
+            transform: `translate(${mouseOffset.x * 0.4}px, ${mouseOffset.y * 0.4}px)`
+          }}
+        >
           <span className="hbadge-num">{patientsCount.toLocaleString()}+</span>
           <span className="hbadge-label">Happy Patients</span>
         </div>
 
-        <div className="hero-float-badge hero-badge-bottom animate-float delay-3">
+        <div 
+          className="hero-float-badge hero-badge-bottom animate-float delay-3"
+          style={{
+            transform: `translate(${mouseOffset.x * -0.3}px, ${mouseOffset.y * -0.3}px)`
+          }}
+        >
           <span className="hbadge-num">{experienceCount}+ Yrs</span>
           <span className="hbadge-label">Clinical Experience</span>
         </div>

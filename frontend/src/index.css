@@ -383,49 +383,169 @@ hr {
   }
 }
 
-@keyframes gradientShift {
+@keyframes marquee {
   0% {
-    background-position: 0% 50%;
+    transform: translateX(0);
   }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
   100% {
-    background-position: 0% 50%;
+    transform: translateX(-50%);
   }
 }
 
-@keyframes textReveal {
-  from {
-    clip-path: inset(0 100% 0 0);
+@keyframes drift {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
   }
-
-  to {
-    clip-path: inset(0 0% 0 0);
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
   }
-}
-
-@keyframes borderDraw {
-  from {
-    stroke-dashoffset: 400;
-  }
-
-  to {
-    stroke-dashoffset: 0;
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
   }
 }
 
-@keyframes countUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+@keyframes shine-sweep {
+  0% {
+    left: -100%;
   }
+  100% {
+    left: 200%;
+  }
+}
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+@keyframes input-focus-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(var(--shadow-color-rgb), 0.25);
+  }
+  50% {
+    box-shadow: 0 0 12px 4px rgba(var(--shadow-color-rgb), 0.15);
+  }
+}
+
+/* Scroll progress indicator bar */
+.scroll-progress-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-secondary), var(--color-gold));
+  z-index: 99999;
+  width: 0%;
+  transition: width 0.1s ease-out;
+  pointer-events: none;
+}
+
+/* Ambient dynamic blobs background container */
+.ambient-glow-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.ambient-blob {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-secondary-soft) 0%, transparent 70%);
+  filter: blur(80px);
+  animation: drift 25s ease-in-out infinite;
+}
+
+.ambient-blob-1 {
+  top: -100px;
+  left: -100px;
+  animation-delay: 0s;
+}
+
+.ambient-blob-2 {
+  bottom: -150px;
+  right: -100px;
+  animation-delay: -5s;
+}
+
+/* Apple-style smooth active line indicators */
+.nav-link-neemz::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0%;
+  height: 2px;
+  background-color: var(--color-secondary);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), left 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link-neemz:hover::after,
+.nav-link-neemz.active::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Premium button interactive sweep overlay */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 100%
+  );
+  animation: shine-sweep 4s infinite linear;
+  pointer-events: none;
+}
+
+/* Infinite Marquee Track Slider */
+.marquee-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  padding: 30px 0;
+  mask-image: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+  gap: 32px;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Accessible prefers-reduced-motion override */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+  .scroll-progress-indicator {
+    display: none;
   }
 }
 
@@ -658,7 +778,16 @@ h6 {
   border-radius: var(--radius-full);
   border: 1px solid transparent;
   cursor: pointer;
-  transition: var(--transition-smooth);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+              box-shadow 0.3s ease, 
+              background-color 0.3s ease, 
+              border-color 0.3s ease, 
+              color 0.3s ease;
+  will-change: transform, box-shadow;
+}
+
+.btn:active {
+  transform: scale(0.95) translateY(0);
 }
 
 .btn-primary {
@@ -671,8 +800,8 @@ h6 {
   background-color: var(--color-primary);
   color: var(--color-secondary-dark);
   border-color: var(--color-secondary-dark);
-  box-shadow: 0 10px 20px rgba(30, 94, 58, 0.15);
-  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(var(--shadow-color-rgb), 0.18);
+  transform: translateY(-4px) scale(1.02);
 }
 
 .btn-secondary {
@@ -1720,19 +1849,23 @@ h6 {
 /* Services Cards & Modal Styling */
 .service-card {
   background-color: var(--color-primary);
-  border: 2px solid rgba(30, 94, 58, 0.5);
+  border: 1.5px solid var(--color-accent-light);
   border-radius: var(--radius-lg);
   padding: 36px;
   display: flex;
   flex-direction: column;
-  transition: var(--transition-smooth);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
   box-shadow: var(--shadow-sm);
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
 }
 
 .service-card:hover {
   border-color: var(--color-secondary);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(var(--shadow-color-rgb), 0.08), 0 8px 16px rgba(var(--shadow-color-rgb), 0.03);
+  transform: translateY(-8px) scale(1.01);
 }
 
 .service-icon-box {
@@ -1745,6 +1878,13 @@ h6 {
   align-items: center;
   justify-content: center;
   margin-bottom: 24px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+}
+
+.service-card:hover .service-icon-box {
+  transform: scale(1.12) rotate(6deg);
+  background-color: var(--color-secondary);
+  color: #FFFFFF;
 }
 
 .service-card-title {
@@ -1753,6 +1893,11 @@ h6 {
   font-weight: 700;
   color: var(--color-accent);
   margin-bottom: 12px;
+  transition: color 0.3s ease;
+}
+
+.service-card:hover .service-card-title {
+  color: var(--color-secondary);
 }
 
 .service-card-desc {
@@ -1780,7 +1925,7 @@ button.service-learn-more {
   cursor: pointer !important;
   letter-spacing: 0.5px !important;
   text-transform: uppercase !important;
-  transition: var(--transition-fast) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
   display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
@@ -1788,7 +1933,7 @@ button.service-learn-more {
 
 button.service-learn-more:hover {
   color: var(--color-gold) !important;
-  text-decoration: underline !important;
+  transform: translateX(6px);
 }
 
 /* Modals */
@@ -2741,13 +2886,20 @@ button.service-learn-more:hover {
 .form-group select,
 .form-group textarea {
   padding: 14px 16px;
-  border: 1px solid var(--color-accent-light);
+  border: 1.5px solid var(--color-accent-light);
   border-radius: var(--radius-md);
   background-color: #FAFBF9;
   font-size: 0.95rem;
   color: var(--color-accent);
-  transition: var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: var(--font-main);
+  will-change: border-color, box-shadow, background-color;
+}
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+  border-color: var(--color-accent-medium);
 }
 
 .form-group input:focus,
@@ -2756,7 +2908,7 @@ button.service-learn-more:hover {
   outline: none;
   border-color: var(--color-secondary);
   background-color: #FFFFFF;
-  box-shadow: 0 0 0 3px var(--color-secondary-soft);
+  animation: input-focus-glow 2s infinite ease-in-out;
 }
 
 .form-group .input-with-icon input,
@@ -3221,12 +3373,17 @@ button.service-learn-more:hover {
   grid-template-columns: 140px 1fr;
   gap: 40px;
   box-shadow: var(--shadow-sm);
-  transition: var(--transition-smooth);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
 }
 
 .doctor-card:hover {
   border-color: var(--color-secondary);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 30px 60px rgba(var(--shadow-color-rgb), 0.12), 0 10px 20px rgba(var(--shadow-color-rgb), 0.04);
+  transform: translateY(-8px) scale(1.005);
 }
 
 .doctor-avatar-wrap {
@@ -3684,13 +3841,12 @@ button.service-learn-more:hover {
 /* ===================== DOCTOR AVATAR RING PULSE ===================== */
 .doctor-avatar-letters,
 .doctor-avatar-image-container {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .doctor-card:hover .doctor-avatar-letters,
 .doctor-card:hover .doctor-avatar-image-container {
-  transform: scale(1.08);
-  animation: pulseGlow 1.5s ease-in-out 2;
+  transform: scale(1.1);
 }
 
 /* ===================== CTA BANNER ANIMATED BACKGROUND ===================== */
