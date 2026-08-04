@@ -89,7 +89,7 @@ export default function Services({ onBookClick }) {
         x: () => getScrollAmount(),
         ease: 'none',
         scrollTrigger: {
-          trigger: '.services-section',
+          trigger: '.services-section-wrapper',
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
@@ -107,39 +107,41 @@ export default function Services({ onBookClick }) {
   }, []);
 
   return (
-    <section className="services-section section" id="services" ref={containerRef}>
-      <div className="section-header services-anim-header">
-        <span className="section-tag">Treatments</span>
-        <h2 className="section-title">Dr Neemz Treatments</h2>
-        <p className="section-subtitle">
-          We combine medical precision with patient comfort to deliver high-quality dental treatments.
-        </p>
-      </div>
+    <section className="services-section-wrapper" ref={containerRef}>
+      <div className="services-pin-panel">
+        <div className="section-header services-anim-header">
+          <span className="section-tag">Treatments</span>
+          <h2 className="section-title">Dr Neemz Treatments</h2>
+          <p className="section-subtitle">
+            We combine medical precision with patient comfort to deliver high-quality dental treatments.
+          </p>
+        </div>
 
-      <div className="services-scroll-container">
-        {SERVICES_DATA.map((service) => {
-          const Icon = service.icon;
-          return (
-            <div key={service.id} className="service-card">
-              <div className="service-card-image-wrap">
-                <img src={service.image} alt={service.title} className="service-card-img" />
+        <div className="services-scroll-container">
+          {SERVICES_DATA.map((service) => {
+            const Icon = service.icon;
+            return (
+              <div key={service.id} className="service-card">
+                <div className="service-card-image-wrap">
+                  <img src={service.image} alt={service.title} className="service-card-img" />
+                </div>
+                <div className="service-icon-box">
+                  <Icon size={24} className="service-icon" />
+                </div>
+                <h3 className="service-card-title">{service.title}</h3>
+                <p className="service-card-desc">{service.shortDesc}</p>
+                <div className="service-card-footer">
+                  <button 
+                    className="service-learn-more"
+                    onClick={() => setSelectedService(service)}
+                  >
+                    Learn Detail
+                  </button>
+                </div>
               </div>
-              <div className="service-icon-box">
-                <Icon size={24} className="service-icon" />
-              </div>
-              <h3 className="service-card-title">{service.title}</h3>
-              <p className="service-card-desc">{service.shortDesc}</p>
-              <div className="service-card-footer">
-                <button 
-                  className="service-learn-more"
-                  onClick={() => setSelectedService(service)}
-                >
-                  Learn Detail
-                </button>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
       {/* Service Detail Modal */}

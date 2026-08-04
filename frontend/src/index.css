@@ -794,7 +794,7 @@ h6 {
   position: relative;
 }
 
-.services-section.section {
+.services-section-wrapper {
   max-width: none !important;
   margin: 0 !important;
   padding-left: 0 !important;
@@ -2425,23 +2425,29 @@ h6 {
   }
 }
 
-.services-section {
+.services-section-wrapper {
   position: relative;
+  width: 100vw;
   overflow: visible;
+}
+
+.services-pin-panel {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; /* Hide vertical overflow during horizontal translation */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
-  height: 100vh;
   box-sizing: border-box;
   padding: 100px 0 20px 0;
-  width: 100vw;
 }
 
 .services-anim-header {
   padding: 0 40px;
   text-align: center;
   margin-bottom: 32px;
+  flex-shrink: 0;
 }
 
 /* Services Cards & Modal Styling */
