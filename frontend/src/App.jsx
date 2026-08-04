@@ -129,19 +129,32 @@ export default function App() {
           <>
             <Hero onBookClick={() => navigate('booking')} onServicesClick={() => navigate('services')} />
             <GoogleReviewsBar />
-            <Services onBookClick={() => navigate('booking')} />
+            
+            {/* 1. How May We Assist You */}
             <AssistYou onSelectTriage={(treatment) => {
               setSelectedTreatment(treatment);
               navigate('booking');
             }} />
+            
             <hr className="section-divider" />
+            
+            {/* 2. Why Trust Dr */}
             <WhyTrust />
+            
+            <hr className="section-divider" />
+            
+            {/* 3. Book an Appointment (CTA banner) */}
+            <CtaBanner onBookClick={() => navigate('booking')} />
+            
+            <hr className="section-divider" />
+            
+            {/* 4. Treatments (Horizontal scroll list) */}
+            <Services onBookClick={() => navigate('booking')} />
+            
             <hr className="section-divider" />
             <TreatmentsGrid onGetMore={(name) => { setSelectedTreatment(name); navigate('treatment-details'); }} />
             <hr className="section-divider" />
             <Testimonials />
-            <hr className="section-divider" />
-            <CtaBanner onBookClick={() => navigate('booking')} />
           </>
         )}
 
