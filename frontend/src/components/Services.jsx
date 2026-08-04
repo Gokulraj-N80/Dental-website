@@ -81,7 +81,8 @@ export default function Services({ onBookClick }) {
       const getScrollAmount = () => {
         const containerWidth = scrollContainer.scrollWidth;
         const viewportWidth = window.innerWidth;
-        return -(containerWidth - viewportWidth + 120); // clean offset
+        // Scroll starting from the first element to the last element completely
+        return -(containerWidth - viewportWidth + 120);
       };
 
       pinScroll = gsap.to(scrollContainer, {
@@ -90,9 +91,9 @@ export default function Services({ onBookClick }) {
         scrollTrigger: {
           trigger: '.services-section',
           pin: true,
-          scrub: 1.5, // slightly higher scrub duration for premium buttery smooth lag feel
-          start: 'center center', // Pin when center of section hits center of viewport
-          end: () => `+=${scrollContainer.scrollWidth - window.innerWidth + 300}`,
+          scrub: 1, // stable crisp scrubbing rate
+          start: 'top top', // Pin cleanly from top of screen viewport
+          end: () => `+=${scrollContainer.scrollWidth - window.innerWidth + 200}`,
           invalidateOnRefresh: true,
         }
       });
