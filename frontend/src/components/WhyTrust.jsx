@@ -54,7 +54,7 @@ export default function WhyTrust() {
     // Reveal visual image frame on scroll
     gsap.from('.wt-visual', {
       scrollTrigger: {
-        trigger: '.wt-visual',
+        trigger: '.wt-section',
         start: 'top 85%',
         toggleActions: 'play none none none'
       },
@@ -67,7 +67,7 @@ export default function WhyTrust() {
     // Reveal header texts on scroll
     gsap.from('.wt-header > *', {
       scrollTrigger: {
-        trigger: '.wt-header',
+        trigger: '.wt-section',
         start: 'top 85%',
         toggleActions: 'play none none none'
       },
@@ -81,7 +81,7 @@ export default function WhyTrust() {
     // Stagger reveal trust pillars list on scroll
     gsap.from('.wt-pillars .wt-pillar', {
       scrollTrigger: {
-        trigger: '.wt-pillars',
+        trigger: '.wt-section',
         start: 'top 80%',
         toggleActions: 'play none none none'
       },
