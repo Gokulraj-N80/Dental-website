@@ -153,155 +153,104 @@ export default function BookingForm() {
     );
   }
 
+  const [captchaValue, setCaptchaValue] = useState('');
+  const [captchaGenerated] = useState('5010');
+
   return (
     <section className="booking-section section" id="booking">
-      <div className="section-header">
-        <span className="section-tag">Booking</span>
-        <h2 className="section-title">Dental E-Consultation</h2>
-        <p className="section-subtitle">
-          Fill the form and our team will contact you shortly to confirm your consultation.
-        </p>
-      </div>
+      <div className="booking-premium-wrap animate-fade-in">
+        
+        {/* Left text column */}
+        <div className="booking-left-text">
+          <h2 className="booking-display-title">
+            Book an<br />
+            Appointment at<br />
+            Dr Neemz Dental<br />
+            Near You
+          </h2>
+        </div>
 
-      <div className="booking-card animate-fade-in">
-        {error && (
-          <div className="error-message">
-            <AlertCircle size={18} />
-            <span>{error}</span>
-          </div>
-        )}
+        {/* Right form inputs column */}
+        <div className="booking-right-inputs-card">
+          {error && (
+            <div className="error-message">
+              <AlertCircle size={18} />
+              <span>{error}</span>
+            </div>
+          )}
 
-        <form onSubmit={handleSubmit} className="booking-form">
-          <div className="form-group-row">
-            <div className="form-group">
-              <label htmlFor="name">Full Name *</label>
-              <input 
-                type="text" 
-                id="name" 
-                name="name" 
-                placeholder="e.g. John Doe"
-                value={formData.name} 
-                onChange={handleChange} 
-                required 
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">Email Address *</label>
-              <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                placeholder="e.g. john@example.com"
-                value={formData.email} 
-                onChange={handleChange} 
-                required 
-              />
-            </div>
-          </div>
-
-          <div className="form-group-row">
-            <div className="form-group">
-              <label htmlFor="phone">Phone Number *</label>
-              <input 
-                type="tel" 
-                id="phone" 
-                name="phone" 
-                placeholder="e.g. +91 74485 60350"
-                value={formData.phone} 
-                onChange={handleChange} 
-                required 
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="branch">Clinic Location *</label>
-              <select 
-                id="branch" 
-                name="branch" 
-                value={formData.branch} 
-                onChange={handleChange} 
-                required
-              >
-                <option value="">Select Location</option>
-                {BRANCHES.map(b => <option key={b} value={b}>{b}</option>)}
-              </select>
-            </div>
-          </div>
-
-          <div className="form-group-row">
-            <div className="form-group">
-              <label htmlFor="service">Treatment Required *</label>
-              <select 
-                id="service" 
-                name="service" 
-                value={formData.service} 
-                onChange={handleChange} 
-                required
-              >
-                <option value="">Select Treatment</option>
-                {SERVICES.map(s => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </div>
-          </div>
-
-          <div className="form-group-row">
-            <div className="form-group">
-              <label htmlFor="date">Appointment Date *</label>
-              <div className="input-with-icon">
-                <Calendar size={18} className="input-icon" />
+          <form onSubmit={handleSubmit} className="booking-form-compact">
+            <div className="booking-compact-grid">
+              
+              <div className="bfield-wrap">
                 <input 
-                  type="date" 
-                  id="date" 
-                  name="date" 
-                  min={getMinDate()}
-                  value={formData.date} 
+                  type="text" 
+                  name="name" 
+                  placeholder="Name"
+                  value={formData.name} 
                   onChange={handleChange} 
                   required 
                 />
               </div>
-            </div>
-            <div className="form-group">
-              <label htmlFor="timeSlot">Preferred Time Slot *</label>
-              <div className="input-with-icon">
-                <Clock size={18} className="input-icon" />
+
+              <div className="bfield-wrap">
+                <input 
+                  type="tel" 
+                  name="phone" 
+                  placeholder="Phone Number"
+                  value={formData.phone} 
+                  onChange={handleChange} 
+                  required 
+                />
+              </div>
+
+              <div className="bfield-wrap">
+                <input 
+                  type="email" 
+                  name="email" 
+                  placeholder="Email Address"
+                  value={formData.email} 
+                  onChange={handleChange} 
+                  required 
+                />
+              </div>
+
+              <div className="bfield-wrap">
                 <select 
-                  id="timeSlot" 
-                  name="timeSlot" 
-                  value={formData.timeSlot} 
+                  name="branch" 
+                  value={formData.branch} 
                   onChange={handleChange} 
                   required
                 >
-                  <option value="">Select Time Slot</option>
-                  {TIME_SLOTS.map(t => <option key={t} value={t}>{t}</option>)}
+                  <option value="">Select City</option>
+                  {BRANCHES.map(b => <option key={b} value={b}>{b}</option>)}
                 </select>
               </div>
+
+              <div className="bfield-wrap">
+                <input 
+                  type="text" 
+                  placeholder="Captcha" 
+                  value={captchaValue}
+                  onChange={(e) => setCaptchaValue(e.target.value)}
+                  required 
+                />
+              </div>
+
+              <div className="captcha-display-box">
+                {captchaGenerated}
+              </div>
+
             </div>
-          </div>
 
-          <div className="form-group">
-            <label htmlFor="notes">Additional Notes / Symptoms (Optional)</label>
-            <textarea 
-              id="notes" 
-              name="notes" 
-              rows="4" 
-              placeholder="Please describe any issues or dental concerns you're currently experiencing..."
-              value={formData.notes} 
-              onChange={handleChange}
-            ></textarea>
-          </div>
+            <div className="booking-submit-row">
+              <button type="submit" className="btn-compact-submit" disabled={loading}>
+                {loading ? 'Processing...' : 'Book Now'}
+              </button>
+            </div>
+          </form>
+        </div>
 
-          <div className="form-actions">
-            <button type="submit" className="btn btn-primary" disabled={loading}>
-              {loading ? (
-                <span>Scheduling...</span>
-              ) : (
-                <>
-                  <Sparkles size={16} />
-                  <span>Request Appointment</span>
-                </>
-              )}
-            </button>
-          </div>
-        </form>
       </div>
     </section>
   );
