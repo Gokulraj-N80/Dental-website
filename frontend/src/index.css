@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 /* ============================================================
    THEME VARIABLES
@@ -121,6 +121,120 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-accent);
   letter-spacing: -0.5px;
   transition: color 0.3s ease;
+}
+
+/* ============================================================
+   GLOBAL STRUCTURAL UTILITIES
+   ============================================================ */
+.section {
+  padding: 80px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 50px auto;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-secondary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.75rem;
+  margin-bottom: 12px;
+  padding: 4px 12px;
+  background-color: var(--color-secondary-soft);
+  border-radius: 9999px;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  letter-spacing: -1px;
+  color: var(--color-accent);
+}
+
+.section-subtitle {
+  color: var(--color-accent-medium);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.section-divider {
+  border: 0;
+  height: 1px;
+  background-color: var(--color-accent-light);
+  margin: 0;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-cols: 1fr;
+  gap: 40px;
+}
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-cols: repeat(2, 1fr);
+  }
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-cols: 1fr;
+  gap: 30px;
+}
+@media (min-width: 640px) {
+  .grid-3 {
+    grid-template-cols: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .grid-3 {
+    grid-template-cols: repeat(3, 1fr);
+  }
+}
+
+/* Premium Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background-color: var(--color-secondary);
+  color: #fff;
+}
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: var(--color-surface);
+  color: var(--color-accent);
+  border-color: var(--color-accent-light);
+}
+.btn-secondary:hover {
+  background-color: var(--color-accent-light);
+  transform: translateY(-2px);
 }
 
 /* ============================================================

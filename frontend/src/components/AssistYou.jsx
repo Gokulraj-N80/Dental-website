@@ -23,25 +23,33 @@ const ASSIST_OPTIONS = [
 
 export default function AssistYou({ onSelectTriage }) {
   return (
-    <section className="assist-section section">
-      <div className="section-header" style={{ textAlign: 'center', marginBottom: '40px' }} data-reveal>
-        <h2 className="section-title">HOW MAY WE ASSIST YOU <span style={{ color: 'var(--color-secondary)' }}>TODAY?</span></h2>
-        <p className="section-subtitle" style={{ maxWidth: '600px', margin: '0 auto' }}>
+    <section className="section py-16" id="assist">
+      <div className="section-header">
+        <span className="section-tag">How may we help?</span>
+        <h2 className="section-title">
+          HOW MAY WE ASSIST YOU <span style={{ color: 'var(--color-secondary)' }}>TODAY?</span>
+        </h2>
+        <p className="section-subtitle">
           Please select the option that best describes your needs to proceed.
         </p>
       </div>
 
-      <div className="assist-grid" data-reveal>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {ASSIST_OPTIONS.map((option) => (
           <div
             key={option.id}
-            className="assist-card"
+            className="flex flex-col rounded-2xl overflow-hidden border cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+            style={{
+              backgroundColor: 'var(--color-primary)',
+              borderColor: 'var(--color-accent-light)',
+              boxShadow: 'var(--shadow-sm)',
+            }}
             onClick={() => onSelectTriage(option.treatment)}
           >
-            <div className="assist-img-wrap">
-              <img src={option.image} alt={option.name} className="assist-card-img" />
+            <div className="w-full aspect-[4/3] overflow-hidden">
+              <img src={option.image} alt={option.name} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
             </div>
-            <div className="assist-card-bar">
+            <div className="p-4 text-center font-bold text-xs md:text-sm" style={{ color: 'var(--color-accent)' }}>
               <span>{option.name}</span>
             </div>
           </div>
