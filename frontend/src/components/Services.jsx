@@ -77,14 +77,11 @@ export default function Services({ onBookClick }) {
 
     if (!isMobile) {
       const scrollContainer = document.querySelector('.services-scroll-container');
-      const cards = gsap.utils.toArray('.services-scroll-container .service-card');
       
-      // Calculate amount to scroll horizontally
-      // Container width minus viewport width
       const getScrollAmount = () => {
         const containerWidth = scrollContainer.scrollWidth;
         const viewportWidth = window.innerWidth;
-        return -(containerWidth - viewportWidth + 80); // add padding offset
+        return -(containerWidth - viewportWidth + 80);
       };
 
       pinScroll = gsap.to(scrollContainer, {
@@ -94,44 +91,15 @@ export default function Services({ onBookClick }) {
           trigger: '.services-section',
           pin: true,
           scrub: 1,
-          start: 'top 80px', // pin just below navbar
+          start: 'top 80px',
           end: () => `+=${scrollContainer.scrollWidth - window.innerWidth + 200}`,
           invalidateOnRefresh: true,
         }
       });
-    } else {
-      // Simple stagger entrance for mobile
-      pinScroll = gsap.from('.services-scroll-container .service-card', {
-        scrollTrigger: {
-          trigger: '.services-scroll-container',
-          start: 'top 85%',
-          toggleActions: 'play none none none'
-        },
-        opacity: 0,
-        y: 40,
-        stagger: 0.1,
-        duration: 0.8,
-        ease: 'power3.out'
-      });
     }
 
-    // Animate the section header texts
-    const animHeader = gsap.from('.services-anim-header > *', {
-      scrollTrigger: {
-        trigger: '.services-anim-header',
-        start: 'top 85%',
-        toggleActions: 'play none none none'
-      },
-      opacity: 0,
-      y: 30,
-      stagger: 0.15,
-      duration: 0.8,
-      ease: 'power3.out'
-    });
-
     return () => {
-      pinScroll.scrollTrigger?.kill();
-      animHeader.scrollTrigger?.kill();
+      pinScroll?.scrollTrigger?.kill();
     };
   }, []);
 
