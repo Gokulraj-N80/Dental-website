@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import Logo from './Logo';
 
 const DENTAL_TREATMENTS = [
   'ROUTINE CHECK UP', 'DENTAL FILLINGS', 'ROOT CANAL TREATMENT', 'WISDOM TOOTH REMOVAL',
@@ -7,8 +8,9 @@ const DENTAL_TREATMENTS = [
   'SMILE MAKEOVERS', 'PEDIATRIC DENTISTRY', 'GUM TREATMENT', 'DENTAL CROWN', 'LASER-DENTISTRY'
 ];
 
-export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment }) {
+export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, theme, setTheme }) {
   const [activeDropdown, setActiveDropdown] = useState(null); // 'treatments' | null
+  const [isThemeDropdownOpen, setIsThemeDropdownOpen] = useState(false);
 
   const handleNavClick = (tab) => {
     setCurrentTab(tab);
@@ -43,8 +45,7 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment })
       <div className="navbar-wrapper">
         {/* Logo */}
         <div className="navbar-logo" onClick={() => handleNavClick('home')}>
-          <div className="logo-icon"></div>
-          <span className="logo-text">LUMINA</span>
+          <Logo size={42} showText={true} />
         </div>
 
         {/* Desktop Links */}
@@ -106,10 +107,140 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment })
           </button>
           
           <button 
+            className="nav-link-neemz"
+            onClick={() => handleNavClick('admin')}
+          >
+            ADMIN
+          </button>
+          
+          <div className="theme-dropdown-wrapper" style={{ position: 'relative' }}>
+            <button
+              onClick={() => setIsThemeDropdownOpen(!isThemeDropdownOpen)}
+              className="theme-toggle-btn"
+              style={{
+                background: 'transparent',
+                border: '1.5px solid var(--color-accent-light)',
+                borderRadius: 'var(--radius-full)',
+                padding: '6px 12px',
+                fontSize: '0.78rem',
+                fontWeight: '700',
+                color: 'var(--color-accent)',
+                cursor: 'pointer',
+                outline: 'none',
+                fontFamily: 'inherit',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                transition: 'var(--transition-smooth)'
+              }}
+            >
+              {theme === 'neem' ? '🌿 Neem' : theme === 'clinical-blue' ? '💙 Clinical' : '🌸 Blush'}
+              <ChevronDown size={11} />
+            </button>
+            
+            {isThemeDropdownOpen && (
+              <div
+                className="theme-dropdown-panel"
+                style={{
+                  position: 'absolute',
+                  top: 'calc(100% + 8px)',
+                  right: 0,
+                  backgroundColor: 'var(--color-primary)',
+                  border: '1.5px solid var(--color-accent-light)',
+                  borderRadius: 'var(--radius-md)',
+                  boxShadow: 'var(--shadow-md)',
+                  padding: '6px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4px',
+                  zIndex: 1000,
+                  minWidth: '120px'
+                }}
+              >
+                {theme !== 'neem' && (
+                  <button
+                    onClick={() => { setTheme('neem'); setIsThemeDropdownOpen(false); }}
+                    style={{
+                      background: 'transparent',
+                      border: 'none',
+                      borderRadius: 'var(--radius-sm)',
+                      padding: '8px 12px',
+                      fontSize: '0.78rem',
+                      fontWeight: '600',
+                      color: 'var(--color-accent)',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      transition: 'var(--transition-smooth)',
+                      width: '100%'
+                    }}
+                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--color-surface)'}
+                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                  >
+                    🌿 Neem
+                  </button>
+                )}
+                {theme !== 'clinical-blue' && (
+                  <button
+                    onClick={() => { setTheme('clinical-blue'); setIsThemeDropdownOpen(false); }}
+                    style={{
+                      background: 'transparent',
+                      border: 'none',
+                      borderRadius: 'var(--radius-sm)',
+                      padding: '8px 12px',
+                      fontSize: '0.78rem',
+                      fontWeight: '600',
+                      color: 'var(--color-accent)',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      transition: 'var(--transition-smooth)',
+                      width: '100%'
+                    }}
+                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--color-surface)'}
+                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                  >
+                    💙 Clinical
+                  </button>
+                )}
+                {theme !== 'soft-medical-blush' && (
+                  <button
+                    onClick={() => { setTheme('soft-medical-blush'); setIsThemeDropdownOpen(false); }}
+                    style={{
+                      background: 'transparent',
+                      border: 'none',
+                      borderRadius: 'var(--radius-sm)',
+                      padding: '8px 12px',
+                      fontSize: '0.78rem',
+                      fontWeight: '600',
+                      color: 'var(--color-accent)',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      transition: 'var(--transition-smooth)',
+                      width: '100%'
+                    }}
+                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--color-surface)'}
+                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                  >
+                    🌸 Blush
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+
+          <button 
             className="btn btn-consultation"
             onClick={() => handleNavClick('booking')}
           >
-            BOOK APPOINTMENT
+            E-CONSULTATION
           </button>
         </div>
       </div>

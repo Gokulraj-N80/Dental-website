@@ -1,8 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, Sparkles, Phone, Award, Shield } from 'lucide-react';
-import heroDentist from '../assets/hero_dentist.png';
+import heroDentist from '../assets/clinical_tooth.jpg';
+
+// Dynamic count up hook
+function useCounter(target, duration = 1500) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const end = parseInt(target, 10);
+    if (start === end) return;
+
+    let totalMiliseconds = duration;
+    let incrementTime = Math.max(Math.floor(totalMiliseconds / end), 10);
+    
+    let timer = setInterval(() => {
+      start += Math.ceil(end / (duration / incrementTime));
+      if (start >= end) {
+        clearInterval(timer);
+        setCount(end);
+      } else {
+        setCount(start);
+      }
+    }, incrementTime);
+
+    return () => clearInterval(timer);
+  }, [target, duration]);
+
+  return count;
+}
 
 export default function Hero({ onBookClick, onServicesClick }) {
+  const patientsCount = useCounter(1500, 1800);
+  const experienceCount = useCounter(10, 1000);
+
   return (
     <section className="hero-split-section">
 
@@ -15,13 +46,13 @@ export default function Hero({ onBookClick, onServicesClick }) {
         </div>
 
         <h1 className="hero-split-title animate-fade-in delay-2">
-          A Clean Approach <br />
-          To Modern <br />
-          <span className="hero-title-accent">Dental Medicine.</span>
+          Smile Confidently <br />
+          With Modern <br />
+          <span className="hero-title-accent">Dental Care.</span>
         </h1>
 
         <p className="hero-split-desc animate-fade-in delay-3">
-          Welcome to Lumina Dental Clinic. We deliver professional,
+          Welcome to Dr Neemz Dentistry. We deliver professional,
           anxiety-free treatments in a calming environment using
           surgical-grade safety procedures and 100% digital diagnostics.
         </p>
@@ -38,7 +69,7 @@ export default function Hero({ onBookClick, onServicesClick }) {
 
         <div className="hero-split-strip animate-fade-in delay-5">
           <div className="strip-item">
-            <Award size={17} className="strip-icon animate-pulse-glow" />
+            <Award size={17} className="strip-icon" />
             <span>Board Certified Specialists</span>
           </div>
           <div className="strip-item">
@@ -60,19 +91,19 @@ export default function Hero({ onBookClick, onServicesClick }) {
 
         {/* Floating stat badges */}
         <div className="hero-float-badge hero-badge-top animate-float delay-1">
-          <span className="hbadge-num">1,200+</span>
+          <span className="hbadge-num">{patientsCount.toLocaleString()}+</span>
           <span className="hbadge-label">Happy Patients</span>
         </div>
 
         <div className="hero-float-badge hero-badge-bottom animate-float delay-3">
-          <span className="hbadge-num">14 Yrs</span>
+          <span className="hbadge-num">{experienceCount}+ Yrs</span>
           <span className="hbadge-label">Clinical Experience</span>
         </div>
 
         <div className="hero-img-wrap">
           <img
             src={heroDentist}
-            alt="Professional Dentist at Lumina Dental Clinic"
+            alt="Professional Dentist at Dr Neemz Dentistry"
             className="hero-dentist-img"
           />
         </div>

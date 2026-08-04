@@ -7,19 +7,19 @@ import {
 } from 'lucide-react';
 
 const TREATMENTS = [
-  { icon: Sparkles, name: 'Teeth Cleaning', color: '#2d9a5c' },
-  { icon: Sun, name: 'Teeth Whitening', color: '#d4a017' },
-  { icon: PenTool, name: 'Dental Fillings', color: '#3584c4' },
-  { icon: Zap, name: 'Root Canal (RCT)', color: '#c0392b' },
-  { icon: Scissors, name: 'Tooth Extraction', color: '#8e44ad' },
-  { icon: CircleDot, name: 'Dental Implants', color: '#1abc9c' },
-  { icon: SmilePlus, name: 'Braces', color: '#e67e22' },
-  { icon: Wrench, name: 'Invis Aligner', color: '#2980b9' },
-  { icon: Crown, name: 'Dental Crowns', color: '#c0872a' },
-  { icon: BrickWall, name: 'Dental Bridges', color: '#27ae60' },
-  { icon: Layers, name: 'Dentures', color: '#7f8c8d' },
-  { icon: HeartPulse, name: 'Gum Treatment', color: '#e74c6f' },
-  { icon: Smile, name: 'Smile Designing', color: '#f39c12' },
+  { icon: Sparkles, name: 'Teeth Cleaning', color: 'var(--color-secondary)' },
+  { icon: Sun, name: 'Teeth Whitening', color: 'var(--color-gold)' },
+  { icon: PenTool, name: 'Dental Fillings', color: 'var(--color-secondary)' },
+  { icon: Zap, name: 'Root Canal (RCT)', color: 'var(--color-gold)' },
+  { icon: Scissors, name: 'Tooth Extraction', color: 'var(--color-secondary)' },
+  { icon: CircleDot, name: 'Dental Implants', color: 'var(--color-gold)' },
+  { icon: SmilePlus, name: 'Braces', color: 'var(--color-secondary)' },
+  { icon: Wrench, name: 'Invis Aligner', color: 'var(--color-gold)' },
+  { icon: Crown, name: 'Dental Crowns', color: 'var(--color-secondary)' },
+  { icon: BrickWall, name: 'Dental Bridges', color: 'var(--color-gold)' },
+  { icon: Layers, name: 'Dentures', color: 'var(--color-secondary)' },
+  { icon: HeartPulse, name: 'Gum Treatment', color: 'var(--color-gold)' },
+  { icon: Smile, name: 'Smile Designing', color: 'var(--color-secondary)' },
 ];
 
 export default function TreatmentsGrid({ onGetMore }) {

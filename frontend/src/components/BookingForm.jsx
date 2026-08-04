@@ -13,11 +13,25 @@ const TIME_SLOTS = [
 
 const SERVICES = [
   'Teeth Cleaning & Hygiene',
-  'Invisalign & Orthodontics',
+  'Teeth Whitening (Bleaching)',
+  'Dental Fillings',
+  'Root Canal Treatment (RCT)',
+  'Tooth Extraction',
   'Dental Implants',
-  'Cosmetic Whitening',
-  'Root Canal Treatment',
+  'Braces',
+  'Invis Aligner',
+  'Dental Crowns (Caps)',
+  'Dental Bridges',
+  'Dentures (Complete/Partial)',
+  'Gum Treatment (Periodontal Care)',
+  'Smile Designing',
   'Pediatric Care'
+];
+
+const BRANCHES = [
+  'Salem (Main Branch)',
+  'Chennai',
+  'Bangalore'
 ];
 
 export default function BookingForm() {
@@ -28,6 +42,7 @@ export default function BookingForm() {
     date: '',
     timeSlot: '',
     service: '',
+    branch: '',
     notes: ''
   });
 
@@ -49,19 +64,25 @@ export default function BookingForm() {
     setLoading(true);
 
     // Simple validation
-    if (!formData.name || !formData.email || !formData.phone || !formData.date || !formData.timeSlot || !formData.service) {
+    if (!formData.name || !formData.email || !formData.phone || !formData.date || !formData.timeSlot || !formData.service || !formData.branch) {
       setError('Please fill in all required fields.');
       setLoading(false);
       return;
     }
 
     try {
+      const payload = {
+        ...formData,
+        notes: `[Branch: ${formData.branch}] ${formData.notes}`
+      };
+      delete payload.branch; // Clean up before sending
+
       const response = await fetch('http://localhost:5000/api/appointments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       });
 
       const data = await response.json();
@@ -138,9 +159,9 @@ export default function BookingForm() {
     <section className="booking-section section" id="booking">
       <div className="section-header">
         <span className="section-tag">Booking</span>
-        <h2 className="section-title">Schedule An Appointment</h2>
+        <h2 className="section-title">Dental E-Consultation</h2>
         <p className="section-subtitle">
-          Book your slot online. Our team will review your selection and contact you to confirm the time.
+          Fill the form and our team will contact you shortly to confirm your consultation.
         </p>
       </div>
 
@@ -187,12 +208,28 @@ export default function BookingForm() {
                 type="tel" 
                 id="phone" 
                 name="phone" 
-                placeholder="e.g. +1 (555) 000-0000"
+                placeholder="e.g. +91 74485 60350"
                 value={formData.phone} 
                 onChange={handleChange} 
                 required 
               />
             </div>
+            <div className="form-group">
+              <label htmlFor="branch">Clinic Location *</label>
+              <select 
+                id="branch" 
+                name="branch" 
+                value={formData.branch} 
+                onChange={handleChange} 
+                required
+              >
+                <option value="">Select Location</option>
+                {BRANCHES.map(b => <option key={b} value={b}>{b}</option>)}
+              </select>
+            </div>
+          </div>
+
+          <div className="form-group-row">
             <div className="form-group">
               <label htmlFor="service">Treatment Required *</label>
               <select 

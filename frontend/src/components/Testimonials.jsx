@@ -4,23 +4,23 @@ import { Star, Quote } from 'lucide-react';
 const TESTIMONIALS_DATA = [
   {
     id: 1,
-    name: 'Emily Watson',
+    name: 'Janakarajan S',
     role: 'Orthodontics Patient',
-    text: 'Getting braces as an adult was a big decision, but Dr. Marcus Vance made the process so clear. The Invisalign treatment was smooth, and the clinic is incredibly relaxing.',
+    text: 'I had a wonderful experience with my orthodontics treatment at this clinic. I initially had crooked and crowded teeth which made me feel self-conscious while smiling. The doctor explained the entire treatment plan in detail and suggested braces. Throughout the treatment every appointment was handled clean and well maintained. I am extremely happy with the results!',
     stars: 5
   },
   {
     id: 2,
-    name: 'Liam Neill',
-    role: 'Implant Patient',
-    text: 'Verdant Clinic is modern and extremely clean. I got a dental implant done here and felt virtually no pain. The entire team was professional and caring throughout.',
+    name: 'Barani S',
+    role: 'Root Canal & Zirconia Crown Patient',
+    text: 'I underwent root canal treatment followed by zirconia brux care crown fixing and the entire experience was excellent. The doctor explained the procedure clearly and ensured complete comfort throughout. The RCT was painless, and the zirconia crown feels extremely strong, fits perfectly, and looks very natural.',
     stars: 5
   },
   {
     id: 3,
-    name: 'Sophia Martinez',
-    role: 'General Dentistry Patient',
-    text: 'I have dental anxiety, but the staff here goes above and beyond to make you feel comfortable. The gentle cleanings and calming environment have completely changed my outlook.',
+    name: 'Kalaiselvi N',
+    role: 'Composite Filling Patient',
+    text: "I done my light cure composite filling treatment in Neemz Dentistry... it's very good treatment... and the doctor treated me very friendly and gave so many information about my teeth... and the staff also very friendly. It's a very nice experience.",
     stars: 5
   }
 ];
@@ -29,8 +29,8 @@ export default function Testimonials() {
   return (
     <section className="testimonials-section section">
       <div className="section-header">
-        <span className="section-tag">Testimonials</span>
-        <h2 className="section-title">What Our Patients Say</h2>
+        <span className="section-tag">Google Reviews</span>
+        <h2 className="section-title">Smiles Shared by Our Patients</h2>
         <p className="section-subtitle">
           Read genuine reviews from patients who experienced our premium dental care.
         </p>

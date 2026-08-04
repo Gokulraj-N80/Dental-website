@@ -53,7 +53,7 @@ export default function Services({ onBookClick }) {
     <section className="services-section section" id="services">
       <div className="section-header">
         <span className="section-tag">Treatments</span>
-        <h2 className="section-title">Our Specialized Services</h2>
+        <h2 className="section-title">Dr Neemz Treatments</h2>
         <p className="section-subtitle">
           We combine medical precision with patient comfort to deliver high-quality dental treatments.
         </p>

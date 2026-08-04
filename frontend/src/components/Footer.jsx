@@ -1,5 +1,6 @@
 import React from 'react';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
+import Logo from './Logo';
 
 export default function Footer({ onNavClick }) {
   return (
@@ -8,9 +9,8 @@ export default function Footer({ onNavClick }) {
         <div className="footer-grid">
           {/* Brand */}
           <div className="footer-brand">
-            <div className="footer-logo">
-              <div className="logo-icon"></div>
-              <span className="logo-text">LUMINA</span>
+            <div className="footer-logo" style={{ cursor: 'pointer' }} onClick={() => onNavClick('home')}>
+              <Logo size={42} showText={true} textColor="#ffffff" />
             </div>
             <p className="brand-description">
               State-of-the-art dental care communicating professionalism, cleanliness, and patient comfort.
@@ -26,7 +26,7 @@ export default function Footer({ onNavClick }) {
               <button onClick={() => onNavClick('about')}>About Us</button>
               <button onClick={() => onNavClick('blog')}>Blog / Insights</button>
               <button onClick={() => onNavClick('doctors')}>Our Doctors</button>
-              <button onClick={() => onNavClick('booking')}>Book Appointment</button>
+              <button onClick={() => onNavClick('booking')}>E-Consultation</button>
             </div>
           </div>
 
@@ -55,22 +55,22 @@ export default function Footer({ onNavClick }) {
             <div className="contact-list">
               <div className="contact-row">
                 <MapPin size={18} />
-                <span>100 Forest Parkway, Suite 250, Green Hills</span>
+                <span>Salem, Tamil Nadu, India</span>
               </div>
               <div className="contact-row">
                 <Phone size={18} />
-                <span>+1 (555) 837-3268</span>
+                <span>+91 74485 60350</span>
               </div>
               <div className="contact-row">
                 <Mail size={18} />
-                <span>care@luminadental.com</span>
+                <span>care@drneemz.com</span>
               </div>
             </div>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} Lumina Dental Clinic. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Dr Neemz Dentistry. All rights reserved.</p>
         </div>
       </div>
     </footer>
