@@ -59,8 +59,19 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
           <Logo size={42} showText={true} />
         </div>
 
+        {/* Mobile Menu Toggle Button */}
+        <button 
+          className="mobile-menu-toggle-btn"
+          onClick={() => setIsThemeDropdownOpen(!isThemeDropdownOpen)}
+          aria-label="Toggle Navigation Menu"
+        >
+          <span className="hamburger-bar" />
+          <span className="hamburger-bar" />
+          <span className="hamburger-bar" />
+        </button>
+
         {/* Desktop Links */}
-        <div className="navbar-links">
+        <div className="navbar-links desktop-only-links">
           <button 
             className={`nav-link-neemz ${currentTab === 'home' ? 'active' : ''}`}
             onClick={() => handleNavClick('home')}
@@ -254,6 +265,58 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
             E-CONSULTATION
           </button>
         </div>
+
+        {/* Mobile Navigation Drawer Side Overlay */}
+        {isThemeDropdownOpen && (
+          <div className="mobile-navbar-drawer animate-fade-in">
+            <button 
+              className={`mobile-nav-link ${currentTab === 'home' ? 'active' : ''}`}
+              onClick={() => { handleNavClick('home'); setIsThemeDropdownOpen(false); }}
+            >
+              HOME
+            </button>
+            <button 
+              className={`mobile-nav-link ${currentTab === 'about' ? 'active' : ''}`}
+              onClick={() => { handleNavClick('about'); setIsThemeDropdownOpen(false); }}
+            >
+              ABOUT US
+            </button>
+            <button 
+              className={`mobile-nav-link ${currentTab === 'blog' ? 'active' : ''}`}
+              onClick={() => { handleNavClick('blog'); setIsThemeDropdownOpen(false); }}
+            >
+              BLOG
+            </button>
+            <button 
+              className={`mobile-nav-link ${currentTab === 'doctors' ? 'active' : ''}`}
+              onClick={() => { handleNavClick('doctors'); setIsThemeDropdownOpen(false); }}
+            >
+              OUR DOCTORS
+            </button>
+            <button 
+              className={`mobile-nav-link ${currentTab === 'admin' ? 'active' : ''}`}
+              onClick={() => { handleNavClick('admin'); setIsThemeDropdownOpen(false); }}
+            >
+              ADMIN
+            </button>
+            <button 
+              className={`mobile-nav-link ${currentTab === 'booking' ? 'active' : ''}`}
+              onClick={() => { handleNavClick('booking'); setIsThemeDropdownOpen(false); }}
+            >
+              E-CONSULTATION
+            </button>
+
+            {/* Mobile Theme Switches */}
+            <div className="mobile-theme-switches">
+              <span className="mobile-theme-label">Switch Theme</span>
+              <div className="mobile-theme-buttons-row">
+                <button onClick={() => { setTheme('neem'); setIsThemeDropdownOpen(false); }} className={`mtheme-btn ${theme === 'neem' ? 'active' : ''}`}>🌿 Neem</button>
+                <button onClick={() => { setTheme('clinical-blue'); setIsThemeDropdownOpen(false); }} className={`mtheme-btn ${theme === 'clinical-blue' ? 'active' : ''}`}>💙 Clinical</button>
+                <button onClick={() => { setTheme('soft-medical-blush'); setIsThemeDropdownOpen(false); }} className={`mtheme-btn ${theme === 'soft-medical-blush' ? 'active' : ''}`}>🌸 Blush</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
