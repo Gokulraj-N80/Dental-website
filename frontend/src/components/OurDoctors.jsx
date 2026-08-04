@@ -36,90 +36,54 @@ const DOCTORS = [
 
 export default function OurDoctors() {
   return (
-    <div style={{ backgroundColor: 'var(--color-primary)' }}>
+    <div>
       {/* Hero Banner */}
-      <div
-        className="w-full py-20 px-8 text-center"
-        style={{
-          background: 'linear-gradient(135deg, var(--color-secondary-dark) 0%, var(--color-gradient-end) 100%)',
-        }}
-      >
-        <div className="max-w-[800px] mx-auto flex flex-col gap-3">
-          <span
-            className="inline-flex self-center items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-white/90"
-            style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
-          >
-            Our Team
-          </span>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white" style={{ fontFamily: 'var(--font-heading)' }}>
-            Meet Our Doctors
-          </h1>
-          <p className="text-sm md:text-base text-white/80 max-w-[600px] mx-auto leading-relaxed">
+      <div className="page-hero-banner">
+        <div className="page-hero-inner section">
+          <span className="section-tag">Our Team</span>
+          <h1 className="page-hero-title">Meet Our Doctors</h1>
+          <p className="page-hero-subtitle">
             Board-certified dental specialists committed to delivering exceptional care with the highest clinical standards.
           </p>
         </div>
       </div>
 
       {/* Doctors Section */}
-      <section className="section py-16" id="doctors">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <section className="section" id="doctors">
+        <div className="doctors-grid">
           {DOCTORS.map((doc, i) => (
-            <div
-              key={i}
-              className="flex flex-col rounded-3xl overflow-hidden border transition-all duration-300 hover:shadow-lg"
-              style={{
-                backgroundColor: 'var(--color-primary)',
-                borderColor: 'var(--color-accent-light)',
-                boxShadow: 'var(--shadow-sm)',
-              }}
-            >
+            <div key={i} className="doctor-card">
               {/* Avatar */}
-              <div className="w-full aspect-[4/3] bg-neutral-100 overflow-hidden relative">
-                <img src={doc.image} alt={doc.name} className="w-full h-full object-cover" />
+              <div className="doctor-avatar-wrap">
+                <div className="doctor-avatar-image-container">
+                  <img src={doc.image} alt={doc.name} className="doctor-avatar-img" />
+                </div>
               </div>
 
               {/* Info */}
-              <div className="p-6 flex flex-col gap-4 flex-grow">
-                <div className="flex flex-col gap-1">
-                  <h3 className="text-xl font-bold" style={{ color: 'var(--color-accent)' }}>
-                    {doc.name}
-                  </h3>
-                  <p className="text-xs font-bold" style={{ color: 'var(--color-secondary)' }}>
-                    {doc.title}
-                  </p>
-                  <div
-                    className="inline-flex self-start items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold border mt-2"
-                    style={{ borderColor: 'var(--color-accent-light)', color: 'var(--color-accent-medium)' }}
-                  >
-                    <Clock size={12} />
+              <div className="doctor-info">
+                <div className="doctor-name-block">
+                  <h3 className="doctor-name">{doc.name}</h3>
+                  <p className="doctor-title">{doc.title}</p>
+                  <div className="doctor-exp-badge">
+                    <Clock size={14} />
                     <span>{doc.experience}</span>
                   </div>
                 </div>
 
-                <p className="text-xs leading-relaxed" style={{ color: 'var(--color-accent-medium)' }}>
-                  {doc.bio}
-                </p>
+                <p className="doctor-bio">{doc.bio}</p>
 
-                <div className="border-t pt-4 flex flex-col gap-3" style={{ borderColor: 'var(--color-accent-light)' }}>
-                  <div className="flex items-start gap-2.5">
-                    <GraduationCap size={15} className="mt-0.5 shrink-0" style={{ color: 'var(--color-secondary)' }} />
-                    <span className="text-[11px] leading-relaxed" style={{ color: 'var(--color-accent-medium)' }}>
-                      {doc.education}
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <Stethoscope size={15} className="mt-0.5 shrink-0" style={{ color: 'var(--color-secondary)' }} />
-                    <div className="flex flex-wrap gap-1.5">
-                      {doc.specializations.map((spec, j) => (
-                        <span
-                          key={j}
-                          className="px-2 py-0.5 rounded text-[10px] font-bold"
-                          style={{ backgroundColor: 'var(--color-surface)', color: 'var(--color-accent)' }}
-                        >
-                          {spec}
-                        </span>
-                      ))}
-                    </div>
+                <div className="doctor-education">
+                  <GraduationCap size={16} className="doctor-info-icon" />
+                  <span>{doc.education}</span>
+                </div>
+
+                <div className="doctor-specializations">
+                  <Stethoscope size={16} className="doctor-info-icon" />
+                  <div className="spec-tags">
+                    {doc.specializations.map((spec, j) => (
+                      <span key={j} className="spec-tag">{spec}</span>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -128,32 +92,26 @@ export default function OurDoctors() {
         </div>
 
         {/* Awards Strip */}
-        <div
-          className="mt-16 p-8 rounded-3xl grid grid-cols-1 md:grid-cols-3 gap-8 border"
-          style={{
-            backgroundColor: 'var(--color-surface)',
-            borderColor: 'var(--color-accent-light)',
-          }}
-        >
-          <div className="flex items-center gap-4">
-            <Award size={32} style={{ color: 'var(--color-secondary)' }} />
+        <div className="awards-strip">
+          <div className="award-badge">
+            <Award size={24} />
             <div>
-              <strong className="text-sm block" style={{ color: 'var(--color-accent)' }}>Best Dental Clinic 2024</strong>
-              <p className="text-xs" style={{ color: 'var(--color-accent-medium)' }}>Regional Healthcare Awards</p>
+              <strong>Best Dental Clinic 2024</strong>
+              <p>Regional Healthcare Awards</p>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <Star size={32} style={{ color: 'var(--color-secondary)' }} />
+          <div className="award-badge">
+            <Star size={24} />
             <div>
-              <strong className="text-sm block" style={{ color: 'var(--color-accent)' }}>4.9 / 5.0 Rating</strong>
-              <p className="text-xs" style={{ color: 'var(--color-accent-medium)' }}>Based on 320+ patient reviews</p>
+              <strong>4.9 / 5.0 Rating</strong>
+              <p>Based on 320+ patient reviews</p>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <GraduationCap size={32} style={{ color: 'var(--color-secondary)' }} />
+          <div className="award-badge">
+            <GraduationCap size={24} />
             <div>
-              <strong className="text-sm block" style={{ color: 'var(--color-accent)' }}>Board Certified Specialists</strong>
-              <p className="text-xs" style={{ color: 'var(--color-accent-medium)' }}>All practitioners are fully licensed</p>
+              <strong>Board Certified Specialists</strong>
+              <p>All practitioners are fully licensed</p>
             </div>
           </div>
         </div>

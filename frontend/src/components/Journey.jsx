@@ -36,8 +36,8 @@ const MILESTONES = [
 
 export default function Journey() {
   return (
-    <section className="section py-16" id="journey">
-      <div className="section-header">
+    <section className="journey-section section" id="journey">
+      <div className="section-header" data-reveal>
         <span className="section-tag">Our History</span>
         <h2 className="section-title">The Journey of Dr Neemz Dentistry</h2>
         <p className="section-subtitle">
@@ -45,12 +45,9 @@ export default function Journey() {
         </p>
       </div>
 
-      <div className="relative max-w-[800px] mx-auto flex flex-col gap-8">
-        {/* Central timeline trunk line */}
-        <div
-          className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2"
-          style={{ backgroundColor: 'var(--color-accent-light)' }}
-        />
+      <div className="tree-timeline">
+        {/* Central trunk */}
+        <div className="tree-trunk" />
 
         {MILESTONES.map((item, index) => {
           const Icon = item.icon;
@@ -59,48 +56,58 @@ export default function Journey() {
           return (
             <div
               key={item.year}
-              className={`relative flex flex-col md:flex-row items-start md:items-center ${
-                isLeft ? 'md:flex-row-reverse' : ''
-              }`}
+              className="tree-row"
+              data-reveal
+              data-delay={index * 140}
             >
-              {/* Card half */}
-              <div className="w-full md:w-1/2 pl-12 md:pl-0 md:px-8">
-                <div
-                  className="p-6 rounded-2xl border shadow-sm transition-all duration-300 hover:shadow-md"
-                  style={{
-                    backgroundColor: 'var(--color-primary)',
-                    borderColor: 'var(--color-accent-light)',
-                  }}
-                >
-                  <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: 'var(--color-secondary)' }}>
-                    {item.year}
-                  </div>
-                  <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--color-accent)' }}>
-                    {item.title}
-                  </h3>
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--color-accent-medium)' }}>
-                    {item.description}
-                  </p>
+              {/* LEFT half */}
+              <div className="tree-half tree-half-left">
+                {isLeft ? (
+                  /* card + branch line reaching right toward trunk */
+                  <>
+                    <div className="tree-card">
+                      <div className="tree-card-year">{item.year}</div>
+                      <h3 className="tree-card-title">{item.title}</h3>
+                      <p className="tree-card-desc">{item.description}</p>
+                    </div>
+                    {/* The branch arm fills from card edge → trunk */}
+                    <div className="tree-branch-arm arm-right-to-trunk" />
+                  </>
+                ) : (
+                  /* empty left half when card is on the right */
+                  <div className="tree-half-empty" />
+                )}
+              </div>
+
+              {/* CENTER: trunk dot */}
+              <div className="tree-node">
+                <div className="tree-dot">
+                  <Icon size={14} />
                 </div>
               </div>
 
-              {/* Center Dot */}
-              <div
-                className="absolute left-[20px] md:left-1/2 top-6 md:top-auto w-10 h-10 -translate-x-1/2 rounded-full border-4 flex items-center justify-center z-10"
-                style={{
-                  backgroundColor: 'var(--color-primary)',
-                  borderColor: 'var(--color-secondary)',
-                  color: 'var(--color-secondary)',
-                }}
-              >
-                <Icon size={14} />
+              {/* RIGHT half */}
+              <div className="tree-half tree-half-right">
+                {!isLeft ? (
+                  /* branch line from trunk → card */
+                  <>
+                    <div className="tree-branch-arm arm-trunk-to-right" />
+                    <div className="tree-card">
+                      <div className="tree-card-year">{item.year}</div>
+                      <h3 className="tree-card-title">{item.title}</h3>
+                      <p className="tree-card-desc">{item.description}</p>
+                    </div>
+                  </>
+                ) : (
+                  <div className="tree-half-empty" />
+                )}
               </div>
-
-              {/* Empty half for spacing on desktop */}
-              <div className="hidden md:block w-1/2" />
             </div>
           );
         })}
+
+        {/* Root dot at bottom */}
+        <div className="tree-root-cap" />
       </div>
     </section>
   );

@@ -24,8 +24,8 @@ const TREATMENTS = [
 
 export default function TreatmentsGrid({ onGetMore }) {
   return (
-    <section className="section py-16" id="treatments">
-      <div className="section-header">
+    <section className="tg-section section">
+      <div className="section-header" data-reveal>
         <span className="section-tag">Our Treatments</span>
         <h2 className="section-title">Comprehensive Dental Services</h2>
         <p className="section-subtitle">
@@ -33,38 +33,23 @@ export default function TreatmentsGrid({ onGetMore }) {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="tg-grid">
         {TREATMENTS.map((t, i) => {
           const Icon = t.icon;
           return (
             <div
               key={t.name}
-              className="flex flex-col gap-4 p-6 rounded-2xl border cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              style={{
-                backgroundColor: 'var(--color-primary)',
-                borderColor: 'var(--color-accent-light)',
-                boxShadow: 'var(--shadow-sm)',
-              }}
+              className="tg-card"
+              data-reveal
+              data-delay={i * 50}
               onClick={() => onGetMore && onGetMore(t.name)}
             >
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center self-start"
-                style={{ backgroundColor: 'var(--color-secondary-soft)', color: t.color }}
-              >
-                <Icon size={24} strokeWidth={1.8} />
+              <div className="tg-card-icon" style={{ '--card-accent': t.color }}>
+                <Icon size={28} strokeWidth={1.5} />
               </div>
-              <h4 className="text-sm font-bold" style={{ color: 'var(--color-accent)' }}>
-                {t.name}
-              </h4>
-              <button
-                className="self-start text-xs font-bold inline-flex items-center gap-1.5 transition-opacity hover:opacity-75"
-                style={{ color: 'var(--color-secondary)' }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onGetMore && onGetMore(t.name);
-                }}
-              >
-                Learn More <ArrowRight size={13} />
+              <h4 className="tg-card-name">{t.name}</h4>
+              <button className="tg-card-link" onClick={(e) => { e.stopPropagation(); onGetMore && onGetMore(t.name); }}>
+                Learn More <ArrowRight size={14} />
               </button>
             </div>
           );

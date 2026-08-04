@@ -13,8 +13,8 @@ const BADGES = [
 
 export default function About() {
   return (
-    <section className="section py-16" id="about">
-      <div className="section-header">
+    <section className="about-section section" id="about">
+      <div className="section-header" data-reveal>
         <span className="section-tag">About Us</span>
         <h2 className="section-title">Professional Care You Can Trust</h2>
         <p className="section-subtitle">
@@ -22,31 +22,28 @@ export default function About() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
-        {/* Image side */}
-        <div className="relative flex justify-center">
-          <div className="relative w-full max-w-[420px] rounded-3xl overflow-hidden shadow-xl" style={{ boxShadow: 'var(--shadow-lg)' }}>
-            <img src={clinicInterior} alt="Premium Clinic Equipment" className="w-full h-full object-cover" />
-            <div
-              className="absolute bottom-6 left-6 flex flex-col px-5 py-3 rounded-2xl shadow-lg"
-              style={{ backgroundColor: 'var(--color-secondary)', color: '#fff', animation: 'floatSlow 5s ease-in-out infinite' }}
-            >
-              <span className="text-xs font-bold uppercase tracking-wider">HYGIENE FIRST</span>
-              <span className="text-[10px] opacity-80">ISO 9001 Certified</span>
+      <div className="grid-2" style={{ marginBottom: '64px' }}>
+        {/* Image side — slides in from left */}
+        <div className="about-visual-premium reveal-left" data-reveal>
+          <div className="about-image-wrapper">
+            <img src={clinicInterior} alt="Premium Clinic Equipment" className="about-img" />
+            <div className="about-img-badge animate-float-slow">
+              <span className="badge-title">HYGIENE FIRST</span>
+              <span className="badge-subtitle">ISO 9001 Certified</span>
             </div>
           </div>
         </div>
 
-        {/* Text side */}
-        <div className="flex flex-col gap-5">
-          <h3 className="text-2xl font-bold" style={{ color: 'var(--color-accent)' }}>
+        {/* Text side — slides in from right */}
+        <div className="about-content reveal-right" data-reveal>
+          <h3 style={{ fontSize: '1.8rem', marginBottom: '16px', fontWeight: '700' }}>
             Redefining the Dental Experience
           </h3>
-          <p className="text-sm leading-relaxed" style={{ color: 'var(--color-accent-medium)' }}>
+          <p className="about-p">
             At Dr Neemz Dentistry, we believe dental care shouldn't feel stressful. We have created a bright,
             quiet, and welcoming space where patients receive high-quality dental treatments from a team of qualified specialists.
           </p>
-          <p className="text-sm leading-relaxed" style={{ color: 'var(--color-accent-medium)' }}>
+          <p className="about-p">
             By investing in digital workflows—like low-radiation 3D X-rays, intraoral cameras, and modern
             chair-side computer systems—we ensure accurate diagnostics, transparent pricing, and treatments
             that are highly effective and virtually painless.
@@ -54,32 +51,26 @@ export default function About() {
         </div>
       </div>
 
-      {/* Badge cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+      {/* Badge cards with staggered reveal */}
+      <div className="about-badges-grid">
         {BADGES.map((badge, i) => {
           const Icon = badge.icon;
           return (
             <div
               key={badge.title}
-              className="flex flex-col gap-3 p-6 rounded-2xl border transition-all duration-300 hover:shadow-md"
-              style={{
-                backgroundColor: 'var(--color-surface)',
-                borderColor: 'var(--color-accent-light)',
-              }}
+              className="about-badge-card reveal-scale"
+              data-reveal
+              data-delay={i * 100}
             >
-              <Icon size={24} style={{ color: 'var(--color-secondary)' }} />
-              <h4 className="text-sm font-bold" style={{ color: 'var(--color-accent)' }}>
-                {badge.title}
-              </h4>
-              <p className="text-xs leading-relaxed" style={{ color: 'var(--color-accent-medium)' }}>
-                {badge.desc}
-              </p>
+              <Icon className="badge-card-icon" size={24} />
+              <h4>{badge.title}</h4>
+              <p>{badge.desc}</p>
             </div>
           );
         })}
       </div>
 
-      <hr className="section-divider my-16" />
+      <hr className="section-divider" />
 
       {/* History Tree Timeline */}
       <Journey />
