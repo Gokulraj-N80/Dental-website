@@ -1434,6 +1434,61 @@ h6 {
   }
 }
 
+/* Mobile responsive font sizes and padding scaling */
+@media (max-width: 768px) {
+  .section {
+    padding: 40px 16px;
+  }
+  .section-title {
+    font-size: 1.85rem !important;
+    letter-spacing: -0.5px;
+  }
+  .section-subtitle {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .hero-split-title {
+    font-size: 2.1rem !important;
+    line-height: 1.2;
+  }
+  .hero-split-desc {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .hero-split-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+  .hero-split-actions .btn {
+    width: 100%;
+  }
+  .hero-split-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .hero-img-wrap {
+    width: 250px;
+    height: 300px;
+  }
+  .hero-img-ring, .hero-img-ring-2 {
+    width: 280px;
+    height: 280px;
+  }
+  .service-card, .doctor-card, .booking-card {
+    padding: 24px !important;
+  }
+  .doctors-grid {
+    gap: 20px;
+  }
+  .doctor-card {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
 /* Timeline/Journey Styling (Alternating soft clinical background) */
 .journey-section {
   background-color: var(--color-primary);
