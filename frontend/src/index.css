@@ -531,6 +531,69 @@ hr {
   animation-play-state: paused;
 }
 
+.testimonial-marquee-card {
+  width: 360px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  background-color: var(--color-primary);
+  border: 1.5px solid var(--color-accent-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+}
+
+.testimonial-marquee-card:hover {
+  border-color: var(--color-secondary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-6px);
+}
+
+.testimonial-stars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.testimonial-text {
+  font-size: 0.9rem;
+  color: var(--color-accent);
+  line-height: 1.6;
+  font-style: italic;
+  flex-grow: 1;
+  margin-bottom: 20px;
+}
+
+.testimonial-author {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px solid var(--color-accent-light);
+  padding-top: 16px;
+}
+
+.testimonial-author .author-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.testimonial-author .author-role {
+  font-size: 0.8rem;
+  color: var(--color-secondary);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .testimonial-marquee-card {
+    width: 280px !important;
+    padding: 20px !important;
+  }
+}
+
 /* Accessible prefers-reduced-motion override */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -1479,6 +1542,19 @@ h6 {
   }
   .service-card, .doctor-card, .booking-card {
     padding: 24px !important;
+  }
+  .testimonial-card {
+    padding: 20px !important;
+  }
+  .testimonial-card .testimonial-text {
+    font-size: 0.82rem !important;
+    line-height: 1.5;
+  }
+  .testimonial-card .author-name {
+    font-size: 0.85rem !important;
+  }
+  .testimonial-card .author-role {
+    font-size: 0.72rem !important;
   }
   .doctors-grid {
     gap: 20px;

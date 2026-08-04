@@ -42,7 +42,7 @@ export default function Testimonials() {
       <div className="marquee-wrapper">
         <div className="marquee-track">
           {doubleTestimonials.map((t, idx) => (
-            <div key={`${t.id}-${idx}`} className="testimonial-card" style={{ width: '360px', flexShrink: 0 }}>
+            <div key={`${t.id}-${idx}`} className="testimonial-card testimonial-marquee-card">
               <Quote size={32} className="testimonial-quote-icon" />
               <div className="testimonial-stars">
                 {[...Array(t.stars)].map((_, i) => (
