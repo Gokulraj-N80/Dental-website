@@ -1,25 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, X, Menu } from 'lucide-react';
 import Logo from './Logo';
 
 const DENTAL_TREATMENTS = [
   'ROUTINE CHECK UP', 'DENTAL FILLINGS', 'ROOT CANAL TREATMENT', 'WISDOM TOOTH REMOVAL',
   'DENTAL BRIDGES', 'DENTAL DENTURE', 'DENTAL IMPLANTS', 'CLEAR ALIGNERS', 'DENTAL BRACES',
-  'SMILE MAKEOVERS', 'PEDIATRIC DENTISTRY', 'GUM TREATMENT', 'DENTAL CROWN', 'LASER-DENTISTRY'
+  'SMILE MAKEOVERS', 'PEDIATRIC DENTISTRY', 'GUM TREATMENT', 'DENTAL CROWN', 'LASER-DENTISTRY',
+];
+
+const NAV_LINKS = [
+  { label: 'HOME',        tab: 'home'    },
+  { label: 'ABOUT US',   tab: 'about'   },
+  { label: 'BLOG',       tab: 'blog'    },
+  { label: 'OUR DOCTORS',tab: 'doctors' },
+  { label: 'ADMIN',      tab: 'admin'   },
+];
+
+const THEMES = [
+  { key: 'neem',              label: '🌿 Neem'     },
+  { key: 'clinical-blue',     label: '💙 Clinical' },
+  { key: 'soft-medical-blush',label: '🌸 Blush'    },
 ];
 
 export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, theme, setTheme }) {
-  const [scrolled, setScrolled] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null); // 'treatments' | null
-  const [isThemeDropdownOpen, setIsThemeDropdownOpen] = useState(false);
-  const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
+  const [scrolled,             setScrolled]             = useState(false);
+  const [activeDropdown,       setActiveDropdown]       = useState(null);
+  const [isThemeDropdownOpen,  setIsThemeDropdownOpen]  = useState(false);
+  const [isMobileDrawerOpen,   setIsMobileDrawerOpen]   = useState(false);
 
   useEffect(() => {
-    const checkScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
-    window.addEventListener('scroll', checkScroll, { passive: true });
-    return () => window.removeEventListener('scroll', checkScroll);
+    const check = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', check, { passive: true });
+    return () => window.removeEventListener('scroll', check);
   }, []);
 
   const handleNavClick = (tab) => {
@@ -28,84 +40,85 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
     setActiveDropdown(null);
   };
 
-  const handleScroll = (id) => {
-    setCurrentTab('home');
-    setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
-    setActiveDropdown(null);
-  };
-
-  const toggleDropdown = (dropdown) => {
-    if (activeDropdown === dropdown) {
-      setActiveDropdown(null);
-    } else {
-      setActiveDropdown(dropdown);
-    }
-  };
-
   const handleTreatmentClick = (item) => {
     onSelectTreatment(item);
     setActiveDropdown(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-
+  // shared link class helper
+  const linkCls = (tab) =>
+    `text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-2 transition-all duration-200 ${
+      currentTab === tab
+        ? 'text-[var(--color-secondary)]'
+        : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'
+    }`;
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 h-[76px] z-[1000] border-b border-[var(--color-accent-light)] transition-all duration-300 flex items-center justify-between px-[40px] ${scrolled ? 'bg-[var(--color-primary)] backdrop-blur-md shadow-md' : 'bg-transparent backdrop-blur-none'}`}>
-      <div className="w-full max-w-[1200px] mx-auto flex items-center justify-between h-full">
+    <nav
+      className={`fixed top-0 left-0 right-0 h-[76px] z-[1000] flex items-center px-8 md:px-10 transition-all duration-300 border-b border-[var(--color-accent-light)] ${
+        scrolled
+          ? 'shadow-md'
+          : ''
+      }`}
+      style={{ backgroundColor: 'var(--color-primary)' }}
+    >
+      <div className="w-full max-w-[1280px] mx-auto flex items-center justify-between h-full">
+
         {/* Logo */}
-        <div className="cursor-pointer flex items-center shrink-0" onClick={() => handleNavClick('home')}>
+        <div className="cursor-pointer shrink-0" onClick={() => handleNavClick('home')}>
           <Logo size={42} showText={true} />
         </div>
 
-        {/* Mobile Menu Toggle Button */}
-        <button 
-          className="md:hidden flex flex-col justify-center items-center gap-[5px] w-[32px] h-[32px] bg-transparent border-none cursor-pointer"
+        {/* Mobile toggle */}
+        <button
+          className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg border border-[var(--color-accent-light)] transition-colors"
+          style={{ backgroundColor: 'var(--color-surface)', color: 'var(--color-accent)' }}
           onClick={() => setIsMobileDrawerOpen(!isMobileDrawerOpen)}
-          aria-label="Toggle Navigation Menu"
+          aria-label="Toggle menu"
         >
-          <span className="w-[20px] h-[2px] bg-[var(--color-accent)] transition-all duration-300" />
-          <span className="w-[20px] h-[2px] bg-[var(--color-accent)] transition-all duration-300" />
-          <span className="w-[20px] h-[2px] bg-[var(--color-accent)] transition-all duration-300" />
+          {isMobileDrawerOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-[24px]">
-          <button 
-            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'home' ? 'text-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
-            onClick={() => handleNavClick('home')}
-          >
-            HOME
-          </button>
+        {/* Desktop links */}
+        <div className="hidden md:flex items-center gap-6">
 
-          <button 
-            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'about' ? 'text-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
-            onClick={() => handleNavClick('about')}
-          >
-            ABOUT US
-          </button>
-          
-          {/* Dental Treatments Dropdown */}
-          <div 
+          {NAV_LINKS.map(({ label, tab }) => (
+            <button key={tab} className={linkCls(tab)} onClick={() => handleNavClick(tab)}>
+              {label}
+            </button>
+          ))}
+
+          {/* Treatments dropdown */}
+          <div
             className="relative"
             onMouseEnter={() => setActiveDropdown('treatments')}
             onMouseLeave={() => setActiveDropdown(null)}
           >
-            <button 
-              className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 flex items-center gap-[4px] ${activeDropdown === 'treatments' ? 'text-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)]'}`}
-              onClick={() => toggleDropdown('treatments')}
+            <button
+              className={`${linkCls('treatments')} inline-flex items-center gap-1`}
+              onClick={() => setActiveDropdown(activeDropdown === 'treatments' ? null : 'treatments')}
             >
-              <span>DENTAL TREATMENTS</span>
-              <ChevronDown size={14} />
+              DENTAL TREATMENTS
+              <ChevronDown size={13} className={`transition-transform duration-200 ${activeDropdown === 'treatments' ? 'rotate-180' : ''}`} />
             </button>
+
             {activeDropdown === 'treatments' && (
-              <div className="absolute top-[100%] left-0 w-[240px] bg-[var(--color-primary)] border border-[var(--color-accent-light)] rounded-md shadow-md p-[10px] flex flex-col gap-[6px] z-[1000] animate-[fadeInUp_0.3s_ease-out]">
+              <div
+                className="absolute top-[calc(100%+4px)] left-0 w-[240px] rounded-2xl border p-2.5 flex flex-col gap-1 z-[1000] animate-[fadeInDown_0.2s_ease-out] shadow-xl"
+                style={{
+                  backgroundColor: 'var(--color-primary)',
+                  borderColor: 'var(--color-accent-light)',
+                  boxShadow: 'var(--shadow-md)',
+                }}
+              >
                 {DENTAL_TREATMENTS.map((item) => (
-                  <button 
-                    key={item} 
-                    className="w-full text-left bg-transparent border-none py-[8px] px-[12px] rounded-sm text-[var(--color-accent-medium)] hover:text-[var(--color-secondary)] hover:bg-[var(--color-surface)] text-[0.8rem] font-bold cursor-pointer transition-all duration-200"
+                  <button
+                    key={item}
+                    className="w-full text-left px-3 py-2 rounded-lg text-[0.78rem] font-semibold transition-all duration-150 hover:opacity-100"
+                    style={{ color: 'var(--color-accent-medium)' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--color-surface)'; e.currentTarget.style.color = 'var(--color-secondary)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = 'var(--color-accent-medium)'; }}
                     onClick={() => handleTreatmentClick(item)}
                   >
                     {item}
@@ -115,125 +128,112 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
             )}
           </div>
 
-          <button 
-            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'blog' ? 'text-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
-            onClick={() => handleNavClick('blog')}
-          >
-            BLOG
-          </button>
-          
-          <button 
-            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'doctors' ? 'text-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
-            onClick={() => handleNavClick('doctors')}
-          >
-            OUR DOCTORS
-          </button>
-          
-          <button 
-            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'admin' ? 'text-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
-            onClick={() => handleNavClick('admin')}
-          >
-            ADMIN
-          </button>
-          
+          {/* Theme switcher */}
           <div className="relative">
             <button
               onClick={() => setIsThemeDropdownOpen(!isThemeDropdownOpen)}
-              className="bg-transparent border border-[var(--color-accent-light)] rounded-full p-[6px_12px] text-[0.78rem] font-extrabold text-[var(--color-accent)] cursor-pointer inline-flex items-center gap-[6px] transition-all duration-300 hover:bg-[var(--color-surface)]"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[0.78rem] font-bold border transition-all duration-200"
+              style={{
+                borderColor: 'var(--color-accent-light)',
+                color: 'var(--color-accent)',
+                backgroundColor: 'transparent',
+              }}
             >
-              {theme === 'neem' ? '🌿 Neem' : theme === 'clinical-blue' ? '💙 Clinical' : '🌸 Blush'}
+              {THEMES.find((t) => t.key === theme)?.label ?? '🌿 Neem'}
               <ChevronDown size={11} />
             </button>
-            
+
             {isThemeDropdownOpen && (
-              <div className="absolute top-[calc(100%+8px)] right-0 bg-[var(--color-primary)] border border-[var(--color-accent-light)] rounded-md shadow-md p-[6px] flex flex-col gap-[4px] z-[1000] min-width-[120px]">
-                {theme !== 'neem' && (
+              <div
+                className="absolute top-[calc(100%+6px)] right-0 rounded-xl border p-1.5 flex flex-col gap-0.5 z-[1000] min-w-[120px] shadow-lg"
+                style={{ backgroundColor: 'var(--color-primary)', borderColor: 'var(--color-accent-light)', boxShadow: 'var(--shadow-md)' }}
+              >
+                {THEMES.filter((t) => t.key !== theme).map(({ key, label }) => (
                   <button
-                    onClick={() => { setTheme('neem'); setIsThemeDropdownOpen(false); }}
-                    className="bg-transparent border-none rounded-sm p-[8px_12px] text-[0.78rem] font-semibold text-[var(--color-accent)] text-left cursor-pointer flex items-center gap-[6px] hover:bg-[var(--color-surface)] transition-all duration-300 w-full"
+                    key={key}
+                    onClick={() => { setTheme(key); setIsThemeDropdownOpen(false); }}
+                    className="w-full text-left px-3 py-2 rounded-lg text-[0.78rem] font-semibold transition-all duration-150"
+                    style={{ color: 'var(--color-accent)' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--color-surface)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
                   >
-                    🌿 Neem
+                    {label}
                   </button>
-                )}
-                {theme !== 'clinical-blue' && (
-                  <button
-                    onClick={() => { setTheme('clinical-blue'); setIsThemeDropdownOpen(false); }}
-                    className="bg-transparent border-none rounded-sm p-[8px_12px] text-[0.78rem] font-semibold text-[var(--color-accent)] text-left cursor-pointer flex items-center gap-[6px] hover:bg-[var(--color-surface)] transition-all duration-300 w-full"
-                  >
-                    💙 Clinical
-                  </button>
-                )}
-                {theme !== 'soft-medical-blush' && (
-                  <button
-                    onClick={() => { setTheme('soft-medical-blush'); setIsThemeDropdownOpen(false); }}
-                    className="bg-transparent border-none rounded-sm p-[8px_12px] text-[0.78rem] font-semibold text-[var(--color-accent)] text-left cursor-pointer flex items-center gap-[6px] hover:bg-[var(--color-surface)] transition-all duration-300 w-full"
-                  >
-                    🌸 Blush
-                  </button>
-                )}
+                ))}
               </div>
             )}
           </div>
 
-          <button 
-            className="btn btn-consultation"
+          {/* CTA button */}
+          <button
             onClick={() => handleNavClick('booking')}
+            className="btn-ripple px-5 py-2.5 rounded-full text-[0.82rem] font-extrabold uppercase tracking-wider text-white transition-all duration-200 hover:opacity-90 hover:scale-105"
+            style={{ backgroundColor: 'var(--color-secondary)' }}
           >
             E-CONSULTATION
           </button>
         </div>
 
-        {/* Mobile Navigation Drawer Side Overlay */}
+        {/* Mobile Drawer */}
         {isMobileDrawerOpen && (
-          <div className="mobile-navbar-drawer animate-fade-in">
-            <button 
-              className={`mobile-nav-link ${currentTab === 'home' ? 'active' : ''}`}
-              onClick={() => { handleNavClick('home'); setIsMobileDrawerOpen(false); }}
+          <div
+            className="md:hidden absolute top-[76px] left-0 right-0 flex flex-col gap-1 p-5 border-b z-[999] animate-[fadeInDown_0.25s_ease-out]"
+            style={{
+              backgroundColor: 'var(--color-primary)',
+              borderColor: 'var(--color-accent-light)',
+              boxShadow: 'var(--shadow-lg)',
+            }}
+          >
+            {NAV_LINKS.map(({ label, tab }) => (
+              <button
+                key={tab}
+                onClick={() => { handleNavClick(tab); setIsMobileDrawerOpen(false); }}
+                className="text-left px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider transition-all"
+                style={{
+                  color: currentTab === tab ? 'var(--color-secondary)' : 'var(--color-accent-medium)',
+                  backgroundColor: currentTab === tab ? 'var(--color-secondary-soft)' : 'transparent',
+                }}
+              >
+                {label}
+              </button>
+            ))}
+
+            {/* Mobile theme row */}
+            <div
+              className="mt-3 pt-3 border-t flex flex-col gap-2"
+              style={{ borderColor: 'var(--color-accent-light)' }}
             >
-              HOME
-            </button>
-            <button 
-              className={`mobile-nav-link ${currentTab === 'about' ? 'active' : ''}`}
-              onClick={() => { handleNavClick('about'); setIsMobileDrawerOpen(false); }}
-            >
-              ABOUT US
-            </button>
-            <button 
-              className={`mobile-nav-link ${currentTab === 'blog' ? 'active' : ''}`}
-              onClick={() => { handleNavClick('blog'); setIsMobileDrawerOpen(false); }}
-            >
-              BLOG
-            </button>
-            <button 
-              className={`mobile-nav-link ${currentTab === 'doctors' ? 'active' : ''}`}
-              onClick={() => { handleNavClick('doctors'); setIsMobileDrawerOpen(false); }}
-            >
-              OUR DOCTORS
-            </button>
-            <button 
-              className={`mobile-nav-link ${currentTab === 'admin' ? 'active' : ''}`}
-              onClick={() => { handleNavClick('admin'); setIsMobileDrawerOpen(false); }}
-            >
-              ADMIN
-            </button>
-            <button 
-              className={`mobile-nav-link ${currentTab === 'booking' ? 'active' : ''}`}
+              <span className="text-xs font-bold uppercase tracking-widest px-4" style={{ color: 'var(--color-accent-medium)' }}>
+                Switch Theme
+              </span>
+              <div className="flex gap-2 px-4">
+                {THEMES.map(({ key, label }) => (
+                  <button
+                    key={key}
+                    onClick={() => { setTheme(key); setIsMobileDrawerOpen(false); }}
+                    className="flex-1 text-xs font-bold py-2 rounded-lg border transition-all"
+                    style={{
+                      borderColor: theme === key ? 'var(--color-secondary)' : 'var(--color-accent-light)',
+                      color: theme === key ? 'var(--color-secondary)' : 'var(--color-accent-medium)',
+                      backgroundColor: theme === key ? 'var(--color-secondary-soft)' : 'transparent',
+                    }}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <button
               onClick={() => { handleNavClick('booking'); setIsMobileDrawerOpen(false); }}
+              className="mt-2 mx-4 py-3 rounded-full text-sm font-bold text-white text-center transition-all hover:opacity-90"
+              style={{ backgroundColor: 'var(--color-secondary)' }}
             >
               E-CONSULTATION
             </button>
-
-            {/* Mobile Theme Switches */}
-            <div className="mobile-theme-switches">
-              <span className="mobile-theme-label">Switch Theme</span>
-              <div className="mobile-theme-buttons-row">
-                <button onClick={() => { setTheme('neem'); setIsMobileDrawerOpen(false); }} className={`mtheme-btn ${theme === 'neem' ? 'active' : ''}`}>🌿 Neem</button>
-                <button onClick={() => { setTheme('clinical-blue'); setIsMobileDrawerOpen(false); }} className={`mtheme-btn ${theme === 'clinical-blue' ? 'active' : ''}`}>💙 Clinical</button>
-                <button onClick={() => { setTheme('soft-medical-blush'); setIsMobileDrawerOpen(false); }} className={`mtheme-btn ${theme === 'soft-medical-blush' ? 'active' : ''}`}>🌸 Blush</button>
-              </div>
-            </div>
           </div>
         )}
+
       </div>
     </nav>
   );

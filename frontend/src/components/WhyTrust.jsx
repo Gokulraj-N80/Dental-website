@@ -5,7 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import doctorImg from '../assets/doctor_trust.png';
 
-// Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
 const TRUST_PILLARS = [
@@ -51,103 +50,119 @@ export default function WhyTrust() {
   const containerRef = useRef(null);
 
   useGSAP(() => {
-    // Reveal visual image frame on scroll
     gsap.from('.wt-visual', {
-      scrollTrigger: {
-        trigger: '.wt-section',
-        start: 'top 85%',
-        toggleActions: 'play none none none'
-      },
-      opacity: 0,
-      x: -40,
-      duration: 1.0,
-      ease: 'power3.out'
+      scrollTrigger: { trigger: containerRef.current, start: 'top 85%', toggleActions: 'play none none none' },
+      opacity: 0, x: -40, duration: 1.0, ease: 'power3.out',
     });
-
-    // Reveal header texts on scroll
     gsap.from('.wt-header > *', {
-      scrollTrigger: {
-        trigger: '.wt-section',
-        start: 'top 85%',
-        toggleActions: 'play none none none'
-      },
-      opacity: 0,
-      y: 20,
-      stagger: 0.12,
-      duration: 0.8,
-      ease: 'power3.out'
+      scrollTrigger: { trigger: containerRef.current, start: 'top 85%', toggleActions: 'play none none none' },
+      opacity: 0, y: 20, stagger: 0.12, duration: 0.8, ease: 'power3.out',
     });
-
-    // Stagger reveal trust pillars list on scroll
-    gsap.from('.wt-pillars .wt-pillar', {
-      scrollTrigger: {
-        trigger: '.wt-section',
-        start: 'top 80%',
-        toggleActions: 'play none none none'
-      },
-      opacity: 0,
-      y: 30,
-      stagger: 0.12,
-      duration: 0.8,
-      ease: 'power3.out'
+    gsap.from('.wt-pillar', {
+      scrollTrigger: { trigger: containerRef.current, start: 'top 80%', toggleActions: 'play none none none' },
+      opacity: 0, y: 30, stagger: 0.12, duration: 0.8, ease: 'power3.out',
     });
   }, { scope: containerRef });
 
   return (
-    <section className="wt-section" ref={containerRef}>
-      <div className="wt-inner">
-        {/* Left — image with overlay badge */}
-        <div className="wt-visual">
-          <div className="wt-img-frame">
-            <img src={doctorImg} alt="Our dentist providing care" />
-            <div className="wt-badge animate-float-slow">
-              <span className="wt-badge-number">15+</span>
-              <span className="wt-badge-label">Years of Excellence</span>
+    <section
+      ref={containerRef}
+      className="w-full py-24 px-6 md:px-12"
+      style={{ backgroundColor: 'var(--color-primary)' }}
+    >
+      <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+
+        {/* ── Left: image with badge ── */}
+        <div className="wt-visual relative flex justify-center">
+          <div
+            className="relative w-full max-w-[420px] rounded-[28px] overflow-hidden shadow-2xl"
+            style={{ boxShadow: 'var(--shadow-lg)' }}
+          >
+            <img
+              src={doctorImg}
+              alt="Our dentist providing care"
+              className="w-full h-full object-cover"
+            />
+            {/* Floating badge */}
+            <div
+              className="absolute bottom-6 right-6 flex flex-col items-center px-5 py-3 rounded-2xl shadow-xl"
+              style={{
+                backgroundColor: 'var(--color-secondary)',
+                color: '#fff',
+                animation: 'floatSlow 5s ease-in-out infinite',
+              }}
+            >
+              <span className="text-2xl font-black">15+</span>
+              <span className="text-xs font-semibold opacity-90">Years of Excellence</span>
             </div>
           </div>
         </div>
 
-        {/* Right — content */}
-        <div className="wt-content">
-          <div className="wt-header">
-            <span className="section-tag">Why Choose Us</span>
-            <h2 className="wt-title">
+        {/* ── Right: content ── */}
+        <div className="flex flex-col gap-8">
+          {/* Header */}
+          <div className="wt-header flex flex-col gap-3">
+            <span
+              className="inline-flex self-start items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest"
+              style={{ backgroundColor: 'var(--color-gold-soft)', color: 'var(--color-secondary)' }}
+            >
+              Why Choose Us
+            </span>
+            <h2
+              className="text-4xl md:text-5xl font-extrabold leading-tight"
+              style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-accent)' }}
+            >
               Trusted Care,<br />
-              <span className="wt-title-accent">Exceptional Results</span>
+              <span style={{ color: 'var(--color-secondary)' }}>Exceptional Results</span>
             </h2>
-            <p className="wt-desc">
+            <p className="text-base leading-relaxed" style={{ color: 'var(--color-accent-medium)' }}>
               We combine clinical expertise with modern technology to deliver dental care
               that is safe, comfortable, and truly effective.
             </p>
           </div>
 
-          <div className="wt-pillars">
-            {TRUST_PILLARS.map((pillar, i) => {
+          {/* Pillars grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {TRUST_PILLARS.map((pillar) => {
               const Icon = pillar.icon;
               return (
                 <div
                   key={pillar.title}
-                  className="wt-pillar"
+                  className="wt-pillar flex flex-col gap-3 p-5 rounded-2xl border transition-all duration-300 hover:shadow-md"
+                  style={{
+                    backgroundColor: 'var(--color-surface)',
+                    borderColor: 'var(--color-accent-light)',
+                  }}
                 >
-                  <div className="wt-pillar-icon-wrap">
-                    <Icon size={22} strokeWidth={1.8} />
+                  {/* Icon */}
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center"
+                    style={{ backgroundColor: 'var(--color-secondary-soft)', color: 'var(--color-secondary)' }}
+                  >
+                    <Icon size={20} strokeWidth={1.8} />
                   </div>
-                  <div className="wt-pillar-body">
-                    <h4>{pillar.title}</h4>
-                    <ul>
-                      {pillar.points.map((pt, j) => (
-                        <li key={j}>
-                          <CheckCircle size={14} strokeWidth={2} />
-                          <span>{pt}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {/* Title */}
+                  <h4
+                    className="text-sm font-bold"
+                    style={{ color: 'var(--color-accent)' }}
+                  >
+                    {pillar.title}
+                  </h4>
+                  {/* Points */}
+                  <ul className="flex flex-col gap-1.5">
+                    {pillar.points.map((pt) => (
+                      <li key={pt} className="flex items-start gap-2 text-xs leading-relaxed" style={{ color: 'var(--color-accent-medium)' }}>
+                        <CheckCircle size={13} strokeWidth={2} className="mt-0.5 shrink-0" style={{ color: 'var(--color-secondary)' }} />
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               );
             })}
           </div>
         </div>
+
       </div>
     </section>
   );
