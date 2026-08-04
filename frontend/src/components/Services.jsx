@@ -81,8 +81,7 @@ export default function Services({ onBookClick }) {
       const getScrollAmount = () => {
         const containerWidth = scrollContainer.scrollWidth;
         const viewportWidth = window.innerWidth;
-        // precise offset based on index.css padding of 80px
-        return -(containerWidth - viewportWidth + 80);
+        return -(containerWidth - viewportWidth + 100);
       };
 
       pinScroll = gsap.to(scrollContainer, {
@@ -93,9 +92,9 @@ export default function Services({ onBookClick }) {
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
-          scrub: 1.2,
+          scrub: 1, // stable crisp scrubbing rate
           start: 'top top',
-          end: () => `+=${scrollContainer.scrollWidth - window.innerWidth + 200}`,
+          end: () => `+=${scrollContainer.scrollWidth - window.innerWidth + 100}`,
           invalidateOnRefresh: true,
         }
       });

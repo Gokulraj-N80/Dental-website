@@ -2464,10 +2464,10 @@ h6 {
 
 .service-card-image-wrap {
   width: 100%;
-  height: 180px;
+  height: 150px;
   border-radius: var(--radius-md);
   overflow: hidden;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   box-shadow: var(--shadow-sm);
   background-color: var(--color-surface);
 }
@@ -2484,12 +2484,12 @@ h6 {
 }
 
 .service-card {
-  width: 360px;
+  width: 310px;
   flex-shrink: 0;
   background-color: var(--color-primary);
   border: 1.5px solid var(--color-accent-light);
   border-radius: var(--radius-lg);
-  padding: 36px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
@@ -2507,15 +2507,15 @@ h6 {
 }
 
 .service-icon-box {
-  width: 52px;
-  height: 52px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-md);
   background-color: var(--color-secondary-soft);
   color: var(--color-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -2526,10 +2526,10 @@ h6 {
 
 .service-card-title {
   font-family: var(--font-heading);
-  font-size: 1.35rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--color-accent);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   transition: color 0.3s ease;
 }
 
