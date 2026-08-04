@@ -12,6 +12,7 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null); // 'treatments' | null
   const [isThemeDropdownOpen, setIsThemeDropdownOpen] = useState(false);
+  const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
 
   useEffect(() => {
     const checkScroll = () => {
@@ -23,8 +24,8 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
 
   const handleNavClick = (tab) => {
     setCurrentTab(tab);
-    setActiveDropdown(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    setActiveDropdown(null);
   };
 
   const handleScroll = (id) => {
@@ -62,7 +63,7 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
         {/* Mobile Menu Toggle Button */}
         <button 
           className="md:hidden flex flex-col justify-center items-center gap-[5px] w-[32px] h-[32px] bg-transparent border-none cursor-pointer"
-          onClick={() => setIsThemeDropdownOpen(!isThemeDropdownOpen)}
+          onClick={() => setIsMobileDrawerOpen(!isMobileDrawerOpen)}
           aria-label="Toggle Navigation Menu"
         >
           <span className="w-[20px] h-[2px] bg-[var(--color-accent)] transition-all duration-300" />
@@ -183,41 +184,41 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
         </div>
 
         {/* Mobile Navigation Drawer Side Overlay */}
-        {isThemeDropdownOpen && (
+        {isMobileDrawerOpen && (
           <div className="mobile-navbar-drawer animate-fade-in">
             <button 
               className={`mobile-nav-link ${currentTab === 'home' ? 'active' : ''}`}
-              onClick={() => { handleNavClick('home'); setIsThemeDropdownOpen(false); }}
+              onClick={() => { handleNavClick('home'); setIsMobileDrawerOpen(false); }}
             >
               HOME
             </button>
             <button 
               className={`mobile-nav-link ${currentTab === 'about' ? 'active' : ''}`}
-              onClick={() => { handleNavClick('about'); setIsThemeDropdownOpen(false); }}
+              onClick={() => { handleNavClick('about'); setIsMobileDrawerOpen(false); }}
             >
               ABOUT US
             </button>
             <button 
               className={`mobile-nav-link ${currentTab === 'blog' ? 'active' : ''}`}
-              onClick={() => { handleNavClick('blog'); setIsThemeDropdownOpen(false); }}
+              onClick={() => { handleNavClick('blog'); setIsMobileDrawerOpen(false); }}
             >
               BLOG
             </button>
             <button 
               className={`mobile-nav-link ${currentTab === 'doctors' ? 'active' : ''}`}
-              onClick={() => { handleNavClick('doctors'); setIsThemeDropdownOpen(false); }}
+              onClick={() => { handleNavClick('doctors'); setIsMobileDrawerOpen(false); }}
             >
               OUR DOCTORS
             </button>
             <button 
               className={`mobile-nav-link ${currentTab === 'admin' ? 'active' : ''}`}
-              onClick={() => { handleNavClick('admin'); setIsThemeDropdownOpen(false); }}
+              onClick={() => { handleNavClick('admin'); setIsMobileDrawerOpen(false); }}
             >
               ADMIN
             </button>
             <button 
               className={`mobile-nav-link ${currentTab === 'booking' ? 'active' : ''}`}
-              onClick={() => { handleNavClick('booking'); setIsThemeDropdownOpen(false); }}
+              onClick={() => { handleNavClick('booking'); setIsMobileDrawerOpen(false); }}
             >
               E-CONSULTATION
             </button>
@@ -226,9 +227,9 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
             <div className="mobile-theme-switches">
               <span className="mobile-theme-label">Switch Theme</span>
               <div className="mobile-theme-buttons-row">
-                <button onClick={() => { setTheme('neem'); setIsThemeDropdownOpen(false); }} className={`mtheme-btn ${theme === 'neem' ? 'active' : ''}`}>🌿 Neem</button>
-                <button onClick={() => { setTheme('clinical-blue'); setIsThemeDropdownOpen(false); }} className={`mtheme-btn ${theme === 'clinical-blue' ? 'active' : ''}`}>💙 Clinical</button>
-                <button onClick={() => { setTheme('soft-medical-blush'); setIsThemeDropdownOpen(false); }} className={`mtheme-btn ${theme === 'soft-medical-blush' ? 'active' : ''}`}>🌸 Blush</button>
+                <button onClick={() => { setTheme('neem'); setIsMobileDrawerOpen(false); }} className={`mtheme-btn ${theme === 'neem' ? 'active' : ''}`}>🌿 Neem</button>
+                <button onClick={() => { setTheme('clinical-blue'); setIsMobileDrawerOpen(false); }} className={`mtheme-btn ${theme === 'clinical-blue' ? 'active' : ''}`}>💙 Clinical</button>
+                <button onClick={() => { setTheme('soft-medical-blush'); setIsMobileDrawerOpen(false); }} className={`mtheme-btn ${theme === 'soft-medical-blush' ? 'active' : ''}`}>🌸 Blush</button>
               </div>
             </div>
           </div>
