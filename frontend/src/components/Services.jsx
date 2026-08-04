@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Activity, ShieldAlert, Sparkles, Smile, RefreshCw, Heart } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
 
 import imgHygiene from '../assets/service_hygiene.png';
 import imgOrtho from '../assets/service_ortho.png';
@@ -61,10 +67,46 @@ const SERVICES_DATA = [
 
 export default function Services({ onBookClick }) {
   const [selectedService, setSelectedService] = useState(null);
+  const containerRef = useRef(null);
+
+  React.useEffect(() => {
+    // Animate the section header texts
+    const animHeader = gsap.from('.services-anim-header > *', {
+      scrollTrigger: {
+        trigger: '.services-anim-header',
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      },
+      opacity: 0,
+      y: 30,
+      stagger: 0.15,
+      duration: 0.8,
+      ease: 'power3.out'
+    });
+
+    // Stagger reveal the service cards
+    const animCards = gsap.from('.services-scroll-container .service-card', {
+      scrollTrigger: {
+        trigger: '.services-scroll-container',
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      },
+      opacity: 0,
+      y: 50,
+      stagger: 0.12,
+      duration: 1.0,
+      ease: 'power4.out'
+    });
+
+    return () => {
+      animHeader.scrollTrigger?.kill();
+      animCards.scrollTrigger?.kill();
+    };
+  }, []);
 
   return (
-    <section className="services-section section" id="services">
-      <div className="section-header">
+    <section className="services-section section" id="services" ref={containerRef}>
+      <div className="section-header services-anim-header">
         <span className="section-tag">Treatments</span>
         <h2 className="section-title">Dr Neemz Treatments</h2>
         <p className="section-subtitle">
