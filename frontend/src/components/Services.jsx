@@ -70,6 +70,51 @@ export default function Services({ onBookClick }) {
   const containerRef = useRef(null);
 
   React.useEffect(() => {
+    // Only run horizontal scroll pinning on desktop viewports (>= 768px)
+    const isMobile = window.innerWidth < 768;
+
+    let pinScroll;
+
+    if (!isMobile) {
+      const scrollContainer = document.querySelector('.services-scroll-container');
+      const cards = gsap.utils.toArray('.services-scroll-container .service-card');
+      
+      // Calculate amount to scroll horizontally
+      // Container width minus viewport width
+      const getScrollAmount = () => {
+        const containerWidth = scrollContainer.scrollWidth;
+        const viewportWidth = window.innerWidth;
+        return -(containerWidth - viewportWidth + 80); // add padding offset
+      };
+
+      pinScroll = gsap.to(scrollContainer, {
+        x: () => getScrollAmount(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.services-section',
+          pin: true,
+          scrub: 1,
+          start: 'top 80px', // pin just below navbar
+          end: () => `+=${scrollContainer.scrollWidth - window.innerWidth + 200}`,
+          invalidateOnRefresh: true,
+        }
+      });
+    } else {
+      // Simple stagger entrance for mobile
+      pinScroll = gsap.from('.services-scroll-container .service-card', {
+        scrollTrigger: {
+          trigger: '.services-scroll-container',
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        y: 40,
+        stagger: 0.1,
+        duration: 0.8,
+        ease: 'power3.out'
+      });
+    }
+
     // Animate the section header texts
     const animHeader = gsap.from('.services-anim-header > *', {
       scrollTrigger: {
@@ -84,23 +129,9 @@ export default function Services({ onBookClick }) {
       ease: 'power3.out'
     });
 
-    // Stagger reveal the service cards
-    const animCards = gsap.from('.services-scroll-container .service-card', {
-      scrollTrigger: {
-        trigger: '.services-scroll-container',
-        start: 'top 80%',
-        toggleActions: 'play none none none'
-      },
-      opacity: 0,
-      y: 50,
-      stagger: 0.12,
-      duration: 1.0,
-      ease: 'power4.out'
-    });
-
     return () => {
+      pinScroll.scrollTrigger?.kill();
       animHeader.scrollTrigger?.kill();
-      animCards.scrollTrigger?.kill();
     };
   }, []);
 

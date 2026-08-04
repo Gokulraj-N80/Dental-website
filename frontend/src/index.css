@@ -2418,13 +2418,25 @@ h6 {
   }
 }
 
+.services-section {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
+
 /* Services Cards & Modal Styling */
 .services-scroll-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: nowrap;
   gap: 32px;
-  width: 100%;
+  width: max-content;
+  padding: 20px 40px;
 }
+
+
 
 .service-card-image-wrap {
   width: 100%;
@@ -2448,6 +2460,8 @@ h6 {
 }
 
 .service-card {
+  width: 360px;
+  flex-shrink: 0;
   background-color: var(--color-primary);
   border: 1.5px solid var(--color-accent-light);
   border-radius: var(--radius-lg);
