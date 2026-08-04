@@ -794,6 +794,13 @@ h6 {
   position: relative;
 }
 
+.services-section.section {
+  max-width: none !important;
+  margin: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
 .section-header {
   text-align: center;
   max-width: 680px;
@@ -2420,14 +2427,21 @@ h6 {
 
 .services-section {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   height: 100vh;
   box-sizing: border-box;
-  padding: 100px 80px 20px 80px;
+  padding: 100px 0 20px 0;
+  width: 100vw;
+}
+
+.services-anim-header {
+  padding: 0 40px;
+  text-align: center;
+  margin-bottom: 32px;
 }
 
 /* Services Cards & Modal Styling */
@@ -2436,7 +2450,7 @@ h6 {
   flex-wrap: nowrap;
   gap: 32px;
   width: max-content;
-  padding: 40px 0;
+  padding: 20px 80px 60px 80px; /* Start scrolling padding offsets */
   align-items: stretch;
 }
 
