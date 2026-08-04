@@ -91,8 +91,10 @@ export default function Services({ onBookClick }) {
         scrollTrigger: {
           trigger: '.services-section',
           pin: true,
-          scrub: 1, // stable crisp scrubbing rate
-          start: 'top top', // Pin cleanly from top of screen viewport
+          pinSpacing: true, // ensures page spacing layout handles pinning cleanly
+          anticipatePin: 1, // reduces jitter before lock-in
+          scrub: 1.2, // smooth inertia scrubbing
+          start: 'top top',
           end: () => `+=${scrollContainer.scrollWidth - window.innerWidth + 200}`,
           invalidateOnRefresh: true,
         }

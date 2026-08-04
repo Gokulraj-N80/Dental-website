@@ -2423,11 +2423,11 @@ h6 {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   height: 100vh;
   box-sizing: border-box;
-  padding: 60px 80px;
+  padding: 100px 80px 20px 80px;
 }
 
 /* Services Cards & Modal Styling */
@@ -2436,7 +2436,8 @@ h6 {
   flex-wrap: nowrap;
   gap: 32px;
   width: max-content;
-  padding: 20px 40px;
+  padding: 40px 0;
+  align-items: stretch;
 }
 
 
