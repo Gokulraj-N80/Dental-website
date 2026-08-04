@@ -5351,11 +5351,21 @@ button.service-learn-more:hover {
 
 @media (max-width: 600px) {
   .assist-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
   .assist-section {
-    padding: 48px 20px;
+    padding: 48px 16px;
+  }
+
+  .assist-img-wrap {
+    height: 90px;
+  }
+
+  .assist-card-bar {
+    padding: 8px 10px;
+    font-size: 0.72rem;
   }
 }
 
