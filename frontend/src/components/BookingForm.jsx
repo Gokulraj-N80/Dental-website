@@ -29,9 +29,7 @@ const SERVICES = [
 ];
 
 const BRANCHES = [
-  'Salem (Main Branch)',
-  'Chennai',
-  'Bangalore'
+  'Salem (Main Branch)'
 ];
 
 export default function BookingForm() {
