@@ -143,18 +143,30 @@ export default function App() {
             
             <hr className="section-divider" />
             
-            {/* 3. Book an Appointment (CTA banner) */}
-            <CtaBanner onBookClick={() => navigate('booking')} />
+            {/* 3. Inline Booking Form */}
+            <section className="home-booking-inline-section section">
+              <div className="section-header">
+                <span className="section-tag">Appointment</span>
+                <h2 className="section-title">Book an Appointment</h2>
+                <p className="section-subtitle">Select your preferred date, time, and service to secure your visit instantly.</p>
+              </div>
+              <BookingForm defaultService={selectedTreatment} />
+            </section>
             
             <hr className="section-divider" />
             
-            {/* 4. Treatments (Horizontal scroll list) */}
-            <Services onBookClick={() => navigate('booking')} />
-            
-            <hr className="section-divider" />
+            {/* 4. Dr Neemz Treatments (Green Grid) */}
             <TreatmentsGrid onGetMore={(name) => { setSelectedTreatment(name); navigate('treatment-details'); }} />
+            
             <hr className="section-divider" />
+            
+            {/* 5. Google reviews & video testimonial slide */}
             <Testimonials />
+
+            <hr className="section-divider" />
+            
+            {/* 6. Book an Appointment Footer CTA Banner */}
+            <CtaBanner onBookClick={() => navigate('booking')} />
           </>
         )}
 
