@@ -3549,7 +3549,7 @@ button.service-learn-more:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-secondary); /* Neem Green Captcha */
+  background-color: var(--color-secondary); /* Theme-aware secondary color */
   color: #FFFFFF;
   font-family: var(--font-main);
   font-size: 1.1rem;
@@ -3559,6 +3559,7 @@ button.service-learn-more:hover {
   padding: 10px;
   height: 48px;
   box-shadow: var(--shadow-sm);
+  transition: background-color 0.3s ease;
 }
 
 .booking-submit-row {
@@ -3567,7 +3568,7 @@ button.service-learn-more:hover {
 }
 
 .btn-compact-submit {
-  background-color: var(--color-secondary);
+  background-color: var(--color-secondary); /* Theme-aware secondary color */
   color: #FFFFFF;
   border: none;
   border-radius: var(--radius-sm);
@@ -3579,7 +3580,7 @@ button.service-learn-more:hover {
 }
 
 .btn-compact-submit:hover {
-  background-color: var(--color-secondary-dark);
+  background-color: var(--color-secondary-dark); /* Theme-aware hover color */
   transform: translateY(-2px);
 }
 
