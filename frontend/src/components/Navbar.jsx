@@ -52,35 +52,35 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
 
 
   return (
-    <nav className={`navbar-container ${scrolled ? 'scrolled-glass-shadow' : ''}`}>
-      <div className="navbar-wrapper">
+    <nav className={`fixed top-0 left-0 right-0 h-[76px] z-[1000] border-b border-[var(--color-accent-light)] transition-all duration-300 flex items-center justify-between px-[40px] ${scrolled ? 'bg-white/80 dark:bg-[var(--color-primary)]/80 backdrop-blur-md shadow-md' : 'bg-transparent'}`}>
+      <div className="w-full max-w-[1200px] mx-auto flex items-center justify-between h-full">
         {/* Logo */}
-        <div className="navbar-logo" onClick={() => handleNavClick('home')}>
+        <div className="cursor-pointer flex items-center shrink-0" onClick={() => handleNavClick('home')}>
           <Logo size={42} showText={true} />
         </div>
 
         {/* Mobile Menu Toggle Button */}
         <button 
-          className="mobile-menu-toggle-btn"
+          className="md:hidden flex flex-col justify-center items-center gap-[5px] w-[32px] h-[32px] bg-transparent border-none cursor-pointer"
           onClick={() => setIsThemeDropdownOpen(!isThemeDropdownOpen)}
           aria-label="Toggle Navigation Menu"
         >
-          <span className="hamburger-bar" />
-          <span className="hamburger-bar" />
-          <span className="hamburger-bar" />
+          <span className="w-[20px] h-[2px] bg-[var(--color-accent)] transition-all duration-300" />
+          <span className="w-[20px] h-[2px] bg-[var(--color-accent)] transition-all duration-300" />
+          <span className="w-[20px] h-[2px] bg-[var(--color-accent)] transition-all duration-300" />
         </button>
 
         {/* Desktop Links */}
-        <div className="navbar-links desktop-only-links">
+        <div className="hidden md:flex items-center gap-[24px]">
           <button 
-            className={`nav-link-neemz ${currentTab === 'home' ? 'active' : ''}`}
+            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'home' ? 'text-[var(--color-secondary)] border-b-[2px] border-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
             onClick={() => handleNavClick('home')}
           >
             HOME
           </button>
 
           <button 
-            className={`nav-link-neemz ${currentTab === 'about' ? 'active' : ''}`}
+            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'about' ? 'text-[var(--color-secondary)] border-b-[2px] border-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
             onClick={() => handleNavClick('about')}
           >
             ABOUT US
@@ -88,23 +88,23 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
           
           {/* Dental Treatments Dropdown */}
           <div 
-            className="nav-dropdown-wrapper"
+            className="relative"
             onMouseEnter={() => setActiveDropdown('treatments')}
             onMouseLeave={() => setActiveDropdown(null)}
           >
             <button 
-              className={`nav-link-neemz dropdown-nav ${activeDropdown === 'treatments' ? 'active' : ''}`}
+              className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 flex items-center gap-[4px] ${activeDropdown === 'treatments' ? 'text-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)]'}`}
               onClick={() => toggleDropdown('treatments')}
             >
               <span>DENTAL TREATMENTS</span>
               <ChevronDown size={14} />
             </button>
             {activeDropdown === 'treatments' && (
-              <div className="dropdown-panel treatments-grid-panel animate-fade-in">
+              <div className="absolute top-[100%] left-0 w-[240px] bg-[var(--color-primary)] border border-[var(--color-accent-light)] rounded-md shadow-md p-[10px] flex flex-col gap-[6px] z-[1000] animate-[fadeInUp_0.3s_ease-out]">
                 {DENTAL_TREATMENTS.map((item) => (
                   <button 
                     key={item} 
-                    className="dropdown-item"
+                    className="w-full text-left bg-transparent border-none py-[8px] px-[12px] rounded-sm text-[var(--color-accent-medium)] hover:text-[var(--color-secondary)] hover:bg-[var(--color-surface)] text-[0.8rem] font-bold cursor-pointer transition-all duration-200"
                     onClick={() => handleTreatmentClick(item)}
                   >
                     {item}
@@ -115,91 +115,41 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
           </div>
 
           <button 
-            className={`nav-link-neemz ${currentTab === 'blog' ? 'active' : ''}`}
+            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'blog' ? 'text-[var(--color-secondary)] border-b-[2px] border-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
             onClick={() => handleNavClick('blog')}
           >
             BLOG
           </button>
           
           <button 
-            className={`nav-link-neemz ${currentTab === 'doctors' ? 'active' : ''}`}
+            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'doctors' ? 'text-[var(--color-secondary)] border-b-[2px] border-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
             onClick={() => handleNavClick('doctors')}
           >
             OUR DOCTORS
           </button>
           
           <button 
-            className={`nav-link-neemz ${currentTab === 'admin' ? 'active' : ''}`}
+            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'admin' ? 'text-[var(--color-secondary)] border-b-[2px] border-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
             onClick={() => handleNavClick('admin')}
           >
             ADMIN
           </button>
           
-          <div className="theme-dropdown-wrapper" style={{ position: 'relative' }}>
+          <div className="relative">
             <button
               onClick={() => setIsThemeDropdownOpen(!isThemeDropdownOpen)}
-              className="theme-toggle-btn"
-              style={{
-                background: 'transparent',
-                border: '1.5px solid var(--color-accent-light)',
-                borderRadius: 'var(--radius-full)',
-                padding: '6px 12px',
-                fontSize: '0.78rem',
-                fontWeight: '700',
-                color: 'var(--color-accent)',
-                cursor: 'pointer',
-                outline: 'none',
-                fontFamily: 'inherit',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                transition: 'var(--transition-smooth)'
-              }}
+              className="bg-transparent border border-[var(--color-accent-light)] rounded-full p-[6px_12px] text-[0.78rem] font-extrabold text-[var(--color-accent)] cursor-pointer inline-flex items-center gap-[6px] transition-all duration-300 hover:bg-[var(--color-surface)]"
             >
               {theme === 'neem' ? '🌿 Neem' : theme === 'clinical-blue' ? '💙 Clinical' : '🌸 Blush'}
               <ChevronDown size={11} />
             </button>
             
             {isThemeDropdownOpen && (
-              <div
-                className="theme-dropdown-panel"
-                style={{
-                  position: 'absolute',
-                  top: 'calc(100% + 8px)',
-                  right: 0,
-                  backgroundColor: 'var(--color-primary)',
-                  border: '1.5px solid var(--color-accent-light)',
-                  borderRadius: 'var(--radius-md)',
-                  boxShadow: 'var(--shadow-md)',
-                  padding: '6px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '4px',
-                  zIndex: 1000,
-                  minWidth: '120px'
-                }}
-              >
+              <div className="absolute top-[calc(100%+8px)] right-0 bg-[var(--color-primary)] border border-[var(--color-accent-light)] rounded-md shadow-md p-[6px] flex flex-col gap-[4px] z-[1000] min-width-[120px]">
                 {theme !== 'neem' && (
                   <button
                     onClick={() => { setTheme('neem'); setIsThemeDropdownOpen(false); }}
-                    style={{
-                      background: 'transparent',
-                      border: 'none',
-                      borderRadius: 'var(--radius-sm)',
-                      padding: '8px 12px',
-                      fontSize: '0.78rem',
-                      fontWeight: '600',
-                      color: 'var(--color-accent)',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      transition: 'var(--transition-smooth)',
-                      width: '100%'
-                    }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--color-surface)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                    className="bg-transparent border-none rounded-sm p-[8px_12px] text-[0.78rem] font-semibold text-[var(--color-accent)] text-left cursor-pointer flex items-center gap-[6px] hover:bg-[var(--color-surface)] transition-all duration-300 w-full"
                   >
                     🌿 Neem
                   </button>
@@ -207,24 +157,7 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
                 {theme !== 'clinical-blue' && (
                   <button
                     onClick={() => { setTheme('clinical-blue'); setIsThemeDropdownOpen(false); }}
-                    style={{
-                      background: 'transparent',
-                      border: 'none',
-                      borderRadius: 'var(--radius-sm)',
-                      padding: '8px 12px',
-                      fontSize: '0.78rem',
-                      fontWeight: '600',
-                      color: 'var(--color-accent)',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      transition: 'var(--transition-smooth)',
-                      width: '100%'
-                    }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--color-surface)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                    className="bg-transparent border-none rounded-sm p-[8px_12px] text-[0.78rem] font-semibold text-[var(--color-accent)] text-left cursor-pointer flex items-center gap-[6px] hover:bg-[var(--color-surface)] transition-all duration-300 w-full"
                   >
                     💙 Clinical
                   </button>
@@ -232,24 +165,7 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
                 {theme !== 'soft-medical-blush' && (
                   <button
                     onClick={() => { setTheme('soft-medical-blush'); setIsThemeDropdownOpen(false); }}
-                    style={{
-                      background: 'transparent',
-                      border: 'none',
-                      borderRadius: 'var(--radius-sm)',
-                      padding: '8px 12px',
-                      fontSize: '0.78rem',
-                      fontWeight: '600',
-                      color: 'var(--color-accent)',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      transition: 'var(--transition-smooth)',
-                      width: '100%'
-                    }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--color-surface)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                    className="bg-transparent border-none rounded-sm p-[8px_12px] text-[0.78rem] font-semibold text-[var(--color-accent)] text-left cursor-pointer flex items-center gap-[6px] hover:bg-[var(--color-surface)] transition-all duration-300 w-full"
                   >
                     🌸 Blush
                   </button>

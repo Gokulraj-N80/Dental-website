@@ -157,12 +157,12 @@ export default function BookingForm() {
   const [captchaGenerated] = useState('5010');
 
   return (
-    <section className="booking-section section" id="booking">
-      <div className="booking-premium-wrap animate-fade-in">
+    <section className="bg-[lightgray] dark:bg-[var(--color-primary)] py-[60px] px-[40px] transition-all duration-300" id="booking">
+      <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-[1fr_1.4fr] gap-[60px] items-center animate-[fadeInUp_0.8s_ease-out]">
         
         {/* Left text column */}
-        <div className="booking-left-text">
-          <h2 className="booking-display-title">
+        <div className="flex flex-col">
+          <h2 className="font-serif text-[2.4rem] font-extrabold leading-[1.3] text-[var(--color-accent)] tracking-[-0.5px]">
             Book an<br />
             Appointment at<br />
             Dr Neemz Dental<br />
@@ -171,53 +171,57 @@ export default function BookingForm() {
         </div>
 
         {/* Right form inputs column */}
-        <div className="booking-right-inputs-card">
+        <div className="bg-transparent">
           {error && (
-            <div className="error-message">
+            <div className="flex items-center gap-[8px] p-[12px_16px] bg-red-500/5 text-red-600 border border-red-600/15 rounded-md text-[0.85rem] font-semibold mb-[24px]">
               <AlertCircle size={18} />
               <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="booking-form-compact">
-            <div className="booking-compact-grid">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-[20px]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[16px_20px]">
               
-              <div className="bfield-wrap">
+              <div className="w-full">
                 <input 
                   type="text" 
                   name="name" 
                   placeholder="Name"
+                  className="w-full p-[14px_16px] border border-neutral-300 rounded-sm bg-neutral-100/80 text-[var(--color-accent)] text-[0.9rem] font-sans outline-none focus:border-[var(--color-secondary)] focus:bg-white transition-all duration-250"
                   value={formData.name} 
                   onChange={handleChange} 
                   required 
                 />
               </div>
 
-              <div className="bfield-wrap">
+              <div className="w-full">
                 <input 
                   type="tel" 
                   name="phone" 
                   placeholder="Phone Number"
+                  className="w-full p-[14px_16px] border border-neutral-300 rounded-sm bg-neutral-100/80 text-[var(--color-accent)] text-[0.9rem] font-sans outline-none focus:border-[var(--color-secondary)] focus:bg-white transition-all duration-250"
                   value={formData.phone} 
                   onChange={handleChange} 
                   required 
                 />
               </div>
 
-              <div className="bfield-wrap">
+              <div className="w-full">
                 <input 
                   type="email" 
                   name="email" 
                   placeholder="Email Address"
+                  className="w-full p-[14px_16px] border border-neutral-300 rounded-sm bg-neutral-100/80 text-[var(--color-accent)] text-[0.9rem] font-sans outline-none focus:border-[var(--color-secondary)] focus:bg-white transition-all duration-250"
                   value={formData.email} 
                   onChange={handleChange} 
                   required 
                 />
               </div>
 
-              <div className="bfield-wrap">
+              <div className="w-full">
                 <select 
                   name="branch" 
+                  className="w-full p-[14px_16px] border border-neutral-300 rounded-sm bg-neutral-100/80 text-[var(--color-accent)] text-[0.9rem] font-sans outline-none focus:border-[var(--color-secondary)] focus:bg-white transition-all duration-250"
                   value={formData.branch} 
                   onChange={handleChange} 
                   required
@@ -227,24 +231,29 @@ export default function BookingForm() {
                 </select>
               </div>
 
-              <div className="bfield-wrap">
+              <div className="w-full">
                 <input 
                   type="text" 
                   placeholder="Captcha" 
+                  className="w-full p-[14px_16px] border border-neutral-300 rounded-sm bg-neutral-100/80 text-[var(--color-accent)] text-[0.9rem] font-sans outline-none focus:border-[var(--color-secondary)] focus:bg-white transition-all duration-250"
                   value={captchaValue}
                   onChange={(e) => setCaptchaValue(e.target.value)}
                   required 
                 />
               </div>
 
-              <div className="captcha-display-box">
+              <div className="flex items-center justify-center bg-[var(--color-secondary)] text-white font-sans text-[1.1rem] font-black tracking-[2px] rounded-sm p-[10px] h-[48px] shadow-sm transition-all duration-300">
                 {captchaGenerated}
               </div>
 
             </div>
 
-            <div className="booking-submit-row">
-              <button type="submit" className="btn-compact-submit" disabled={loading}>
+            <div className="flex justify-start">
+              <button 
+                type="submit" 
+                className="bg-[var(--color-secondary)] hover:bg-[var(--color-secondary-dark)] text-white border-none rounded-sm p-[14px_44px] text-[0.95rem] font-bold cursor-pointer transition-all duration-300 hover:translate-y-[-2px]" 
+                disabled={loading}
+              >
                 {loading ? 'Processing...' : 'Book Now'}
               </button>
             </div>
