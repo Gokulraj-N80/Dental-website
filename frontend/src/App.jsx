@@ -155,11 +155,6 @@ export default function App() {
             
             <hr className="section-divider" />
             
-            {/* 4. Dr Neemz Treatments (Green Grid) */}
-            <TreatmentsGrid onGetMore={(name) => { setSelectedTreatment(name); navigate('treatment-details'); }} />
-            
-            <hr className="section-divider" />
-            
             {/* 5. Google reviews & video testimonial slide */}
             <Testimonials />
 
