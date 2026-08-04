@@ -53,7 +53,7 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
 
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 h-[76px] z-[1000] border-b border-[var(--color-accent-light)] transition-all duration-300 flex items-center justify-between px-[40px] ${scrolled ? 'bg-white/80 dark:bg-[var(--color-primary)]/80 backdrop-blur-md shadow-md' : 'bg-transparent'}`}>
+    <nav className={`fixed top-0 left-0 right-0 h-[76px] z-[1000] border-b border-[var(--color-accent-light)] transition-all duration-300 flex items-center justify-between px-[40px] ${scrolled ? 'bg-[var(--color-primary)]/90 backdrop-blur-md shadow-md' : 'bg-[var(--color-primary)]/40 backdrop-blur-sm'}`}>
       <div className="w-full max-w-[1200px] mx-auto flex items-center justify-between h-full">
         {/* Logo */}
         <div className="cursor-pointer flex items-center shrink-0" onClick={() => handleNavClick('home')}>
@@ -74,14 +74,14 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-[24px]">
           <button 
-            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'home' ? 'text-[var(--color-secondary)] border-b-[2px] border-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
+            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'home' ? 'text-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
             onClick={() => handleNavClick('home')}
           >
             HOME
           </button>
 
           <button 
-            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'about' ? 'text-[var(--color-secondary)] border-b-[2px] border-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
+            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'about' ? 'text-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
             onClick={() => handleNavClick('about')}
           >
             ABOUT US
@@ -116,21 +116,21 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
           </div>
 
           <button 
-            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'blog' ? 'text-[var(--color-secondary)] border-b-[2px] border-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
+            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'blog' ? 'text-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
             onClick={() => handleNavClick('blog')}
           >
             BLOG
           </button>
           
           <button 
-            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'doctors' ? 'text-[var(--color-secondary)] border-b-[2px] border-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
+            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'doctors' ? 'text-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
             onClick={() => handleNavClick('doctors')}
           >
             OUR DOCTORS
           </button>
           
           <button 
-            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'admin' ? 'text-[var(--color-secondary)] border-b-[2px] border-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
+            className={`font-sans text-[0.82rem] font-extrabold tracking-[1px] uppercase border-none bg-transparent cursor-pointer py-[8px] transition-all duration-300 ${currentTab === 'admin' ? 'text-[var(--color-secondary)]' : 'text-[var(--color-accent-medium)] hover:text-[var(--color-accent)]'}`}
             onClick={() => handleNavClick('admin')}
           >
             ADMIN
