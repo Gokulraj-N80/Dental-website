@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import { Activity, ShieldAlert, Sparkles, Smile, RefreshCw, Heart } from 'lucide-react';
 
+import imgHygiene from '../assets/service_hygiene.png';
+import imgOrtho from '../assets/service_ortho.png';
+import imgImplants from '../assets/service_implants.png';
+import imgWhitening from '../assets/service_whitening.png';
+import imgRootcanal from '../assets/service_rootcanal.png';
+import imgPediatric from '../assets/service_pediatric.png';
+
 const SERVICES_DATA = [
   {
     id: 'hygiene',
     icon: Smile,
+    image: imgHygiene,
     title: 'Teeth Cleaning & Hygiene',
     shortDesc: 'Regular scaling and prophylaxis to keep your teeth bright and prevent gum disease.',
     longDesc: 'Our preventative cleaning programs focus on plaque removal, calculus scraping, polishing, and comprehensive dental examinations. Early detection of potential issues guarantees a lifetime of clean smiles.'
@@ -12,6 +20,7 @@ const SERVICES_DATA = [
   {
     id: 'ortho',
     icon: Activity,
+    image: imgOrtho,
     title: 'Invisalign & Orthodontics',
     shortDesc: 'Discreet aligners and modern braces to straighten your teeth with minimal discomfort.',
     longDesc: 'Say goodbye to metal braces. Using advanced 3D scanning technology, we formulate transparent Invisalign aligners custom-made to shift your teeth into perfect alignment comfortably and invisibly.'
@@ -19,6 +28,7 @@ const SERVICES_DATA = [
   {
     id: 'implants',
     icon: ShieldAlert,
+    image: imgImplants,
     title: 'Dental Implants',
     shortDesc: 'Premium titanium restorations that look, feel, and function like natural teeth.',
     longDesc: 'Missing teeth can impact your speech, chewing, and self-confidence. Our implantology specialists use titanium roots and high-grade ceramic crowns to deliver permanent, structurally sound restorations.'
@@ -26,6 +36,7 @@ const SERVICES_DATA = [
   {
     id: 'aesthetic',
     icon: Sparkles,
+    image: imgWhitening,
     title: 'Cosmetic Whitening',
     shortDesc: 'Professional bleaching services to safely enhance the brightness of your smile.',
     longDesc: 'Our state-of-the-art office bleaching treatments can lift shade brightness by up to 8 levels in under an hour. Safe, painless, and monitored by professional dental specialists.'
@@ -33,6 +44,7 @@ const SERVICES_DATA = [
   {
     id: 'root-canal',
     icon: RefreshCw,
+    image: imgRootcanal,
     title: 'Root Canal Treatment',
     shortDesc: 'Microscopic therapy to save damaged teeth and eliminate internal nerve pain.',
     longDesc: 'Using local anesthesia and high-precision microscopes, we clear bacterial infections from the tooth root canal, reseal the chamber, and prevent extraction so you can keep your natural tooth.'
@@ -40,6 +52,7 @@ const SERVICES_DATA = [
   {
     id: 'pediatric',
     icon: Heart,
+    image: imgPediatric,
     title: 'Pediatric Care',
     shortDesc: 'A comfortable, friendly, and gentle dental experience tailored for children.',
     longDesc: 'We introduce kids to dental health in a fun, non-threatening environment. From initial assessments to cavity prevention treatments and habit counseling, we set up strong habits early.'
@@ -59,11 +72,14 @@ export default function Services({ onBookClick }) {
         </p>
       </div>
 
-      <div className="grid-3">
+      <div className="services-scroll-container">
         {SERVICES_DATA.map((service) => {
           const Icon = service.icon;
           return (
             <div key={service.id} className="service-card">
+              <div className="service-card-image-wrap">
+                <img src={service.image} alt={service.title} className="service-card-img" />
+              </div>
               <div className="service-icon-box">
                 <Icon size={24} className="service-icon" />
               </div>

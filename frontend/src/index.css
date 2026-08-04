@@ -1548,6 +1548,30 @@ h6 {
   .service-card, .doctor-card, .booking-card {
     padding: 20px !important;
   }
+  .services-scroll-container {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    padding: 10px 4px 24px 4px !important;
+    gap: 20px !important;
+    width: 100vw !important;
+    margin-left: -16px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .services-scroll-container::-webkit-scrollbar {
+    display: none !important; /* Hide scrollbar for clean premium UI */
+  }
+  .services-scroll-container .service-card {
+    width: 290px !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: start !important;
+  }
+  .services-scroll-container .service-card-image-wrap {
+    height: 140px !important;
+  }
   .testimonial-card {
     padding: 16px !important;
   }
@@ -2395,6 +2419,34 @@ h6 {
 }
 
 /* Services Cards & Modal Styling */
+.services-scroll-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  width: 100%;
+}
+
+.service-card-image-wrap {
+  width: 100%;
+  height: 180px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+  background-color: var(--color-surface);
+}
+
+.service-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-card:hover .service-card-img {
+  transform: scale(1.06);
+}
+
 .service-card {
   background-color: var(--color-primary);
   border: 1.5px solid var(--color-accent-light);

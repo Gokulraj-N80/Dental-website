@@ -129,6 +129,7 @@ export default function App() {
           <>
             <Hero onBookClick={() => navigate('booking')} onServicesClick={() => navigate('services')} />
             <GoogleReviewsBar />
+            <Services onBookClick={() => navigate('booking')} />
             <AssistYou onSelectTriage={(treatment) => {
               setSelectedTreatment(treatment);
               navigate('booking');
