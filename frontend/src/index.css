@@ -1500,68 +1500,374 @@ h6 {
 /* Mobile responsive font sizes and padding scaling */
 @media (max-width: 768px) {
   .section {
-    padding: 40px 16px;
+    padding: 32px 16px;
   }
   .section-title {
-    font-size: 1.85rem !important;
+    font-size: 1.65rem !important;
     letter-spacing: -0.5px;
   }
   .section-subtitle {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     line-height: 1.5;
   }
   .hero-split-title {
-    font-size: 2.1rem !important;
+    font-size: 1.9rem !important;
     line-height: 1.2;
   }
   .hero-split-desc {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     line-height: 1.5;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
   .hero-split-actions {
     flex-direction: column;
     width: 100%;
-    gap: 12px;
+    gap: 10px;
   }
   .hero-split-actions .btn {
     width: 100%;
+    padding: 12px 20px;
+    font-size: 0.85rem;
   }
   .hero-split-strip {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 10px;
+  }
+  .strip-item {
+    font-size: 0.75rem;
   }
   .hero-img-wrap {
-    width: 250px;
-    height: 300px;
+    width: 220px;
+    height: 260px;
   }
   .hero-img-ring, .hero-img-ring-2 {
-    width: 280px;
-    height: 280px;
+    width: 240px;
+    height: 240px;
   }
   .service-card, .doctor-card, .booking-card {
-    padding: 24px !important;
-  }
-  .testimonial-card {
     padding: 20px !important;
   }
+  .testimonial-card {
+    padding: 16px !important;
+  }
   .testimonial-card .testimonial-text {
-    font-size: 0.82rem !important;
+    font-size: 0.78rem !important;
     line-height: 1.5;
   }
   .testimonial-card .author-name {
-    font-size: 0.85rem !important;
+    font-size: 0.8rem !important;
   }
   .testimonial-card .author-role {
-    font-size: 0.72rem !important;
+    font-size: 0.68rem !important;
   }
   .doctors-grid {
-    gap: 20px;
+    gap: 16px;
   }
   .doctor-card {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
+    padding: 24px !important;
+  }
+  .doctor-avatar-letters, .doctor-avatar-image-container {
+    width: 80px;
+    height: 80px;
+    font-size: 1.5rem;
+  }
+  .doctor-name {
+    font-size: 1.3rem !important;
+  }
+  .doctor-bio {
+    font-size: 0.85rem;
+  }
+  .form-group-row {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+  .btn {
+    padding: 12px 20px;
+    font-size: 0.85rem;
+  }
+  .booking-card {
+    padding: 24px !important;
+  }
+  .qb-field-row {
+    grid-template-columns: 1fr !important;
+  }
+  .qb-field input, .qb-field select {
+    padding: 12px 12px 12px 38px;
+    font-size: 0.85rem;
+  }
+  .qb-left-title {
+    font-size: 1.5rem !important;
+  }
+  .qb-section {
+    padding: 40px 16px !important;
+  }
+  .qb-inner {
+    border-radius: var(--radius-md);
+  }
+  .tg-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  .tg-card {
+    padding: 20px 16px 16px !important;
+  }
+  .tg-card-name {
+    font-size: 0.82rem !important;
+  }
+  .assist-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  .assist-img-wrap {
+    height: 80px !important;
+  }
+  .assist-card-bar {
+    padding: 8px 10px !important;
+    font-size: 0.7rem !important;
+  }
+  .wt-section {
+    padding: 48px 16px !important;
+  }
+  .wt-title {
+    font-size: 1.6rem !important;
+  }
+  .wt-pillars {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .wt-pillar {
+    padding: 16px !important;
+  }
+  .wt-pillar-body h4 {
+    font-size: 0.85rem !important;
+  }
+  .wt-pillar-body li {
+    font-size: 0.72rem !important;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .footer-brand {
+    text-align: center;
+  }
+  .footer-logo {
+    justify-content: center;
+  }
+  .footer-links-col h4,
+  .footer-hours-col h4,
+  .footer-contact-col h4 {
+    font-size: 1rem !important;
+  }
+  .brand-description {
+    font-size: 0.85rem !important;
+    text-align: center;
+  }
+  .footer-links button {
+    font-size: 0.85rem !important;
+  }
+  .hours-row,
+  .contact-row {
+    font-size: 0.85rem !important;
+  }
+  .footer-container {
+    padding: 48px 16px 24px 16px !important;
+  }
+  .page-hero-title {
+    font-size: 1.6rem !important;
+  }
+  .page-hero-subtitle {
+    font-size: 0.85rem !important;
+  }
+  .page-hero-banner {
+    padding: 20px 0 !important;
+  }
+  .admin-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+  .admin-stat-value {
+    font-size: 1.5rem !important;
+  }
+  .admin-chart-card {
+    padding: 16px !important;
+  }
+  .admin-main-viewport {
+    padding: 20px 16px !important;
+  }
+  .admin-sidebar {
+    display: none !important;
+  }
+  .modal-content {
+    padding: 24px !important;
+    margin: 16px !important;
+    max-width: calc(100% - 32px) !important;
+  }
+  .modal-title {
+    font-size: 1.3rem !important;
+  }
+  .timeline-card-neemz {
+    width: 100% !important;
+    padding: 0 12px !important;
+  }
+  .timeline-year {
+    font-size: 1.1rem !important;
+  }
+  .timeline-card-title {
+    font-size: 1.3rem !important;
+  }
+  .timeline-card-desc {
+    font-size: 1rem !important;
+  }
+  .about-badges-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .about-badge-card {
+    padding: 16px !important;
+  }
+  .cta-banner-card {
+    padding: 24px !important;
+    text-align: center;
+  }
+  .cta-banner-card .cta-banner-title {
+    font-size: 1.4rem !important;
+  }
+  .cta-banner-subtitle {
+    font-size: 0.85rem !important;
+  }
+  .google-reviews-bar {
+    padding: 12px 16px !important;
+  }
+  .ticker-review-item {
+    font-size: 0.78rem !important;
+  }
+  .reviews-ticker {
+    gap: 32px !important;
+  }
+  .blog-card-premium {
+    padding: 20px !important;
+  }
+  .blog-card-title {
+    font-size: 1.1rem !important;
+  }
+  .blog-card-excerpt {
+    font-size: 0.82rem !important;
+  }
+  .admin-page-header h1 {
+    font-size: 1.5rem !important;
+  }
+  .admin-page-header p {
+    font-size: 0.85rem !important;
+  }
+  .dashboard-stat-card {
+    padding: 20px !important;
+  }
+  .stat-value {
+    font-size: 1.8rem !important;
+  }
+  .dashboard-controls-card {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+  }
+  .search-form {
+    max-width: 100% !important;
+  }
+  .filter-buttons {
+    justify-content: center !important;
+  }
+  .activity-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .awards-strip {
+    grid-template-columns: 1fr !important;
+    padding: 24px !important;
+  }
+  .award-badge {
+    justify-content: center !important;
+  }
+}
+
+/* Extra small mobile */
+@media (max-width: 480px) {
+  .section {
+    padding: 28px 12px;
+  }
+  .section-title {
+    font-size: 1.45rem !important;
+  }
+  .hero-split-title {
+    font-size: 1.6rem !important;
+  }
+  .hero-split-desc {
+    font-size: 0.8rem;
+  }
+  .hero-img-wrap {
+    width: 180px;
+    height: 210px;
+  }
+  .hero-img-ring, .hero-img-ring-2 {
+    width: 200px;
+    height: 200px;
+  }
+  .tg-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .assist-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .assist-img-wrap {
+    height: 100px !important;
+  }
+  .wt-pillars {
+    gap: 10px !important;
+  }
+  .wt-pillar {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px !important;
+  }
+  .wt-pillar-icon-wrap {
+    margin: 0 auto;
+  }
+  .wt-pillar-body ul {
+    align-items: center;
+  }
+  .admin-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .qb-left-title {
+    font-size: 1.3rem !important;
+  }
+  .booking-card {
+    padding: 20px !important;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+  .btn {
+    padding: 10px 16px;
+    font-size: 0.8rem;
+  }
+  .modal-content {
+    padding: 20px !important;
+    margin: 12px !important;
+  }
+  .page-hero-title {
+    font-size: 1.4rem !important;
   }
 }
 
