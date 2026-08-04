@@ -1325,7 +1325,7 @@ h6 {
 
 /* Timeline/Journey Styling (Alternating soft clinical background) */
 .journey-section {
-  background-color: #F3F7F4;
+  background-color: var(--color-primary);
   border-top: 1px solid var(--color-accent-light);
   border-bottom: 1px solid var(--color-accent-light);
 }
@@ -1421,7 +1421,7 @@ h6 {
 
 /* About Layout with Badges Grid (Alternating pure white background) */
 .about-section {
-  background-color: #FFFFFF;
+  background-color: var(--color-primary);
   border-bottom: 1px solid var(--color-accent-light);
 }
 
@@ -2843,7 +2843,7 @@ button.service-learn-more:hover {
 
 /* ===================== BOOKING FORM ===================== */
 .booking-section {
-  background-color: #F8FAF7;
+  background-color: var(--color-primary);
 }
 
 .booking-card {
