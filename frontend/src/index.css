@@ -783,8 +783,8 @@ h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.25;
-  color: var(--color-secondary);
-  /* Heading color to green */
+  color: var(--color-accent);
+  /* Heading color corrected to dark brand color for contrast */
   letter-spacing: -0.5px;
 }
 
