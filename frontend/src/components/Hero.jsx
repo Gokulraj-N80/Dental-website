@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Sparkles, Phone, Award, Shield } from 'lucide-react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import heroDentist from '../assets/clinical_tooth.jpg';
 
 // Dynamic count up hook
@@ -35,6 +37,7 @@ export default function Hero({ onBookClick, onServicesClick }) {
   const experienceCount = useCounter(10, 1000);
 
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
+  const containerRef = useRef(null);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -47,8 +50,25 @@ export default function Hero({ onBookClick, onServicesClick }) {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  useGSAP(() => {
+    const tl = gsap.timeline({ defaults: { ease: 'power4.out', duration: 1.2 } });
+
+    // Left content staggered fade-in up
+    tl.from('.hero-tag-premium', { opacity: 0, y: -20, duration: 0.8 }, 0.2)
+      .from('.hero-split-title', { opacity: 0, y: 30 }, '-=0.6')
+      .from('.hero-split-desc', { opacity: 0, y: 20 }, '-=0.8')
+      .from('.hero-split-actions', { opacity: 0, y: 15 }, '-=0.8')
+      .from('.hero-split-strip .strip-item', { opacity: 0, y: 15, stagger: 0.12 }, '-=0.8');
+
+    // Right column entrance
+    tl.from('.hero-img-wrap', { opacity: 0, scale: 0.9, rotate: -2, duration: 1.4 }, 0.4)
+      .from('.hero-img-ring', { opacity: 0, scale: 0.8, stagger: 0.15 }, '-=1.0')
+      .from('.hero-badge-top', { opacity: 0, x: 30 }, '-=1.0')
+      .from('.hero-badge-bottom', { opacity: 0, x: -30 }, '-=1.0');
+  }, { scope: containerRef });
+
   return (
-    <section className="hero-split-section">
+    <section className="hero-split-section" ref={containerRef}>
 
       {/* ─── LEFT COLUMN ─── */}
       <div 
@@ -58,24 +78,24 @@ export default function Hero({ onBookClick, onServicesClick }) {
         }}
       >
 
-        <div className="hero-tag-premium animate-fade-in-down delay-1">
+        <div className="hero-tag-premium">
           <Sparkles size={13} className="hero-tag-icon" />
           <span>ESTABLISHED 2012 • PRIVATE CLINICAL PRACTICE</span>
         </div>
 
-        <h1 className="hero-split-title animate-fade-in delay-2">
+        <h1 className="hero-split-title">
           Smile Confidently <br />
           With Modern <br />
           <span className="hero-title-accent">Dental Care.</span>
         </h1>
 
-        <p className="hero-split-desc animate-fade-in delay-3">
+        <p className="hero-split-desc">
           Welcome to Dr Neemz Dentistry. We deliver professional,
           anxiety-free treatments in a calming environment using
           surgical-grade safety procedures and 100% digital diagnostics.
         </p>
 
-        <div className="hero-split-actions animate-fade-in delay-4">
+        <div className="hero-split-actions">
           <button className="btn btn-primary btn-lg btn-ripple" onClick={onBookClick}>
             BOOK APPOINTMENT
             <ArrowRight size={18} />
@@ -85,7 +105,7 @@ export default function Hero({ onBookClick, onServicesClick }) {
           </button>
         </div>
 
-        <div className="hero-split-strip animate-fade-in delay-5">
+        <div className="hero-split-strip">
           <div className="strip-item">
             <Award size={17} className="strip-icon" />
             <span>Board Certified Specialists</span>
@@ -103,7 +123,7 @@ export default function Hero({ onBookClick, onServicesClick }) {
 
       {/* ─── RIGHT COLUMN — Image ─── */}
       <div 
-        className="hero-split-right animate-fade-in-right delay-3"
+        className="hero-split-right"
         style={{
           transform: `translate(${mouseOffset.x * -0.6}px, ${mouseOffset.y * -0.6}px)`
         }}
@@ -114,7 +134,7 @@ export default function Hero({ onBookClick, onServicesClick }) {
 
         {/* Floating stat badges */}
         <div 
-          className="hero-float-badge hero-badge-top animate-float delay-1"
+          className="hero-float-badge hero-badge-top"
           style={{
             transform: `translate(${mouseOffset.x * 0.4}px, ${mouseOffset.y * 0.4}px)`
           }}
@@ -124,7 +144,7 @@ export default function Hero({ onBookClick, onServicesClick }) {
         </div>
 
         <div 
-          className="hero-float-badge hero-badge-bottom animate-float delay-3"
+          className="hero-float-badge hero-badge-bottom"
           style={{
             transform: `translate(${mouseOffset.x * -0.3}px, ${mouseOffset.y * -0.3}px)`
           }}

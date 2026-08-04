@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Stethoscope, Cpu, Users, ShieldCheck, CheckCircle } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import doctorImg from '../assets/doctor_trust.png';
+
+// Register ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
 
 const TRUST_PILLARS = [
   {
@@ -42,11 +48,56 @@ const TRUST_PILLARS = [
 ];
 
 export default function WhyTrust() {
+  const containerRef = useRef(null);
+
+  useGSAP(() => {
+    // Reveal visual image frame on scroll
+    gsap.from('.wt-visual', {
+      scrollTrigger: {
+        trigger: '.wt-visual',
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      },
+      opacity: 0,
+      x: -40,
+      duration: 1.0,
+      ease: 'power3.out'
+    });
+
+    // Reveal header texts on scroll
+    gsap.from('.wt-header > *', {
+      scrollTrigger: {
+        trigger: '.wt-header',
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      },
+      opacity: 0,
+      y: 20,
+      stagger: 0.12,
+      duration: 0.8,
+      ease: 'power3.out'
+    });
+
+    // Stagger reveal trust pillars list on scroll
+    gsap.from('.wt-pillars .wt-pillar', {
+      scrollTrigger: {
+        trigger: '.wt-pillars',
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      },
+      opacity: 0,
+      y: 30,
+      stagger: 0.12,
+      duration: 0.8,
+      ease: 'power3.out'
+    });
+  }, { scope: containerRef });
+
   return (
-    <section className="wt-section">
+    <section className="wt-section" ref={containerRef}>
       <div className="wt-inner">
         {/* Left — image with overlay badge */}
-        <div className="wt-visual" data-reveal>
+        <div className="wt-visual">
           <div className="wt-img-frame">
             <img src={doctorImg} alt="Our dentist providing care" />
             <div className="wt-badge animate-float-slow">
@@ -58,7 +109,7 @@ export default function WhyTrust() {
 
         {/* Right — content */}
         <div className="wt-content">
-          <div className="wt-header" data-reveal>
+          <div className="wt-header">
             <span className="section-tag">Why Choose Us</span>
             <h2 className="wt-title">
               Trusted Care,<br />
@@ -77,8 +128,6 @@ export default function WhyTrust() {
                 <div
                   key={pillar.title}
                   className="wt-pillar"
-                  data-reveal
-                  data-delay={i * 120}
                 >
                   <div className="wt-pillar-icon-wrap">
                     <Icon size={22} strokeWidth={1.8} />
