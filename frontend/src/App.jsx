@@ -167,11 +167,13 @@ export default function App() {
         )}
       </main>
 
-      <Footer onNavClick={(tab) => {
-        setCurrentTab(tab);
-        setSelectedTreatment(null);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }} />
+      {currentTab !== 'admin' && (
+        <Footer onNavClick={(tab) => {
+          setCurrentTab(tab);
+          setSelectedTreatment(null);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }} />
+      )}
     </div>
   );
 }
