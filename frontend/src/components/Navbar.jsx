@@ -53,7 +53,7 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
 
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 h-[76px] z-[1000] border-b border-[var(--color-accent-light)] transition-all duration-300 flex items-center justify-between px-[40px] ${scrolled ? 'bg-[var(--color-primary)]/90 backdrop-blur-md shadow-md' : 'bg-[var(--color-primary)]/40 backdrop-blur-sm'}`}>
+    <nav className={`fixed top-0 left-0 right-0 h-[76px] z-[1000] border-b border-[var(--color-accent-light)] transition-all duration-300 flex items-center justify-between px-[40px] ${scrolled ? 'bg-[var(--color-primary)] backdrop-blur-md shadow-md' : 'bg-transparent backdrop-blur-none'}`}>
       <div className="w-full max-w-[1200px] mx-auto flex items-center justify-between h-full">
         {/* Logo */}
         <div className="cursor-pointer flex items-center shrink-0" onClick={() => handleNavClick('home')}>
