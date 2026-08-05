@@ -60,7 +60,6 @@ export default function App() {
   const [currentTab, setCurrentTab] = useState('home');
   const [selectedTreatment, setSelectedTreatment] = useState(null);
   const [isPreloading, setIsPreloading] = useState(true);
-  const [hideNavbarLogo, setHideNavbarLogo] = useState(true);
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'neem');
   
   const lenisRef = useRef(null);
@@ -97,67 +96,15 @@ export default function App() {
   }, []);
 
   const handleLoaderComplete = (logoSvg, logoText, preloaderOverlay) => {
-    const targetEl = document.querySelector('.header-logo-target');
-    if (!targetEl) {
-      setIsPreloading(false);
-      setHideNavbarLogo(false);
-      return;
-    }
-
-    // Get exact target bounds in header
-    const targetRect = targetEl.getBoundingClientRect();
-    const currentRect = logoSvg.getBoundingClientRect();
-
-    // Flight offset measurements
-    const deltaX = targetRect.left - currentRect.left;
-    const deltaY = targetRect.top - currentRect.top;
-    const scaleFactor = 42 / 90; // target size 42 / loader size 90
-
-    const flightTl = gsap.timeline({
+    // Fade out preloader overlay background
+    gsap.to(preloaderOverlay, {
+      opacity: 0,
+      duration: 0.6,
+      ease: 'power2.out',
       onComplete: () => {
-        setHideNavbarLogo(false);
         setIsPreloading(false);
       }
     });
-
-    // Animate flight path & radial page reveal mask
-    flightTl
-      .to(logoText, {
-        opacity: 0,
-        x: 30,
-        duration: 0.4,
-        ease: 'power2.in'
-      })
-      .to(logoSvg, {
-        x: deltaX,
-        y: deltaY,
-        scale: scaleFactor,
-        transformOrigin: 'top left',
-        duration: 1.3,
-        ease: 'power4.inOut'
-      }, '-=0.15')
-      .to('.app-reveal-wrapper', {
-        clipPath: 'circle(150% at 50% 50%)',
-        duration: 1.5,
-        ease: 'power3.inOut'
-      }, '-=0.9')
-      .to(preloaderOverlay, {
-        opacity: 0,
-        duration: 0.6,
-        ease: 'power2.out'
-      }, '-=0.4');
-
-    // Staggered Navbar links fade in during flight
-    flightTl.fromTo('.desktop-only-links .nav-link-neemz, .desktop-only-links .nav-dropdown-wrapper', {
-      opacity: 0,
-      y: -15
-    }, {
-      opacity: 1,
-      y: 0,
-      stagger: 0.06,
-      duration: 0.7,
-      ease: 'power2.out'
-    }, '-=0.8');
   };
 
   useEffect(() => {
@@ -206,7 +153,7 @@ export default function App() {
         <BrandRevealLoader onComplete={handleLoaderComplete} />
       )}
 
-      <div className={`app-reveal-wrapper ${isPreloading ? 'clipped' : ''}`}>
+      <div className="app-reveal-wrapper">
         {/* Premium Apple-style top scroll indicator */}
         <div className="scroll-progress-indicator" style={{ width: `${scrollProgress}%` }} />
 
@@ -228,7 +175,6 @@ export default function App() {
           }}
           theme={theme}
           setTheme={setTheme}
-          hideLogo={hideNavbarLogo}
         />
 
         <main className="main-content">

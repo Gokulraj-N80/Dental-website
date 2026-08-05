@@ -7192,14 +7192,4 @@ html.lenis body {
   min-height: 100vh;
   position: relative;
   background-color: var(--color-primary);
-}
-
-.app-reveal-wrapper.clipped {
-  clip-path: circle(0% at 50% 50%);
-}
-
-/* Navbar logo flight override */
-.header-logo-target.logo-hidden {
-  opacity: 0 !important;
-  pointer-events: none;
 }
