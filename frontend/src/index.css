@@ -7352,20 +7352,57 @@ html.lenis body {
   }
 
   /* ── 6. WHY TRUST US / TRUST CARE ── */
-  .trust-desc, .why-trust-desc {
-    display: none !important; /* Hide long descriptions to save scroll */
+  .wt-visual {
+    display: none !important; /* Hide image completely to save scroll space */
   }
 
-  .why-trust-card {
-    padding: 16px !important;
+  .wt-section {
+    padding: 30px 16px !important;
+  }
+
+  .wt-inner {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .wt-pillars {
+    grid-template-columns: 1fr 1fr !important; /* 2x2 tiny grid */
+    gap: 10px !important;
+  }
+
+  .wt-pillar {
+    padding: 12px 10px !important;
+    gap: 8px !important;
+    align-items: center;
+  }
+
+  .wt-pillar-icon-wrap {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .wt-pillar-icon-wrap svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .wt-pillar-body h4 {
+    font-size: 0.8rem !important;
+    margin: 0 !important;
+  }
+
+  /* Hide bullet lists on mobile to save space */
+  .wt-pillar-body ul {
+    display: none !important;
   }
 
   /* ── 7. GOOGLE REVIEWS BAR ── */
   .reviews-bar-wrapper {
     flex-direction: column;
-    gap: 10px !important;
-    padding: 12px !important;
+    gap: 8px !important;
+    padding: 10px !important;
     text-align: center;
+    font-size: 0.8rem !important;
   }
 
   /* ── 8. BOOKING SECTION ── */
@@ -7378,14 +7415,44 @@ html.lenis body {
     padding: 16px !important;
   }
 
+  /* Compact calendar and slots container on small mobile screens */
+  .bfn-cal-row {
+    grid-template-columns: 1fr !important; /* Stack calendar and slots on mobile */
+    gap: 12px !important;
+  }
+
+  .bc-wrapper, .ts-panel {
+    height: 240px !important; /* Slightly smaller height on mobile */
+  }
+
+  .bc-grid {
+    grid-template-columns: repeat(7, 24px) !important;
+    gap: 1px !important;
+  }
+
+  .bc-day, .bc-cell-empty {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 0.68rem !important;
+  }
+
   /* ── 9. FOOTER ── */
   .footer-container {
-    padding: 40px 20px 20px !important;
+    padding: 30px 16px 16px !important;
   }
 
   .footer-grid {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
+    text-align: center;
+  }
+
+  .footer-links-col {
+    align-items: center !important;
+  }
+
+  .footer-links-col h4 {
+    margin-bottom: 8px !important;
   }
 
   .footer-logo-col {
