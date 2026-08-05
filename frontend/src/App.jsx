@@ -96,10 +96,10 @@ export default function App() {
   }, []);
 
   const handleLoaderComplete = (logoSvg, logoText, preloaderOverlay) => {
-    // Fade out preloader overlay background
+    // Fade out preloader overlay background quickly
     gsap.to(preloaderOverlay, {
       opacity: 0,
-      duration: 0.6,
+      duration: 0.28,
       ease: 'power2.out',
       onComplete: () => {
         setIsPreloading(false);

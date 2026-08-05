@@ -77,17 +77,17 @@ export default function Hero({ onBookClick, onServicesClick, startAnimation }) {
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
-    // GSAP Entrance Timeline
+    // GSAP Entrance Timeline (Optimized for faster content reveal)
     const tl = gsap.timeline();
     
-    tl.to('.hero-tag-premium', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' })
-      .to('.word-span', { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'back.out(1.7)' }, '-=0.3')
-      .to('.hero-split-desc', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4')
-      .to('.hero-split-actions button', { opacity: 1, scale: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out' }, '-=0.3')
-      .to('.hero-img-wrap', { opacity: 1, scale: 1, rotation: 0, duration: 1.4, ease: 'power3.out' }, '-=0.7')
-      .to('.hero-img-ring', { opacity: 0.4, scale: 1, duration: 1, stagger: 0.2, ease: 'elastic.out(1, 0.75)' }, '-=0.9')
-      .to('.hero-float-badge', { opacity: 1, scale: 1, duration: 0.8, stagger: 0.15, ease: 'elastic.out(1, 0.5)' }, '-=0.6')
-      .to('.strip-item', { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' }, '-=0.5');
+    tl.to('.hero-tag-premium', { opacity: 1, y: 0, duration: 0.3, ease: 'power3.out' })
+      .to('.word-span', { opacity: 1, y: 0, duration: 0.45, stagger: 0.05, ease: 'back.out(1.5)' }, '-=0.15')
+      .to('.hero-split-desc', { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, '-=0.25')
+      .to('.hero-split-actions button', { opacity: 1, scale: 1, duration: 0.3, stagger: 0.05, ease: 'power3.out' }, '-=0.2')
+      .to('.hero-img-wrap', { opacity: 1, scale: 1, rotation: 0, duration: 0.8, ease: 'power3.out' }, '-=0.3')
+      .to('.hero-img-ring', { opacity: 0.4, scale: 1, duration: 0.6, stagger: 0.1, ease: 'power2.out' }, '-=0.5')
+      .to('.hero-float-badge', { opacity: 1, scale: 1, duration: 0.5, stagger: 0.08, ease: 'power2.out' }, '-=0.4')
+      .to('.strip-item', { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out' }, '-=0.35');
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
