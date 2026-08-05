@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import WhyTrust from './components/WhyTrust';
@@ -6,7 +6,6 @@ import QuickBooking from './components/QuickBooking';
 import TreatmentsGrid from './components/TreatmentsGrid';
 import Journey from './components/Journey';
 import About from './components/About';
-import CtaBanner from './components/CtaBanner';
 import Services from './components/Services';
 import Blog from './components/Blog';
 import BookingForm from './components/BookingForm';
@@ -19,6 +18,11 @@ import AssistYou from './components/AssistYou';
 import GoogleReviewsBar from './components/GoogleReviewsBar';
 import Testimonials from './components/Testimonials';
 import AdminPanel from './components/AdminPanel';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
+
+gsap.registerPlugin(ScrollTrigger);
 
 /* ---- Global scroll-reveal ---- */
 function useScrollReveal(currentTab) {
@@ -55,13 +59,85 @@ export default function App() {
   const [currentTab, setCurrentTab] = useState('home');
   const [selectedTreatment, setSelectedTreatment] = useState(null);
   const [isPreloading, setIsPreloading] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'neem');
+  
+  const preloaderRef = useRef(null);
+  const logoWrapRef = useRef(null);
+  const progressTextRef = useRef(null);
+  const lenisRef = useRef(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsPreloading(false);
-    }, 1500);
-    return () => clearTimeout(timer);
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const lenis = new Lenis({
+      duration: prefersReducedMotion ? 0.001 : 1.2,
+      smoothWheel: !prefersReducedMotion,
+      syncTouch: true,
+      touchMultiplier: 1.2,
+      wheelMultiplier: 1,
+      lerp: prefersReducedMotion ? 1 : 0.08,
+    });
+
+    lenisRef.current = lenis;
+
+    // Drive Lenis with GSAP's ticker
+    function update(time) {
+      lenis.raf(time * 1000);
+    }
+    gsap.ticker.add(update);
+
+    // Synchronize ScrollTrigger updates with Lenis scrolling
+    lenis.on('scroll', ScrollTrigger.update);
+
+    return () => {
+      gsap.ticker.remove(update);
+      lenis.destroy();
+      lenisRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    // Animate progress value
+    const obj = { val: 0 };
+    const tl = gsap.timeline({
+      onComplete: () => {
+        // Animate overlay slide up and fade out
+        const exitTl = gsap.timeline({
+          onComplete: () => {
+            setIsPreloading(false);
+          }
+        });
+        
+        exitTl.to(logoWrapRef.current, {
+          scale: 0.8,
+          opacity: 0,
+          y: -50,
+          duration: 0.6,
+          ease: 'power3.inOut'
+        })
+        .to(preloaderRef.current, {
+          yPercent: -100,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power4.inOut'
+        }, '-=0.3');
+      }
+    });
+
+    tl.to(obj, {
+      val: 100,
+      duration: 1.6,
+      ease: 'power2.out',
+      onUpdate: () => {
+        setLoadingProgress(Math.floor(obj.val));
+      }
+    });
+
+    return () => {
+      tl.kill();
+    };
   }, []);
 
   useEffect(() => {
@@ -73,8 +149,22 @@ export default function App() {
 
   const navigate = (tab) => {
     setCurrentTab(tab);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo({ top: 0 });
+    }
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+      if (lenisRef.current) {
+        lenisRef.current.resize();
+      }
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [currentTab]);
 
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -89,18 +179,24 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  if (isPreloading) {
-    return (
-      <div className="preloader-overlay">
-        <div className="preloader-logo-wrap" style={{ animation: 'pulseScale 2s infinite ease-in-out' }}>
-          <Logo size={80} showText={true} />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="app-container">
+      {isPreloading && (
+        <div className="preloader-overlay" ref={preloaderRef}>
+          <div className="preloader-logo-wrap" ref={logoWrapRef}>
+            <Logo size={90} showText={true} />
+            <div className="preloader-progress-track">
+              <div className="preloader-progress-bar" style={{ width: `${loadingProgress}%` }} />
+            </div>
+            <div className="preloader-progress-text" ref={progressTextRef}>
+              {loadingProgress}%
+            </div>
+          </div>
+        </div>
+      )}
+
+
       {/* Premium Apple-style top scroll indicator */}
       <div className="scroll-progress-indicator" style={{ width: `${scrollProgress}%` }} />
 
@@ -158,10 +254,6 @@ export default function App() {
             {/* 5. Google reviews & video testimonial slide */}
             <Testimonials />
 
-            <hr className="section-divider" />
-            
-            {/* 6. Book an Appointment Footer CTA Banner */}
-            <CtaBanner onBookClick={() => navigate('booking')} />
           </>
         )}
 

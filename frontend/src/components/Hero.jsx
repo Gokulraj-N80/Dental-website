@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Sparkles, Phone, Award, Shield } from 'lucide-react';
 import heroDentist from '../assets/clinical_tooth.jpg';
+import { gsap } from 'gsap';
 
 // Dynamic count up hook
 function useCounter(target, duration = 1500) {
@@ -34,48 +35,88 @@ export default function Hero({ onBookClick, onServicesClick }) {
   const patientsCount = useCounter(1500, 1800);
   const experienceCount = useCounter(10, 1000);
 
-  const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
+  const containerRef = useRef(null);
+  const leftColRef = useRef(null);
+  const rightColRef = useRef(null);
 
   useEffect(() => {
+    const leftEl = leftColRef.current;
+    const rightEl = rightColRef.current;
+    if (!leftEl || !rightEl) return;
+
+    // Smooth inertia mouse move with quickTo
+    const xToLeft = gsap.quickTo(leftEl, 'x', { duration: 0.5, ease: 'power2.out' });
+    const yToLeft = gsap.quickTo(leftEl, 'y', { duration: 0.5, ease: 'power2.out' });
+    const xToRight = gsap.quickTo(rightEl, 'x', { duration: 0.8, ease: 'power3.out' });
+    const yToRight = gsap.quickTo(rightEl, 'y', { duration: 0.8, ease: 'power3.out' });
+
     const handleMouseMove = (e) => {
       const { innerWidth, innerHeight } = window;
-      const x = (e.clientX - innerWidth / 2) / 30; // Max offset 30px
-      const y = (e.clientY - innerHeight / 2) / 30;
-      setMouseOffset({ x, y });
+      const xVal = (e.clientX - innerWidth / 2) / 35;
+      const yVal = (e.clientY - innerHeight / 2) / 35;
+      
+      xToLeft(xVal * 0.3);
+      yToLeft(yVal * 0.3);
+      xToRight(xVal * -0.6);
+      yToRight(yVal * -0.6);
     };
+
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+
+    // GSAP Entrance Timeline
+    const tl = gsap.timeline();
+    
+    // Initial states
+    gsap.set('.hero-tag-premium', { opacity: 0, y: -20 });
+    gsap.set('.word-span', { opacity: 0, y: 30 });
+    gsap.set('.hero-split-desc', { opacity: 0, y: 20 });
+    gsap.set('.hero-split-actions button', { opacity: 0, scale: 0.95 });
+    gsap.set('.strip-item', { opacity: 0, y: 15 });
+    gsap.set('.hero-img-wrap', { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.1 });
+    gsap.set('.hero-float-badge', { opacity: 0, scale: 0 });
+    gsap.set('.hero-img-ring', { opacity: 0, scale: 0.5 });
+
+    tl.to('.hero-tag-premium', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' })
+      .to('.word-span', { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'back.out(1.7)' }, '-=0.3')
+      .to('.hero-split-desc', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+      .to('.hero-split-actions button', { opacity: 1, scale: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out' }, '-=0.3')
+      .to('.hero-img-wrap', { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, duration: 1.2, ease: 'power4.inOut' }, '-=0.7')
+      .to('.hero-img-ring', { opacity: 0.4, scale: 1, duration: 1, stagger: 0.2, ease: 'elastic.out(1, 0.75)' }, '-=0.8')
+      .to('.hero-float-badge', { opacity: 1, scale: 1, duration: 0.8, stagger: 0.15, ease: 'elastic.out(1, 0.5)' }, '-=0.6')
+      .to('.strip-item', { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' }, '-=0.5');
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      tl.kill();
+    };
   }, []);
 
   return (
-    <section className="hero-split-section">
+    <section className="hero-split-section" ref={containerRef}>
 
       {/* ─── LEFT COLUMN ─── */}
-      <div 
-        className="hero-split-left"
-        style={{
-          transform: `translate(${mouseOffset.x * 0.3}px, ${mouseOffset.y * 0.3}px)`
-        }}
-      >
+      <div className="hero-split-left" ref={leftColRef}>
 
-        <div className="hero-tag-premium animate-fade-in-down delay-1">
+        <div className="hero-tag-premium">
           <Sparkles size={13} className="hero-tag-icon" />
           <span>ESTABLISHED 2012 • PRIVATE CLINICAL PRACTICE</span>
         </div>
 
-        <h1 className="hero-split-title animate-fade-in delay-2">
-          Smile Confidently <br />
-          With Modern <br />
-          <span className="hero-title-accent">Dental Care.</span>
+        <h1 className="hero-split-title">
+          <span className="word-span" style={{ display: 'inline-block' }}>Smile</span>{' '}
+          <span className="word-span" style={{ display: 'inline-block' }}>Confidently</span><br />
+          <span className="word-span" style={{ display: 'inline-block' }}>With</span>{' '}
+          <span className="word-span" style={{ display: 'inline-block' }}>Modern</span><br />
+          <span className="word-span hero-title-accent" style={{ display: 'inline-block' }}>Dental Care.</span>
         </h1>
 
-        <p className="hero-split-desc animate-fade-in delay-3">
+        <p className="hero-split-desc">
           Welcome to Dr Neemz Dentistry. We deliver professional,
           anxiety-free treatments in a calming environment using
           surgical-grade safety procedures and 100% digital diagnostics.
         </p>
 
-        <div className="hero-split-actions animate-fade-in delay-4">
+        <div className="hero-split-actions">
           <button className="btn btn-primary btn-lg btn-ripple" onClick={onBookClick}>
             BOOK APPOINTMENT
             <ArrowRight size={18} />
@@ -85,7 +126,7 @@ export default function Hero({ onBookClick, onServicesClick }) {
           </button>
         </div>
 
-        <div className="hero-split-strip animate-fade-in delay-5">
+        <div className="hero-split-strip">
           <div className="strip-item">
             <Award size={17} className="strip-icon" />
             <span>Board Certified Specialists</span>
@@ -102,33 +143,18 @@ export default function Hero({ onBookClick, onServicesClick }) {
       </div>
 
       {/* ─── RIGHT COLUMN — Image ─── */}
-      <div 
-        className="hero-split-right animate-fade-in-right delay-3"
-        style={{
-          transform: `translate(${mouseOffset.x * -0.6}px, ${mouseOffset.y * -0.6}px)`
-        }}
-      >
+      <div className="hero-split-right" ref={rightColRef}>
         {/* Decorative ring behind image */}
         <div className="hero-img-ring" />
         <div className="hero-img-ring hero-img-ring-2" />
 
         {/* Floating stat badges */}
-        <div 
-          className="hero-float-badge hero-badge-top animate-float delay-1"
-          style={{
-            transform: `translate(${mouseOffset.x * 0.4}px, ${mouseOffset.y * 0.4}px)`
-          }}
-        >
+        <div className="hero-float-badge hero-badge-top">
           <span className="hbadge-num">{patientsCount.toLocaleString()}+</span>
           <span className="hbadge-label">Happy Patients</span>
         </div>
 
-        <div 
-          className="hero-float-badge hero-badge-bottom animate-float delay-3"
-          style={{
-            transform: `translate(${mouseOffset.x * -0.3}px, ${mouseOffset.y * -0.3}px)`
-          }}
-        >
+        <div className="hero-float-badge hero-badge-bottom">
           <span className="hbadge-num">{experienceCount}+ Yrs</span>
           <span className="hbadge-label">Clinical Experience</span>
         </div>
@@ -145,3 +171,4 @@ export default function Hero({ onBookClick, onServicesClick }) {
     </section>
   );
 }
+

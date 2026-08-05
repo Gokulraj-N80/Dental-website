@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Stethoscope, Cpu, Users, ShieldCheck, CheckCircle } from 'lucide-react';
 import doctorImg from '../assets/doctor_trust.png';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const TRUST_PILLARS = [
   {
@@ -42,15 +46,76 @@ const TRUST_PILLARS = [
 ];
 
 export default function WhyTrust() {
+  const containerRef = useRef(null);
+  const [yearsCount, setYearsCount] = useState(0);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Badge count up timeline triggered by scroll
+      const countObj = { val: 0 };
+      gsap.to(countObj, {
+        val: 15,
+        duration: 1.5,
+        ease: 'power1.out',
+        scrollTrigger: {
+          trigger: '.wt-badge',
+          start: 'top 85%',
+        },
+        onUpdate: () => {
+          setYearsCount(Math.floor(countObj.val));
+        }
+      });
+
+      // Stagger elements entry
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top 75%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      tl.from('.wt-img-frame', {
+        opacity: 0,
+        x: -50,
+        scale: 0.95,
+        duration: 1,
+        ease: 'power3.out'
+      })
+      .from('.wt-badge', {
+        scale: 0,
+        opacity: 0,
+        duration: 0.5,
+        ease: 'back.out(2)'
+      }, '-=0.5')
+      .from('.wt-header', {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: 'power3.out'
+      }, '-=0.7')
+      .from('.wt-pillar', {
+        opacity: 0,
+        y: 35,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: 'power2.out'
+      }, '-=0.5');
+
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="wt-section">
+    <section className="wt-section" ref={containerRef}>
       <div className="wt-inner">
         {/* Left — image with overlay badge */}
-        <div className="wt-visual" data-reveal>
+        <div className="wt-visual">
           <div className="wt-img-frame">
             <img src={doctorImg} alt="Our dentist providing care" />
-            <div className="wt-badge animate-float-slow">
-              <span className="wt-badge-number">15+</span>
+            <div className="wt-badge">
+              <span className="wt-badge-number">{yearsCount}+</span>
               <span className="wt-badge-label">Years of Excellence</span>
             </div>
           </div>
@@ -58,7 +123,7 @@ export default function WhyTrust() {
 
         {/* Right — content */}
         <div className="wt-content">
-          <div className="wt-header" data-reveal>
+          <div className="wt-header">
             <span className="section-tag">Why Choose Us</span>
             <h2 className="wt-title">
               Trusted Care,<br />
@@ -76,9 +141,7 @@ export default function WhyTrust() {
               return (
                 <div
                   key={pillar.title}
-                  className="wt-pillar"
-                  data-reveal
-                  data-delay={i * 120}
+                  className="wt-pillar interactive-card"
                 >
                   <div className="wt-pillar-icon-wrap">
                     <Icon size={22} strokeWidth={1.8} />
@@ -103,3 +166,4 @@ export default function WhyTrust() {
     </section>
   );
 }
+

@@ -69,40 +69,37 @@ export default function Services({ onBookClick }) {
   const [selectedService, setSelectedService] = useState(null);
   const containerRef = useRef(null);
 
-  React.useEffect(() => {
-    // Only run horizontal scroll pinning on desktop viewports (>= 768px)
+  React.useLayoutEffect(() => {
     const isMobile = window.innerWidth < 768;
+    if (isMobile) return;
 
-    let pinScroll;
-
-    if (!isMobile) {
+    const ctx = gsap.context(() => {
       const scrollContainer = document.querySelector('.services-scroll-container');
-      
+      if (!scrollContainer) return;
+
       const getScrollAmount = () => {
         const containerWidth = scrollContainer.scrollWidth;
         const viewportWidth = window.innerWidth;
         return -(containerWidth - viewportWidth + 100);
       };
 
-      pinScroll = gsap.to(scrollContainer, {
+      gsap.to(scrollContainer, {
         x: () => getScrollAmount(),
         ease: 'none',
         scrollTrigger: {
-          trigger: '.services-section-wrapper',
+          trigger: containerRef.current,
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
-          scrub: 1, // stable crisp scrubbing rate
+          scrub: 1,
           start: 'top top',
           end: () => `+=${scrollContainer.scrollWidth - window.innerWidth + 100}`,
           invalidateOnRefresh: true,
         }
       });
-    }
+    }, containerRef);
 
-    return () => {
-      pinScroll?.scrollTrigger?.kill();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
