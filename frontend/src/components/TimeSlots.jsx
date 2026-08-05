@@ -103,7 +103,7 @@ function TimeSlots({ selectedDate, selectedSlot, onSlotSelect }) {
       </div>
 
       {/* ── Scrollable pill grid ── */}
-      <div className="ts-scroll">
+      <div className="ts-scroll" data-lenis-prevent>
         <div
           className="ts-grid"
           role="listbox"
