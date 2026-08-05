@@ -78,73 +78,73 @@ export default function BrandRevealLoader({ onComplete }) {
     });
 
     master
-      // Stage 1: Initial Silence (50ms)
-      .to({}, { duration: 0.05 })
+      // Stage 1: Initial Silence (100ms)
+      .to({}, { duration: 0.1 })
 
-      // Stage 2: Logo SVG container fades & scales in (0.3s)
+      // Stage 2: Logo SVG container fades & scales in
       .to(logoSvgRef.current, {
         opacity: 1,
         scale: 1,
-        duration: 0.3,
+        duration: 0.5,
         ease: 'power3.out'
       })
 
-      // Stage 3: Deliberate and natural SVG Outline drawing (Fast outlines)
+      // Stage 3: Deliberate and natural SVG Outline drawing (Reduced by 0.2s)
       .to(crossPathRef.current, {
         strokeDashoffset: 0,
-        duration: 0.3,
+        duration: 0.6,
         ease: 'sine.inOut'
       })
       .to(trunkPathRef.current, {
         strokeDashoffset: 0,
-        duration: 0.45,
+        duration: 0.9,
         ease: 'sine.inOut'
-      }, '-=0.18')
+      }, '-=0.35')
       .to(rootsPathRef.current, {
         strokeDashoffset: 0,
-        duration: 0.3,
+        duration: 0.6,
         ease: 'sine.inOut'
-      }, '-=0.18')
+      }, '-=0.35')
 
-      // Stage 4: Fill Paths and Leaf Cluster Fade-In (0.2s)
+      // Stage 4: Fill Paths and Leaf Cluster Fade-In
       .to([crossPathRef.current, trunkPathRef.current, rootsPathRef.current], {
         fillOpacity: 1,
         strokeWidth: 0,
-        duration: 0.2,
+        duration: 0.3,
         ease: 'power2.out'
-      }, '-=0.1')
+      }, '-=0.15')
       .to(leafRefs.current, {
         scale: 1,
         opacity: 1,
-        duration: 0.2,
+        duration: 0.3,
         stagger: {
-          each: 0.004,
+          each: 0.008,
           from: 'center'
         },
         ease: 'back.out(1.2)'
-      }, '-=0.12')
+      }, '-=0.2')
 
       // Stage 5: Typography Reveal & Ambient Glow
       .to(textRef.current, {
         opacity: 1,
         x: 0,
-        duration: 0.2,
+        duration: 0.3,
         ease: 'power3.out'
-      }, '-=0.1')
+      }, '-=0.15')
       .to(logoSvgRef.current, {
         filter: 'drop-shadow(0 0 8px rgba(61, 107, 83, 0.2))',
-        duration: 0.2
-      }, '-=0.2')
+        duration: 0.3
+      }, '-=0.3')
 
       // Breathe Animation stage (Subtle looping scale while waiting briefly)
       .to(logoSvgRef.current, {
         scale: 1.01,
-        duration: 0.15,
+        duration: 0.4,
         repeat: 0,
         yoyo: true,
         ease: 'sine.inOut'
       })
-      .to({}, { duration: 0.05 });
+      .to({}, { duration: 0.1 });
 
     return () => {
       master.kill();
