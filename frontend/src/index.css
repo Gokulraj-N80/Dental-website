@@ -131,12 +131,12 @@ html.lenis, html.lenis body {
   /* Soft Clinical Pink Surface */
   --color-secondary: #E15A80;
   /* Bright Medical Rose Pink Brand */
-  --color-secondary-dark: #5E122A;
-  /* Deep Crimson for panel backgrounds */
-  --color-gradient-end: #400617;
-  /* Mahogany crimson gradient end color */
-  --color-footer-bg: #30030E;
-  /* Midnight dark crimson footer background */
+  --color-secondary-dark: #8B3D52;
+  /* Soft Luxury Dusty Rose */
+  --color-gradient-end: #6E2D3E;
+  /* Rich warm medium rose instead of dark maroon */
+  --color-footer-bg: #4F1E2A;
+  /* Softer dark rose instead of black-burgundy */
   --color-footer-text: #FFE4E8;
   /* Soft pink text color for footer */
   --shadow-color-rgb: 225, 90, 128;
