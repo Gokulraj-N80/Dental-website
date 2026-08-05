@@ -90,10 +90,10 @@ export default function Patients({ searchGlobal }) {
                     <td>{p.city}</td>
                     <td style={{ fontWeight: 600 }}>{p.lastVisit}</td>
                     <td>
-                      {p.medicalConditions.length > 0 ? (
+                      {p.medicalHistory && p.medicalHistory !== 'None reported' && p.medicalHistory !== 'No significant history' ? (
                         <span className="admin-v2-badge cancelled" style={{ fontSize: '0.7rem' }}>
                           <span className="admin-v2-badge-dot" />
-                          {p.medicalConditions[0]}
+                          {p.medicalHistory}
                         </span>
                       ) : (
                         <span className="admin-v2-badge confirmed" style={{ fontSize: '0.7rem' }}>
@@ -102,8 +102,8 @@ export default function Patients({ searchGlobal }) {
                         </span>
                       )}
                     </td>
-                    <td style={{ fontWeight: 700, color: p.outstandingBalance > 0 ? 'var(--adm-red)' : 'var(--adm-text-primary)' }}>
-                      ₹{p.outstandingBalance.toLocaleString('en-IN')}
+                    <td style={{ fontWeight: 700, color: p.pendingAmount > 0 ? 'var(--adm-red)' : 'var(--adm-text-primary)' }}>
+                      ₹{p.pendingAmount.toLocaleString('en-IN')}
                     </td>
                     <td>
                       <button 
@@ -189,13 +189,11 @@ export default function Patients({ searchGlobal }) {
                       Diagnostic Conditions
                     </h4>
                     <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                      {selectedPatient.medicalConditions.length > 0 ? (
-                        selectedPatient.medicalConditions.map((c, idx) => (
-                          <span key={idx} className="admin-v2-badge cancelled" style={{ fontSize: '0.78rem' }}>
-                            <span className="admin-v2-badge-dot" />
-                            {c}
-                          </span>
-                        ))
+                      {selectedPatient.medicalHistory && selectedPatient.medicalHistory !== 'None reported' && selectedPatient.medicalHistory !== 'No significant history' ? (
+                        <span className="admin-v2-badge cancelled" style={{ fontSize: '0.78rem' }}>
+                          <span className="admin-v2-badge-dot" />
+                          {selectedPatient.medicalHistory}
+                        </span>
                       ) : (
                         <span className="admin-v2-badge confirmed" style={{ fontSize: '0.78rem' }}>
                           <span className="admin-v2-badge-dot" />
@@ -213,13 +211,13 @@ export default function Patients({ searchGlobal }) {
                       Clinical Treatment History
                     </h4>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                      {selectedPatient.treatmentHistory.map((h, idx) => (
+                      {(selectedPatient.previousTreatments || [selectedPatient.treatment]).map((trt, idx) => (
                         <div key={idx} style={{ padding: '14px', background: 'var(--adm-bg)', border: '1px solid var(--adm-border)', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                           <div>
-                            <div style={{ fontWeight: 700, color: 'var(--adm-text-primary)', fontSize: '0.85rem' }}>{h.treatment}</div>
-                            <div style={{ fontSize: '0.74rem', color: 'var(--adm-text-tertiary)', marginTop: '4px' }}>by {h.doctor}</div>
+                            <div style={{ fontWeight: 700, color: 'var(--adm-text-primary)', fontSize: '0.85rem' }}>{trt}</div>
+                            <div style={{ fontSize: '0.74rem', color: 'var(--adm-text-tertiary)', marginTop: '4px' }}>by {selectedPatient.assignedDoctor}</div>
                           </div>
-                          <span className="admin-v2-stat-pill" style={{ fontSize: '0.72rem' }}>{h.date}</span>
+                          <span className="admin-v2-stat-pill" style={{ fontSize: '0.72rem' }}>{selectedPatient.lastVisit}</span>
                         </div>
                       ))}
                     </div>
@@ -231,13 +229,13 @@ export default function Patients({ searchGlobal }) {
                     <div className="admin-v2-detail-item">
                       <span className="admin-v2-detail-label">Total Billed</span>
                       <span className="admin-v2-detail-value" style={{ color: 'var(--adm-text-primary)' }}>
-                        ₹{selectedPatient.totalBilled.toLocaleString('en-IN')}
+                        ₹{selectedPatient.totalBills.toLocaleString('en-IN')}
                       </span>
                     </div>
                     <div className="admin-v2-detail-item">
                       <span className="admin-v2-detail-label">Outstanding</span>
-                      <span className="admin-v2-detail-value" style={{ color: selectedPatient.outstandingBalance > 0 ? 'var(--adm-red)' : 'var(--adm-accent)' }}>
-                        ₹{selectedPatient.outstandingBalance.toLocaleString('en-IN')}
+                      <span className="admin-v2-detail-value" style={{ color: selectedPatient.pendingAmount > 0 ? 'var(--adm-red)' : 'var(--adm-accent)' }}>
+                        ₹{selectedPatient.pendingAmount.toLocaleString('en-IN')}
                       </span>
                     </div>
                   </div>
@@ -250,7 +248,9 @@ export default function Patients({ searchGlobal }) {
                       Invoices & Collections Ledgers
                     </h4>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                      {selectedPatient.invoices.map((inv, idx) => (
+                      {[
+                        { id: `INV-${selectedPatient.id.split('-')[1]}-01`, treatment: selectedPatient.treatment, amount: selectedPatient.totalBills, status: selectedPatient.paymentStatus }
+                      ].map((inv, idx) => (
                         <div key={idx} style={{ padding: '14px', background: 'var(--adm-bg)', border: '1px solid var(--adm-border)', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                           <div>
                             <div style={{ fontWeight: 700, color: 'var(--adm-text-primary)', fontSize: '0.85rem' }}>{inv.id}</div>
