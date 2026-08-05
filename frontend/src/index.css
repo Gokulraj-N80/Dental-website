@@ -5824,7 +5824,7 @@ button.service-learn-more:hover {
 /* ===================== HOW MAY WE ASSIST YOU — TRIAGE ===================== */
 .assist-section {
   background-color: var(--color-primary);
-  padding: 80px 40px;
+  padding: 80px 0;
   overflow: hidden;
   position: relative;
 }
@@ -5859,7 +5859,7 @@ button.service-learn-more:hover {
   }
 
   .assist-viewport {
-    padding: 10px 80px 30px 80px;
+    padding: 10px 0 30px 0;
     width: 100%;
     overflow: visible;
   }
@@ -6004,7 +6004,7 @@ button.service-learn-more:hover {
   .assist-grid {
     grid-template-columns: 1fr !important;
     gap: 30px;
-    padding: 0 20px;
+    padding: 0;
   }
 }
 @media (max-width: 600px) {
@@ -6014,7 +6014,7 @@ button.service-learn-more:hover {
   }
 
   .assist-section {
-    padding: 48px 16px;
+    padding: 48px 0;
   }
 
   .assist-img-wrap {
@@ -7322,7 +7322,7 @@ html.lenis body {
 
   /* ── 5. HOW MAY WE ASSIST YOU — COMPACT TRIAGE ── */
   .assist-section {
-    padding: 30px 16px !important;
+    padding: 30px 0 !important;
   }
 
   .assist-viewport {
