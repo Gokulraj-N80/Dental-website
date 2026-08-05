@@ -126,10 +126,18 @@
   min-height: 100vh;
   background: var(--adm-bg);
   color: var(--adm-text-primary);
-  font-family: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif !important;
   font-feature-settings: 'cv11', 'ss01';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  /* Override global Tailwind / Theme font variables */
+  --font-main: 'Plus Jakarta Sans', sans-serif !important;
+  --font-heading: 'Outfit', sans-serif !important;
+}
+
+.admin-v2-wrapper * {
+  font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif !important;
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
