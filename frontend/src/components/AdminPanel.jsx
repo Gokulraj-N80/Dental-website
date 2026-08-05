@@ -158,7 +158,7 @@ export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
 
       <main className="admin-v2-main">
 
-        <div className="admin-v2-content-area">
+        <div className="admin-v2-content-area" data-lenis-prevent>
           {currentSection === 'dashboard' && <Dashboard onNavigateToSection={setCurrentSection} />}
           {currentSection === 'appointments' && <Appointments searchGlobal={globalSearch} />}
           {currentSection === 'patients' && <Patients searchGlobal={globalSearch} />}
