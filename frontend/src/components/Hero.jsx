@@ -108,14 +108,12 @@ export default function Hero({ onBookClick, onServicesClick, startAnimation }) {
 
         <h1 className="hero-split-title">
           <span className="word-span" style={{ display: 'inline-block' }}>Smile</span>{' '}
-          <span className="word-span" style={{ display: 'inline-block' }}>Confidently</span><br />
-          <span className="word-span" style={{ display: 'inline-block' }}>With</span>{' '}
-          <span className="word-span" style={{ display: 'inline-block' }}>Modern</span><br />
-          <span className="word-span hero-title-accent" style={{ display: 'inline-block' }}>Dental Care.</span>
+          <span className="word-span" style={{ display: 'inline-block' }}>Without</span><br />
+          <span className="word-span hero-title-accent" style={{ display: 'inline-block' }}>Limits.</span>
         </h1>
 
         <p className="hero-split-desc">
-          Welcome to Dr Neemz Dentistry. We deliver professional,
+          Because Every Smile Deserves Perfection. We deliver professional,
           anxiety-free treatments in a calming environment using
           surgical-grade safety procedures and 100% digital diagnostics.
         </p>
