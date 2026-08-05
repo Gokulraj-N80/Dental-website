@@ -139,10 +139,10 @@ export default function AssistYou({ onSelectTriage }) {
           }
         });
 
-        // Horizontal pin scroll timeline
+        // Horizontal pin scroll timeline (Optimized speed)
         gsap.to(grid, {
           x: () => {
-            const scrollDistance = grid.scrollWidth - viewport.offsetWidth + 480; // Increased to 480px for complete clearance
+            const scrollDistance = grid.scrollWidth - viewport.offsetWidth + 480; 
             return -scrollDistance;
           },
           ease: 'none',
@@ -151,7 +151,7 @@ export default function AssistYou({ onSelectTriage }) {
             pin: true,
             scrub: 1.2,
             start: 'top top',
-            end: () => `+=${(grid.scrollWidth - viewport.offsetWidth + 480) * 1.6}`,
+            end: () => `+=${(grid.scrollWidth - viewport.offsetWidth + 480) * 1.1}`,
             invalidateOnRefresh: true,
             anticipatePin: 1
           }
