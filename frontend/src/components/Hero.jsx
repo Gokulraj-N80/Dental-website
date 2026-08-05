@@ -49,6 +49,7 @@ export default function Hero({ onBookClick, onServicesClick, startAnimation }) {
     gsap.set('.hero-img-wrap', { scale: 0.9, opacity: 0, rotation: -0.8 });
     gsap.set('.hero-float-badge', { opacity: 0, scale: 0 });
     gsap.set('.hero-img-ring', { opacity: 0, scale: 0.5 });
+    gsap.set('.brush-underline-svg path', { strokeDashoffset: 200, strokeDasharray: 200 });
   }, []);
 
   useEffect(() => {
@@ -81,9 +82,10 @@ export default function Hero({ onBookClick, onServicesClick, startAnimation }) {
     const tl = gsap.timeline();
     
     tl.to('.hero-tag-premium', { opacity: 1, y: 0, duration: 0.3, ease: 'power3.out' })
-      .to('.word-span', { opacity: 1, y: 0, duration: 0.45, stagger: 0.05, ease: 'back.out(1.5)' }, '-=0.15')
-      .to('.hero-split-desc', { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, '-=0.25')
-      .to('.hero-split-actions button', { opacity: 1, scale: 1, duration: 0.3, stagger: 0.05, ease: 'power3.out' }, '-=0.2')
+      .to('.word-span', { opacity: 1, y: 0, duration: 0.45, stagger: 0.1, ease: 'power3.out' }, '-=0.15')
+      .to('.brush-underline-svg path', { strokeDashoffset: 0, duration: 0.8, ease: 'power2.inOut' }, '-=0.25')
+      .to('.hero-split-desc', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.45')
+      .to('.hero-split-actions button', { opacity: 1, scale: 1, duration: 0.3, stagger: 0.05, ease: 'power3.out' }, '-=0.25')
       .to('.hero-img-wrap', { opacity: 1, scale: 1, rotation: 0, duration: 0.8, ease: 'power3.out' }, '-=0.3')
       .to('.hero-img-ring', { opacity: 0.4, scale: 1, duration: 0.6, stagger: 0.1, ease: 'power2.out' }, '-=0.5')
       .to('.hero-float-badge', { opacity: 1, scale: 1, duration: 0.5, stagger: 0.08, ease: 'power2.out' }, '-=0.4')
@@ -106,18 +108,25 @@ export default function Hero({ onBookClick, onServicesClick, startAnimation }) {
           <span>ESTABLISHED 2012 • PRIVATE CLINICAL PRACTICE</span>
         </div>
 
-        <h1 className="hero-split-title">
-          <span className="word-span" style={{ display: 'inline-block' }}>Smile</span>{' '}
-          <span className="word-span" style={{ display: 'inline-block' }}>Confidently</span><br />
-          <span className="word-span" style={{ display: 'inline-block' }}>With</span>{' '}
-          <span className="word-span" style={{ display: 'inline-block' }}>Modern</span><br />
-          <span className="word-span hero-title-accent" style={{ display: 'inline-block' }}>Dental Care.</span>
+        <h1 className="hero-split-title" style={{ position: 'relative', display: 'block' }}>
+          <span className="word-span" style={{ display: 'block', position: 'relative', paddingBottom: '10px' }}>
+            <span className="hero-title-accent highlighted-wrapper" style={{ position: 'relative', display: 'inline-block' }}>
+              Smile
+              <span className="radial-glow-highlight" />
+              <div className="sparkles-container">
+                <Sparkles size={14} className="sparkle-micro sparkle-1" />
+                <Sparkles size={10} className="sparkle-micro sparkle-2" />
+              </div>
+            </span>{' '}
+            Without Limits.
+            <svg className="brush-underline-svg" viewBox="0 0 100 10" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute', bottom: '0', left: '0', width: '100%', height: '10px', zIndex: '1' }}>
+              <path d="M2,8 C30,2 70,2 98,8" stroke="var(--color-secondary)" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+            </svg>
+          </span>
         </h1>
 
-        <p className="hero-split-desc">
-          Welcome to Dr Neemz Dentistry. We deliver professional,
-          anxiety-free treatments in a calming environment using
-          surgical-grade safety procedures and 100% digital diagnostics.
+        <p className="hero-split-desc" style={{ fontFamily: 'var(--font-main)', fontWeight: '400', color: 'var(--color-accent-medium)', fontSize: '1.18rem', lineHeight: '1.6', margin: '12px 0 24px', letterSpacing: '-0.1px' }}>
+          Because Every Smile Deserves Perfection.
         </p>
 
         <div className="hero-split-actions">
