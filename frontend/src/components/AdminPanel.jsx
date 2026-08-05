@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Lock, User as UserIcon, LogOut } from 'lucide-react';
-import './AdminPanel.css';
+import './admin/AdminPanel.css';
 
 // Importing sub-components
-import AdminSidebar from './AdminSidebar';
-import AdminTopBar from './AdminTopBar';
-import Dashboard from './Dashboard';
-import Appointments from './Appointments';
-import Patients from './Patients';
-import Doctors from './Doctors';
-import Treatments from './Treatments';
-import Invoices from './Invoices';
-import Payments from './Payments';
-import Reviews from './Reviews';
-import Messages from './Messages';
-import Reports from './Reports';
-import WebsiteCMS from './WebsiteCMS';
-import Notifications from './Notifications';
-import Settings from './Settings';
+import AdminSidebar from './admin/AdminSidebar';
+import AdminTopBar from './admin/AdminTopBar';
+import Dashboard from './admin/Dashboard';
+import Appointments from './admin/Appointments';
+import Patients from './admin/Patients';
+import Doctors from './admin/Doctors';
+import Treatments from './admin/Treatments';
+import Invoices from './admin/Invoices';
+import Payments from './admin/Payments';
+import Reviews from './admin/Reviews';
+import Messages from './admin/Messages';
+import Reports from './admin/Reports';
+import WebsiteCMS from './admin/WebsiteCMS';
+import Notifications from './admin/Notifications';
+import Settings from './admin/Settings';
 
 export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
