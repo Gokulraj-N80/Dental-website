@@ -85,12 +85,23 @@ export default function BookingForm({ defaultService }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState('');
   const [captchaValue, setCaptchaValue] = useState('');
-  const [captchaCode]                   = useState('5010');
+  
+  // Dynamic random captcha generator
+  const generateRandomCaptcha = useCallback(() => {
+    return Math.floor(1000 + Math.random() * 9000).toString();
+  }, []);
+
+  const [captchaCode, setCaptchaCode]                   = useState('');
   const [loading,      setLoading]      = useState(false);
   const [error,        setError]        = useState('');
   const [successData,  setSuccessData]  = useState(null);
 
   const containerRef = useRef(null);
+
+  // Set initial captcha on mount
+  useEffect(() => {
+    setCaptchaCode(generateRandomCaptcha());
+  }, [generateRandomCaptcha]);
 
   /* Premium GSAP page entrance animation */
   useEffect(() => {
@@ -156,7 +167,8 @@ export default function BookingForm({ defaultService }) {
     setSelectedDate(null);
     setSelectedSlot('');
     setCaptchaValue('');
-  }, [defaultService]);
+    setCaptchaCode(generateRandomCaptcha());
+  }, [defaultService, generateRandomCaptcha]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -172,7 +184,10 @@ export default function BookingForm({ defaultService }) {
       setError('Please select a time slot.'); return;
     }
     if (captchaValue.trim() !== captchaCode) {
-      setError('Captcha does not match. Please try again.'); return;
+      setError('Captcha does not match. Please try again.');
+      setCaptchaValue('');
+      setCaptchaCode(generateRandomCaptcha());
+      return;
     }
 
     setLoading(true);
