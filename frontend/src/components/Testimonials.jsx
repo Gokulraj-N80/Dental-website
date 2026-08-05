@@ -41,23 +41,38 @@ export default function Testimonials() {
 
       <div className="marquee-wrapper">
         <div className="marquee-track">
-          {doubleTestimonials.map((t, idx) => (
-            <div key={`${t.id}-${idx}`} className="testimonial-card testimonial-marquee-card">
-              <Quote size={32} className="testimonial-quote-icon" />
-              <div className="testimonial-stars">
-                {[...Array(t.stars)].map((_, i) => (
-                  <Star key={i} size={16} fill="var(--color-secondary)" color="var(--color-secondary)" />
-                ))}
+          {doubleTestimonials.map((t, idx) => {
+            const initials = t.name
+              .split(' ')
+              .map((n) => n[0])
+              .join('');
+            return (
+              <div key={`${t.id}-${idx}`} className="testimonial-card testimonial-marquee-card">
+                <Quote size={40} className="testimonial-quote-icon" />
+                
+                <div className="testimonial-stars">
+                  {[...Array(t.stars)].map((_, i) => (
+                    <Star key={i} size={16} fill="var(--color-secondary)" color="var(--color-secondary)" />
+                  ))}
+                </div>
+                
+                <p className="testimonial-text">"{t.text}"</p>
+                
+                <div className="testimonial-author">
+                  <div className="testimonial-avatar">
+                    {initials}
+                  </div>
+                  <div className="testimonial-author-info">
+                    <h4 className="author-name">{t.name}</h4>
+                    <span className="author-role">{t.role}</span>
+                  </div>
+                </div>
               </div>
-              <p className="testimonial-text">"{t.text}"</p>
-              <div className="testimonial-author">
-                <h4 className="author-name">{t.name}</h4>
-                <span className="author-role">{t.role}</span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
+
