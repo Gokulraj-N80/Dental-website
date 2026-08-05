@@ -5977,21 +5977,27 @@ button.service-learn-more:hover {
 }
 
 .assist-card-action {
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 .assist-card-btn {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--color-secondary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff !important;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  transition: var(--transition-fast);
+  gap: 6px;
+  padding: 8px 20px;
+  border-radius: 99px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none !important;
 }
 
 .assist-card:hover .assist-card-btn {
-  text-decoration: underline;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+  opacity: 0.95;
 }
 
 .card-gradient-overlay {
@@ -6007,39 +6013,6 @@ button.service-learn-more:hover {
   background: linear-gradient(to top, rgba(225, 90, 128, 0.22) 0%, transparent 100%);
   /* Modern dynamic color based on active theme */
   background: linear-gradient(to top, color-mix(in srgb, var(--color-secondary) 25%, transparent) 0%, transparent 100%);
-}
-
-/* Distinct separate look for Book Appointment card */
-.assist-card-highlighted {
-  background: linear-gradient(135deg, var(--color-secondary-dark) 0%, var(--color-gradient-end) 100%) !important;
-  border: 1px solid var(--color-secondary) !important;
-  box-shadow: 0 12px 30px rgba(var(--shadow-color-rgb), 0.15) !important;
-}
-
-.assist-card-highlighted .assist-card-title {
-  color: var(--color-primary) !important;
-}
-
-.assist-card-highlighted .assist-card-desc {
-  color: rgba(255, 255, 255, 0.75) !important;
-}
-
-.assist-card-highlighted .assist-card-btn {
-  background-color: var(--color-primary) !important;
-  color: var(--color-secondary-dark) !important;
-  padding: 8px 18px !important;
-  border-radius: 99px !important;
-  font-weight: 700 !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-  transition: all 0.3s ease !important;
-  text-decoration: none !important;
-}
-
-.assist-card-highlighted:hover .assist-card-btn {
-  background-color: var(--color-lime-neemz) !important;
-  color: var(--color-primary) !important;
-  text-decoration: none !important;
-  transform: translateY(-2px);
 }
 
 .assist-action-wrap button {

@@ -221,7 +221,7 @@ export default function AssistYou({ onSelectTriage }) {
           {ASSIST_OPTIONS.map((option) => (
             <div
               key={option.id}
-              className={`assist-card interactive-card ${option.id === 'book' ? 'assist-card-highlighted' : ''}`}
+              className="assist-card interactive-card"
               onClick={() => onSelectTriage(option.treatment)}
             >
               <div className="assist-img-wrap">
@@ -231,7 +231,7 @@ export default function AssistYou({ onSelectTriage }) {
                 <h3 className="assist-card-title">{option.name}</h3>
                 <p className="assist-card-desc">{option.desc}</p>
                 <div className="assist-card-action">
-                  <span className="assist-card-btn">
+                  <span className="assist-card-btn" style={{ backgroundColor: option.accent }}>
                     Book Appointment <ChevronRight size={14} />
                   </span>
                 </div>
