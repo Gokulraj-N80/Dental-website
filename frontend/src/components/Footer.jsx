@@ -63,14 +63,14 @@ export default function Footer({ onNavClick }) {
               </div>
               <div className="contact-row">
                 <Mail size={18} />
-                <span>care@drneemz.com</span>
+                <span>care@drmarcus.com</span>
               </div>
             </div>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} Dr. Neemz Dentistry. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Dr. Marcus Dentistry. All rights reserved.</p>
         </div>
       </div>
     </footer>

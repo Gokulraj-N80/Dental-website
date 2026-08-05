@@ -6,7 +6,7 @@ export default function BrandRevealLoader({ onComplete }) {
   const logoSvgRef = useRef(null);
   const textRef = useRef(null);
 
-  // SVG Paths of Dr. Neemz logo
+  // SVG Paths of Dr. Marcus logo
   const crossPathRef = useRef(null);
   const trunkPathRef = useRef(null);
   const rootsPathRef = useRef(null);
@@ -207,7 +207,7 @@ export default function BrandRevealLoader({ onComplete }) {
             {/* Typography Side */}
             <div className="loader-logo-text" ref={textRef}>
               <div className="loader-text-row">
-                <span className="ltext-bold">DR. NEEMZ</span>
+                <span className="ltext-bold">DR. MARCUS</span>
                 <span className="ltext-light">DENTISTRY</span>
               </div>
               <span className="ltext-tagline">Smile Confident with Neem</span>

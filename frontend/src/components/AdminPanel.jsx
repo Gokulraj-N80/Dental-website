@@ -288,7 +288,7 @@ export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
       <aside className="admin-sidebar">
         <div className="admin-sidebar-top">
           <div className="admin-logo-section">
-            <span className="admin-logo-title">DR. NEEMZ</span>
+            <span className="admin-logo-title">DR. MARCUS</span>
             <span className="admin-logo-subtitle">Admin Console</span>
           </div>
 
@@ -314,7 +314,7 @@ export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
           <div className="admin-help-box">
             <strong>Need help?</strong>
             <p>Contact the event/clinic developer team for console maintenance.</p>
-            <a href="mailto:support@drneemz.com">View Help Center</a>
+            <a href="mailto:support@drmarcus.com">View Help Center</a>
           </div>
 
           <button onClick={handleLogout} className="admin-logout-btn">

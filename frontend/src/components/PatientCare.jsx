@@ -71,7 +71,7 @@ export default function PatientCare() {
           <span className="section-tag">Patient Care</span>
           <h1 className="page-hero-title">Your Health, Our Priority</h1>
           <p className="page-hero-subtitle">
-            Everything you need to know before, during, and after your visit to Dr. Neemz Dentistry.
+            Everything you need to know before, during, and after your visit to Dr. Marcus Dentistry.
           </p>
         </div>
       </div>
