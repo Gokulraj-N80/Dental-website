@@ -248,6 +248,16 @@ export default function App() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }} />
         )}
+
+        {/* Floating Premium Theme Switcher Widget to make themes noticeable */}
+        <div className="floating-theme-switch-indicator" role="complementary" aria-label="Theme selector">
+          <span className="ft-label">Themes:</span>
+          <div className="ft-buttons-group">
+            <button onClick={() => setTheme('neem')} className={`ft-btn ${theme === 'neem' ? 'active' : ''}`} aria-label="Neem Theme">🌿</button>
+            <button onClick={() => setTheme('clinical-blue')} className={`ft-btn ${theme === 'clinical-blue' ? 'active' : ''}`} aria-label="Clinical Theme">💙</button>
+            <button onClick={() => setTheme('soft-medical-blush')} className={`ft-btn ${theme === 'soft-medical-blush' ? 'active' : ''}`} aria-label="Blush Theme">🌸</button>
+          </div>
+        </div>
       </div>
     </div>
   );
