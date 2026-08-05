@@ -149,9 +149,9 @@ export default function AssistYou({ onSelectTriage }) {
           scrollTrigger: {
             trigger: section,
             pin: true,
-            scrub: 1.2,
+            scrub: 0.6, // Snappier follow
             start: 'top top',
-            end: () => `+=${(grid.scrollWidth - viewport.offsetWidth + 480) * 1.1}`,
+            end: () => `+=${(grid.scrollWidth - viewport.offsetWidth + 480) * 0.7}`, // Shorter scroll distance to finish translation
             invalidateOnRefresh: true,
             anticipatePin: 1
           }
