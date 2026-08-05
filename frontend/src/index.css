@@ -5871,7 +5871,7 @@ button.service-learn-more:hover {
     gap: 32px;
     max-width: none;
     margin: 0;
-    padding-left: 64px;
+    padding-left: 120px;
     padding-right: 64px;
     width: max-content;
     will-change: transform;
