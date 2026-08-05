@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import BrandRevealLoader from './components/BrandRevealLoader';
 import WhyTrust from './components/WhyTrust';
 import QuickBooking from './components/QuickBooking';
 import TreatmentsGrid from './components/TreatmentsGrid';
@@ -59,12 +60,9 @@ export default function App() {
   const [currentTab, setCurrentTab] = useState('home');
   const [selectedTreatment, setSelectedTreatment] = useState(null);
   const [isPreloading, setIsPreloading] = useState(true);
-  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [hideNavbarLogo, setHideNavbarLogo] = useState(true);
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'neem');
   
-  const preloaderRef = useRef(null);
-  const logoWrapRef = useRef(null);
-  const progressTextRef = useRef(null);
   const lenisRef = useRef(null);
 
   useEffect(() => {
@@ -98,47 +96,69 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    // Animate progress value
-    const obj = { val: 0 };
-    const tl = gsap.timeline({
+  const handleLoaderComplete = (logoSvg, logoText, preloaderOverlay) => {
+    const targetEl = document.querySelector('.header-logo-target');
+    if (!targetEl) {
+      setIsPreloading(false);
+      setHideNavbarLogo(false);
+      return;
+    }
+
+    // Get exact target bounds in header
+    const targetRect = targetEl.getBoundingClientRect();
+    const currentRect = logoSvg.getBoundingClientRect();
+
+    // Flight offset measurements
+    const deltaX = targetRect.left - currentRect.left;
+    const deltaY = targetRect.top - currentRect.top;
+    const scaleFactor = 42 / 90; // target size 42 / loader size 90
+
+    const flightTl = gsap.timeline({
       onComplete: () => {
-        // Animate overlay slide up and fade out
-        const exitTl = gsap.timeline({
-          onComplete: () => {
-            setIsPreloading(false);
-          }
-        });
-        
-        exitTl.to(logoWrapRef.current, {
-          scale: 0.8,
-          opacity: 0,
-          y: -50,
-          duration: 0.6,
-          ease: 'power3.inOut'
-        })
-        .to(preloaderRef.current, {
-          yPercent: -100,
-          opacity: 0,
-          duration: 0.8,
-          ease: 'power4.inOut'
-        }, '-=0.3');
+        setHideNavbarLogo(false);
+        setIsPreloading(false);
       }
     });
 
-    tl.to(obj, {
-      val: 100,
-      duration: 1.6,
-      ease: 'power2.out',
-      onUpdate: () => {
-        setLoadingProgress(Math.floor(obj.val));
-      }
-    });
+    // Animate flight path & radial page reveal mask
+    flightTl
+      .to(logoText, {
+        opacity: 0,
+        x: 30,
+        duration: 0.4,
+        ease: 'power2.in'
+      })
+      .to(logoSvg, {
+        x: deltaX,
+        y: deltaY,
+        scale: scaleFactor,
+        transformOrigin: 'top left',
+        duration: 1.3,
+        ease: 'power4.inOut'
+      }, '-=0.15')
+      .to('.app-reveal-wrapper', {
+        clipPath: 'circle(150% at 50% 50%)',
+        duration: 1.5,
+        ease: 'power3.inOut'
+      }, '-=0.9')
+      .to(preloaderOverlay, {
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.out'
+      }, '-=0.4');
 
-    return () => {
-      tl.kill();
-    };
-  }, []);
+    // Staggered Navbar links fade in during flight
+    flightTl.fromTo('.desktop-only-links .nav-link-neemz, .desktop-only-links .nav-dropdown-wrapper', {
+      opacity: 0,
+      y: -15
+    }, {
+      opacity: 1,
+      y: 0,
+      stagger: 0.06,
+      duration: 0.7,
+      ease: 'power2.out'
+    }, '-=0.8');
+  };
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -183,110 +203,106 @@ export default function App() {
   return (
     <div className="app-container">
       {isPreloading && (
-        <div className="preloader-overlay" ref={preloaderRef}>
-          <div className="preloader-logo-wrap" ref={logoWrapRef}>
-            <Logo size={90} showText={true} />
-            <div className="preloader-progress-track">
-              <div className="preloader-progress-bar" style={{ width: `${loadingProgress}%` }} />
-            </div>
-            <div className="preloader-progress-text" ref={progressTextRef}>
-              {loadingProgress}%
-            </div>
-          </div>
+        <BrandRevealLoader onComplete={handleLoaderComplete} />
+      )}
+
+      <div className={`app-reveal-wrapper ${isPreloading ? 'clipped' : ''}`}>
+        {/* Premium Apple-style top scroll indicator */}
+        <div className="scroll-progress-indicator" style={{ width: `${scrollProgress}%` }} />
+
+        {/* Dynamic drifting background particles / mesh blur blooms */}
+        <div className="ambient-glow-container" aria-hidden="true">
+          <div className="ambient-blob ambient-blob-1" />
+          <div className="ambient-blob ambient-blob-2" />
         </div>
-      )}
 
+        <Navbar
+          currentTab={currentTab}
+          setCurrentTab={(tab) => {
+            setCurrentTab(tab);
+            setSelectedTreatment(null);
+          }}
+          onSelectTreatment={(item) => {
+            setSelectedTreatment(item);
+            navigate('treatment-details');
+          }}
+          theme={theme}
+          setTheme={setTheme}
+          hideLogo={hideNavbarLogo}
+        />
 
-      {/* Premium Apple-style top scroll indicator */}
-      <div className="scroll-progress-indicator" style={{ width: `${scrollProgress}%` }} />
+        <main className="main-content">
+          {currentTab === 'home' && (
+            <>
+              <Hero 
+                onBookClick={() => navigate('booking')} 
+                onServicesClick={() => navigate('services')}
+                startAnimation={!isPreloading}
+              />
+              <GoogleReviewsBar />
+              
+              {/* 1. How May We Assist You */}
+              <AssistYou onSelectTriage={(treatment) => {
+                setSelectedTreatment(treatment);
+                navigate('booking');
+              }} />
+              
+              <hr className="section-divider" />
+              
+              {/* 2. Why Trust Dr */}
+              <WhyTrust />
+              
+              <hr className="section-divider" />
+              
+              {/* 3. Inline Booking Form */}
+              <section className="home-booking-inline-section section">
+                <div className="section-header">
+                  <span className="section-tag">Appointment</span>
+                  <h2 className="section-title">Book an Appointment</h2>
+                  <p className="section-subtitle">Select your preferred date, time, and service to secure your visit instantly.</p>
+                </div>
+                <BookingForm defaultService={selectedTreatment} />
+              </section>
+              
+              <hr className="section-divider" />
+              
+              {/* 5. Google reviews & video testimonial slide */}
+              <Testimonials />
 
-      {/* Dynamic drifting background particles / mesh blur blooms */}
-      <div className="ambient-glow-container" aria-hidden="true">
-        <div className="ambient-blob ambient-blob-1" />
-        <div className="ambient-blob ambient-blob-2" />
+            </>
+          )}
+
+          {currentTab === 'about' && <About />}
+          {currentTab === 'services' && <Services onBookClick={() => navigate('booking')} />}
+          {currentTab === 'blog' && <Blog />}
+          {currentTab === 'booking' && <BookingForm defaultService={selectedTreatment} />}
+          {currentTab === 'patient-care' && <PatientCare />}
+          {currentTab === 'doctors' && <OurDoctors />}
+          {currentTab === 'admin' && (
+            <AdminPanel
+              onGoToPublic={() => setCurrentTab('home')}
+              theme={theme}
+              setTheme={setTheme}
+            />
+          )}
+
+          {currentTab === 'treatment-details' && selectedTreatment && (
+            <TreatmentDetails
+              treatmentName={selectedTreatment}
+              onBack={() => { setSelectedTreatment(null); navigate('home'); }}
+              onBook={(item) => { setSelectedTreatment(item); navigate('booking'); }}
+            />
+          )}
+        </main>
+
+        {currentTab !== 'admin' && (
+          <Footer onNavClick={(tab) => {
+            setCurrentTab(tab);
+            setSelectedTreatment(null);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }} />
+        )}
       </div>
-
-      <Navbar
-        currentTab={currentTab}
-        setCurrentTab={(tab) => {
-          setCurrentTab(tab);
-          setSelectedTreatment(null);
-        }}
-        onSelectTreatment={(item) => {
-          setSelectedTreatment(item);
-          navigate('treatment-details');
-        }}
-        theme={theme}
-        setTheme={setTheme}
-      />
-
-      <main className="main-content">
-        {currentTab === 'home' && (
-          <>
-            <Hero onBookClick={() => navigate('booking')} onServicesClick={() => navigate('services')} />
-            <GoogleReviewsBar />
-            
-            {/* 1. How May We Assist You */}
-            <AssistYou onSelectTriage={(treatment) => {
-              setSelectedTreatment(treatment);
-              navigate('booking');
-            }} />
-            
-            <hr className="section-divider" />
-            
-            {/* 2. Why Trust Dr */}
-            <WhyTrust />
-            
-            <hr className="section-divider" />
-            
-            {/* 3. Inline Booking Form */}
-            <section className="home-booking-inline-section section">
-              <div className="section-header">
-                <span className="section-tag">Appointment</span>
-                <h2 className="section-title">Book an Appointment</h2>
-                <p className="section-subtitle">Select your preferred date, time, and service to secure your visit instantly.</p>
-              </div>
-              <BookingForm defaultService={selectedTreatment} />
-            </section>
-            
-            <hr className="section-divider" />
-            
-            {/* 5. Google reviews & video testimonial slide */}
-            <Testimonials />
-
-          </>
-        )}
-
-        {currentTab === 'about' && <About />}
-        {currentTab === 'services' && <Services onBookClick={() => navigate('booking')} />}
-        {currentTab === 'blog' && <Blog />}
-        {currentTab === 'booking' && <BookingForm defaultService={selectedTreatment} />}
-        {currentTab === 'patient-care' && <PatientCare />}
-        {currentTab === 'doctors' && <OurDoctors />}
-        {currentTab === 'admin' && (
-          <AdminPanel
-            onGoToPublic={() => setCurrentTab('home')}
-            theme={theme}
-            setTheme={setTheme}
-          />
-        )}
-
-        {currentTab === 'treatment-details' && selectedTreatment && (
-          <TreatmentDetails
-            treatmentName={selectedTreatment}
-            onBack={() => { setSelectedTreatment(null); navigate('home'); }}
-            onBook={(item) => { setSelectedTreatment(item); navigate('booking'); }}
-          />
-        )}
-      </main>
-
-      {currentTab !== 'admin' && (
-        <Footer onNavClick={(tab) => {
-          setCurrentTab(tab);
-          setSelectedTreatment(null);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }} />
-      )}
     </div>
   );
 }

@@ -8,7 +8,7 @@ const DENTAL_TREATMENTS = [
   'SMILE MAKEOVERS', 'PEDIATRIC DENTISTRY', 'GUM TREATMENT', 'DENTAL CROWN', 'LASER-DENTISTRY'
 ];
 
-export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, theme, setTheme }) {
+export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, theme, setTheme, hideLogo }) {
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null); // 'treatments' | null
   const [isThemeDropdownOpen, setIsThemeDropdownOpen] = useState(false);
@@ -56,7 +56,7 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
     <nav className={`navbar-container ${scrolled ? 'scrolled-glass-shadow' : ''}`}>
       <div className="navbar-wrapper">
         {/* Logo */}
-        <div className="navbar-logo" onClick={() => handleNavClick('home')}>
+        <div className={`navbar-logo header-logo-target ${hideLogo ? 'logo-hidden' : ''}`} onClick={() => handleNavClick('home')}>
           <Logo size={42} showText={true} />
         </div>
 

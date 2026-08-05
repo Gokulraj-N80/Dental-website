@@ -31,7 +31,7 @@ function useCounter(target, duration = 1500) {
   return count;
 }
 
-export default function Hero({ onBookClick, onServicesClick }) {
+export default function Hero({ onBookClick, onServicesClick, startAnimation }) {
   const patientsCount = useCounter(1500, 1800);
   const experienceCount = useCounter(10, 1000);
 
@@ -39,7 +39,21 @@ export default function Hero({ onBookClick, onServicesClick }) {
   const leftColRef = useRef(null);
   const rightColRef = useRef(null);
 
+  // Immediate initial hidden state to prevent flash
   useEffect(() => {
+    gsap.set('.hero-tag-premium', { opacity: 0, y: -20 });
+    gsap.set('.word-span', { opacity: 0, y: 30 });
+    gsap.set('.hero-split-desc', { opacity: 0, y: 20 });
+    gsap.set('.hero-split-actions button', { opacity: 0, scale: 0.95 });
+    gsap.set('.strip-item', { opacity: 0, y: 15 });
+    gsap.set('.hero-img-wrap', { scale: 0.9, opacity: 0, rotation: -0.8 });
+    gsap.set('.hero-float-badge', { opacity: 0, scale: 0 });
+    gsap.set('.hero-img-ring', { opacity: 0, scale: 0.5 });
+  }, []);
+
+  useEffect(() => {
+    if (!startAnimation) return;
+
     const leftEl = leftColRef.current;
     const rightEl = rightColRef.current;
     if (!leftEl || !rightEl) return;
@@ -66,30 +80,52 @@ export default function Hero({ onBookClick, onServicesClick }) {
     // GSAP Entrance Timeline
     const tl = gsap.timeline();
     
-    // Initial states
-    gsap.set('.hero-tag-premium', { opacity: 0, y: -20 });
-    gsap.set('.word-span', { opacity: 0, y: 30 });
-    gsap.set('.hero-split-desc', { opacity: 0, y: 20 });
-    gsap.set('.hero-split-actions button', { opacity: 0, scale: 0.95 });
-    gsap.set('.strip-item', { opacity: 0, y: 15 });
-    gsap.set('.hero-img-wrap', { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.1 });
-    gsap.set('.hero-float-badge', { opacity: 0, scale: 0 });
-    gsap.set('.hero-img-ring', { opacity: 0, scale: 0.5 });
-
     tl.to('.hero-tag-premium', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' })
       .to('.word-span', { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'back.out(1.7)' }, '-=0.3')
       .to('.hero-split-desc', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4')
       .to('.hero-split-actions button', { opacity: 1, scale: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out' }, '-=0.3')
-      .to('.hero-img-wrap', { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, duration: 1.2, ease: 'power4.inOut' }, '-=0.7')
-      .to('.hero-img-ring', { opacity: 0.4, scale: 1, duration: 1, stagger: 0.2, ease: 'elastic.out(1, 0.75)' }, '-=0.8')
+      .to('.hero-img-wrap', { opacity: 1, scale: 1, rotation: 0, duration: 1.4, ease: 'power3.out' }, '-=0.7')
+      .to('.hero-img-ring', { opacity: 0.4, scale: 1, duration: 1, stagger: 0.2, ease: 'elastic.out(1, 0.75)' }, '-=0.9')
       .to('.hero-float-badge', { opacity: 1, scale: 1, duration: 0.8, stagger: 0.15, ease: 'elastic.out(1, 0.5)' }, '-=0.6')
       .to('.strip-item', { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' }, '-=0.5');
+
+    // Continuous slow floating animations
+    const floatImg = gsap.to('.hero-img-wrap', {
+      y: -12,
+      duration: 4,
+      yoyo: true,
+      repeat: -1,
+      ease: 'sine.inOut'
+    });
+
+    const floatRing1 = gsap.to('.hero-img-ring', {
+      y: 10,
+      x: -5,
+      rotation: 15,
+      duration: 6,
+      yoyo: true,
+      repeat: -1,
+      ease: 'sine.inOut'
+    });
+
+    const floatRing2 = gsap.to('.hero-img-ring-2', {
+      y: -8,
+      x: 8,
+      rotation: -10,
+      duration: 8,
+      yoyo: true,
+      repeat: -1,
+      ease: 'sine.inOut'
+    });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       tl.kill();
+      floatImg.kill();
+      floatRing1.kill();
+      floatRing2.kill();
     };
-  }, []);
+  }, [startAnimation]);
 
   return (
     <section className="hero-split-section" ref={containerRef}>

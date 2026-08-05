@@ -7059,4 +7059,142 @@ html.lenis body {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+/* ==========================================================================
+   CINEMATIC BRAND REVEAL LOADER STYLES
+   ========================================================================== */
+.brand-reveal-loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.loader-ambient-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.loader-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-secondary);
+  border-radius: 50%;
+  opacity: 0.15;
+  filter: blur(1px);
+}
+
+.loader-particle.p1 { top: 20%; left: 30%; animation: floatSlow 8s infinite alternate ease-in-out; }
+.loader-particle.p2 { top: 70%; left: 25%; animation: floatSlow 10s infinite alternate ease-in-out -2s; }
+.loader-particle.p3 { top: 35%; left: 75%; animation: floatSlow 12s infinite alternate ease-in-out -4s; }
+.loader-particle.p4 { top: 80%; left: 80%; animation: floatSlow 7s infinite alternate ease-in-out -6s; }
+
+@keyframes floatSlow {
+  0% { transform: translateY(0) translateX(0); }
+  100% { transform: translateY(-30px) translateX(20px); }
+}
+
+.loader-stage {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.loader-center-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-secondary);
+  border-radius: 50%;
+}
+
+.loader-ring-svg {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  pointer-events: none;
+}
+
+.loader-logo-wrapper {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-logo-flex {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.loader-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.loader-text-row {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+}
+
+.loader-logo-text .ltext-bold {
+  font-weight: 900;
+  font-size: 1.5rem;
+  letter-spacing: 0.8px;
+  color: var(--color-secondary);
+}
+
+.loader-logo-text .ltext-light {
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.8px;
+  color: var(--color-accent);
+}
+
+.loader-logo-text .ltext-tagline {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--color-accent-medium);
+  margin-top: 3px;
+}
+
+/* Page wrapper reveal layout */
+.app-reveal-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  background-color: var(--color-primary);
+}
+
+.app-reveal-wrapper.clipped {
+  clip-path: circle(0% at 50% 50%);
+}
+
+/* Navbar logo flight override */
+.header-logo-target.logo-hidden {
+  opacity: 0 !important;
+  pointer-events: none;
 }
