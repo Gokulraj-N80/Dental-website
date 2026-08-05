@@ -1438,7 +1438,6 @@ h6 {
   overflow: hidden;
   width: 420px;
   height: 500px;
-  box-shadow: 0 32px 80px rgba(var(--shadow-color-rgb), 0.18), 0 12px 30px rgba(var(--shadow-color-rgb), 0.1);
   background: linear-gradient(135deg, #e8f5ee 0%, #f0faf3 100%);
   animation: morphShape 10s ease-in-out infinite;
 }
