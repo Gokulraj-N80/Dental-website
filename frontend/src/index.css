@@ -7320,24 +7320,27 @@ html.lenis body {
     box-shadow: var(--shadow-sm) !important;
   }
 
-  /* Hide card images and description texts to save scroll space */
+  /* Keep images but scale them down significantly for mobile */
   .assist-img-wrap {
-    display: none !important;
+    display: block !important;
+    height: 90px !important;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
   }
 
   .assist-card-desc {
-    display: none !important;
+    display: none !important; /* Hide description copy to keep it tidy */
   }
 
   .assist-card-content {
-    padding: 12px 10px !important;
-    gap: 6px !important;
+    padding: 10px 8px !important;
+    gap: 4px !important;
     align-items: center;
     text-align: center;
   }
 
   .assist-card-title {
-    font-size: 0.8rem !important;
+    font-size: 0.76rem !important;
     font-weight: 700 !important;
     line-height: 1.3 !important;
   }
@@ -7347,13 +7350,20 @@ html.lenis body {
   }
 
   .assist-card-btn {
-    padding: 4px 12px !important;
-    font-size: 0.72rem !important;
+    padding: 3px 10px !important;
+    font-size: 0.68rem !important;
   }
 
   /* ── 6. WHY TRUST US / TRUST CARE ── */
   .wt-visual {
-    display: none !important; /* Hide image completely to save scroll space */
+    display: block !important; /* Restore image */
+    width: 100% !important;
+    margin-bottom: 16px !important;
+  }
+
+  .wt-img-frame img {
+    height: 200px !important; /* Extremely compact height for mobile */
+    border-radius: 12px !important;
   }
 
   .wt-section {
@@ -7371,23 +7381,24 @@ html.lenis body {
   }
 
   .wt-pillar {
-    padding: 12px 10px !important;
-    gap: 8px !important;
+    padding: 10px 8px !important;
+    gap: 6px !important;
     align-items: center;
   }
 
   .wt-pillar-icon-wrap {
-    width: 32px !important;
-    height: 32px !important;
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 8px !important;
   }
 
   .wt-pillar-icon-wrap svg {
-    width: 16px !important;
-    height: 16px !important;
+    width: 14px !important;
+    height: 14px !important;
   }
 
   .wt-pillar-body h4 {
-    font-size: 0.8rem !important;
+    font-size: 0.76rem !important;
     margin: 0 !important;
   }
 
@@ -7398,11 +7409,19 @@ html.lenis body {
 
   /* ── 7. GOOGLE REVIEWS BAR ── */
   .reviews-bar-wrapper {
-    flex-direction: column;
-    gap: 8px !important;
-    padding: 10px !important;
-    text-align: center;
-    font-size: 0.8rem !important;
+    flex-direction: row !important; /* Keep it in a single neat row */
+    justify-content: center !important;
+    gap: 12px !important;
+    padding: 6px 12px !important; /* Tiny padding */
+    font-size: 0.72rem !important; /* Compact text */
+    max-width: 90% !important;
+    margin: 10px auto !important;
+    border-radius: 99px !important;
+  }
+
+  .reviews-bar-wrapper svg {
+    width: 12px !important;
+    height: 12px !important;
   }
 
   /* ── 8. BOOKING SECTION ── */
@@ -7438,17 +7457,18 @@ html.lenis body {
 
   /* ── 9. FOOTER ── */
   .footer-container {
-    padding: 30px 16px 16px !important;
+    padding: 20px 12px 12px !important; /* Compact footer padding */
   }
 
   .footer-grid {
     grid-template-columns: 1fr !important;
-    gap: 16px !important;
+    gap: 12px !important;
     text-align: center;
   }
 
   .footer-links-col {
     align-items: center !important;
+    gap: 6px !important;
   }
 
   .footer-links-col h4 {
