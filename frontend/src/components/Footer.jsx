@@ -70,7 +70,7 @@ export default function Footer({ onNavClick }) {
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} Dr Neemz Dentistry. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Dr. Neemz Dentistry. All rights reserved.</p>
         </div>
       </div>
     </footer>

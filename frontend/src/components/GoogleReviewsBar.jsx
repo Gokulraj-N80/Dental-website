@@ -4,7 +4,7 @@ import { Star } from 'lucide-react';
 const REVIEWS = [
   { name: 'Janakarajan S', text: 'Crooked/crowded teeth corrected with braces. Detailed explanation and clean appointments. Happy with results!' },
   { name: 'Barani S', text: 'Painless Root Canal & zirconia crown fixing. Feels extremely strong, fits perfectly, looks very natural.' },
-  { name: 'Kalaiselvi N', text: 'Done composite filling in Neemz Dentistry... very friendly doctor and staff. Nice experience.' },
+  { name: 'Kalaiselvi N', text: 'Done composite filling in Dr. Neemz Dentistry... very friendly doctor and staff. Nice experience.' },
 ];
 
 export default function GoogleReviewsBar() {
