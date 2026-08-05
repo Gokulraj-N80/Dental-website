@@ -7594,8 +7594,8 @@ html.lenis body {
 /* ─── FLOATING PREMIUM THEME SWITCHER WIDGET ─── */
 .floating-theme-switch-indicator {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  top: 100px; /* Positioned below the navbar level */
+  left: 24px;
   background: rgba(var(--color-primary-rgb, 255, 255, 255), 0.72);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -7664,8 +7664,10 @@ html.lenis body {
 /* Adjust layout on small viewports so switcher doesn't conflict with elements */
 @media (max-width: 600px) {
   .floating-theme-switch-indicator {
-    bottom: 16px;
-    right: 16px;
+    top: 76px; /* Below mobile navbar level */
+    left: 16px;
+    bottom: auto;
+    right: auto;
     padding: 4px 8px;
   }
   .ft-btn {
