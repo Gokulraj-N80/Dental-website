@@ -60,7 +60,7 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
 
         {/* Mobile Menu Toggle Button */}
         <button 
-          className="mobile-menu-toggle-btn"
+          className={`mobile-menu-toggle-btn ${isMobileMenuOpen ? 'open' : ''}`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle Navigation Menu"
         >
