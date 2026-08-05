@@ -4773,16 +4773,13 @@ button.service-learn-more:hover {
 
 .journey-section {
   background-color: #FAFCF9;
-  padding-top: 80px;
-  padding-bottom: 80px;
+  /* ─── Outer wrapper ─── */
 }
-
-/* ─── Outer wrapper ─── */
 .tree-timeline {
   position: relative;
-  max-width: 1100px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 0 24px 48px;
+  padding: 0 20px 48px;
 }
 
 /* ─── Vertical trunk ─── */
@@ -4791,7 +4788,7 @@ button.service-learn-more:hover {
   left: 50%;
   top: 0;
   bottom: 48px;
-  width: 5px;
+  width: 4px;
   transform: translateX(-50%);
   background: linear-gradient(180deg,
       var(--color-secondary-dark) 0%,
@@ -4799,40 +4796,32 @@ button.service-learn-more:hover {
       var(--color-tree-trunk-2) 65%,
       var(--color-tree-trunk-3) 100%);
   border-radius: 3px;
-  box-shadow: 2px 0 10px rgba(var(--shadow-color-rgb), 0.18), -2px 0 10px rgba(var(--shadow-color-rgb), 0.08);
-  animation: lineGrowY 1.2s cubic-bezier(0.16, 1, 0.3, 1) both 0.3s;
-  transform-origin: top center;
   z-index: 0;
 }
 
-/* ─── Root dot ─── */
+/* ─── Root cap ─── */
 .tree-root-cap {
   width: 14px;
   height: 14px;
   border-radius: 50%;
   background-color: var(--color-tree-trunk-3);
   margin: 0 auto;
-  box-shadow: 0 0 0 5px rgba(var(--shadow-color-rgb), 0.1);
   position: relative;
   z-index: 2;
+  box-shadow: 0 0 0 5px rgba(var(--shadow-color-rgb), 0.1);
 }
 
-/* ─── Row ─── */
+/* ─── Timeline Row ─── */
 .tree-row {
   display: grid;
   grid-template-columns: 1fr 40px 1fr;
-  /* left-half | dot | right-half */
   align-items: center;
-  min-height: 110px;
-  margin-bottom: 8px;
+  margin-bottom: 24px;
   position: relative;
   z-index: 1;
-
-  /* Scroll-reveal */
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1);
 }
 
 .tree-row.visible {
@@ -4840,219 +4829,122 @@ button.service-learn-more:hover {
   transform: translateY(0);
 }
 
-/* ─── Each half: flex row, fills its grid cell ─── */
-.tree-half {
-  display: flex;
-  align-items: center;
-  height: 100%;
+/* ─── Year / Card placement by row direction ─── */
+.row-left .tree-year {
+  grid-column: 1;
+  text-align: right;
+  padding-right: 20px;
+  font-family: var(--font-main);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--color-secondary);
 }
 
-.tree-half-left {
-  flex-direction: row;
-  /* card → arm → trunk */
+.row-left .tree-card-container {
+  grid-column: 3;
+  padding-left: 20px;
 }
 
-.tree-half-right {
-  flex-direction: row;
-  /* trunk → arm → card */
+.row-right .tree-year {
+  grid-column: 3;
+  text-align: left;
+  padding-left: 20px;
+  font-family: var(--font-main);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--color-secondary);
 }
 
-/* Empty side just takes up space */
-.tree-half-empty {
-  flex: 1;
+.row-right .tree-card-container {
+  grid-column: 1;
+  padding-right: 20px;
 }
 
-/* ─── Branch arm — the key piece ─── */
-.tree-branch-arm {
-  flex: 1;
-  /* ← fills ALL remaining space in the half */
-  height: 3px;
-  border-radius: 2px;
-  position: relative;
-}
-
-/* Left-side arm: gradient flows right-to-left (trunk is on the right) */
-.arm-right-to-trunk {
-  background: linear-gradient(to left,
-      var(--color-secondary-dark) 0%,
-      var(--color-tree-trunk-2) 50%,
-      var(--color-tree-arm-fade) 100%);
-}
-
-/* Right-side arm: gradient flows left-to-right (trunk is on the left) */
-.arm-trunk-to-right {
-  background: linear-gradient(to right,
-      var(--color-secondary-dark) 0%,
-      var(--color-tree-trunk-2) 50%,
-      var(--color-tree-arm-fade) 100%);
-}
-
-/* ─── Center node ─── */
+/* ─── Dot Center Node ─── */
 .tree-node {
+  grid-column: 2;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   position: relative;
   z-index: 3;
-  height: 100%;
 }
 
-/* ─── Green dot ─── */
 .tree-dot {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--color-secondary-dark) 0%, var(--color-tree-dot-gradient) 100%);
   color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow:
-    0 0 0 5px rgba(var(--shadow-color-rgb), 0.12),
-    0 4px 16px rgba(var(--shadow-color-rgb), 0.3);
+  box-shadow: 0 0 0 4px rgba(var(--shadow-color-rgb), 0.12);
   flex-shrink: 0;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   z-index: 3;
-}
-
-.tree-row:hover .tree-dot {
-  transform: scale(1.18);
-  box-shadow:
-    0 0 0 9px rgba(var(--shadow-color-rgb), 0.14),
-    0 6px 22px rgba(var(--shadow-color-rgb), 0.35);
 }
 
 /* ─── Card ─── */
 .tree-card {
   background: #FFFFFF;
   border: 1px solid rgba(var(--shadow-color-rgb), 0.13);
-  border-radius: 14px;
-  padding: 20px 24px;
-  /* Increased padding */
-  width: 360px;
-  /* Increased box size */
-  flex-shrink: 0;
-  box-shadow: 0 4px 18px rgba(var(--shadow-color-rgb), 0.07);
-  position: relative;
-  transition:
-    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.25s ease;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 14px rgba(var(--shadow-color-rgb), 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .tree-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 14px 36px rgba(var(--shadow-color-rgb), 0.14);
-  border-color: var(--color-secondary-dark);
-}
-
-/* Arrow on LEFT card pointing toward trunk (→) */
-.tree-half-left .tree-card::after {
-  content: '';
-  position: absolute;
-  right: -9px;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 9px solid transparent;
-  border-left-color: #FFFFFF;
-  filter: drop-shadow(1px 0 0 rgba(var(--shadow-color-rgb), 0.1));
-}
-
-/* Arrow on RIGHT card pointing toward trunk (←) */
-.tree-half-right .tree-card::after {
-  content: '';
-  position: absolute;
-  left: -9px;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 9px solid transparent;
-  border-right-color: #FFFFFF;
-  filter: drop-shadow(-1px 0 0 rgba(var(--shadow-color-rgb), 0.1));
-}
-
-.tree-card-year {
-  font-size: 0.9rem;
-  /* Increased size */
-  font-weight: 800;
-  color: var(--color-gold);
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  margin-bottom: 6px;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(var(--shadow-color-rgb), 0.12);
 }
 
 .tree-card-title {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
-  /* Increased size */
+  font-size: 1.05rem;
   font-weight: 800;
   color: var(--color-secondary-dark);
-  margin-bottom: 8px;
-  line-height: 1.25;
+  margin-bottom: 6px;
 }
 
 .tree-card-desc {
-  font-size: 0.95rem;
-  /* Increased size */
+  font-size: 0.85rem;
   color: var(--color-accent-medium);
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 /* ─── Mobile ─── */
 @media (max-width: 640px) {
   .tree-timeline {
-    padding: 0 12px 24px !important;
+    padding: 0 10px 24px !important;
   }
 
   .tree-trunk {
     left: 45px !important;
-    width: 3px !important;
+    width: 2px !important;
+    transform: none !important;
   }
 
   .tree-row {
     grid-template-columns: 35px 30px 1fr !important;
     gap: 8px !important;
-    min-height: auto !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 16px !important;
   }
 
-  /* We'll display the year in the left column directly */
-  .tree-half-left {
-    display: flex !important;
-    justify-content: flex-end;
-    align-items: center;
-    height: auto;
-  }
-  
-  .tree-half-left .tree-half-empty {
-    display: none;
-  }
-
-  /* Force display of year in left half */
-  .tree-half-left::before {
-    content: attr(data-year);
-    font-family: var(--font-main);
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: var(--color-secondary);
-    white-space: nowrap;
-  }
-
-  /* Hide the duplicate year inside the card on mobile to save vertical space */
-  .tree-card-year {
-    display: none !important;
+  .row-left .tree-year, .row-right .tree-year {
+    grid-column: 1 !important;
+    text-align: right !important;
+    padding: 0 !important;
+    font-size: 0.72rem !important;
   }
 
   .tree-node {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
+    grid-column: 2 !important;
   }
 
   .tree-dot {
     width: 22px !important;
     height: 22px !important;
-    border-width: 1.5px !important;
   }
 
   .tree-dot svg {
@@ -5060,31 +4952,25 @@ button.service-learn-more:hover {
     height: 10px !important;
   }
 
-  .tree-half-right {
-    display: flex !important;
+  .row-left .tree-card-container, .row-right .tree-card-container {
+    grid-column: 3 !important;
+    padding: 0 !important;
     width: 100% !important;
-    padding-left: 4px !important;
   }
 
   .tree-card {
     padding: 10px 12px !important;
-    border-radius: 10px !important;
-    width: 100% !important;
-    box-shadow: var(--shadow-sm) !important;
+    border-radius: 8px !important;
   }
 
   .tree-card-title {
-    font-size: 0.88rem !important;
+    font-size: 0.85rem !important;
     margin-bottom: 3px !important;
   }
 
   .tree-card-desc {
-    font-size: 0.76rem !important;
+    font-size: 0.74rem !important;
     line-height: 1.4 !important;
-  }
-
-  .tree-branch-arm {
-    display: none !important;
   }
 }
 

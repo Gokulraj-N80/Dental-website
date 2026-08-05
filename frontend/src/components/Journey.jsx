@@ -56,51 +56,26 @@ export default function Journey() {
           return (
             <div
               key={item.year}
-              className="tree-row"
+              className={`tree-row ${isLeft ? 'row-left' : 'row-right'}`}
               data-reveal
               data-delay={index * 140}
             >
-              {/* LEFT half */}
-              <div className="tree-half tree-half-left" data-year={item.year}>
-                {isLeft ? (
-                  /* card + branch line reaching right toward trunk */
-                  <>
-                    <div className="tree-card">
-                      <div className="tree-card-year">{item.year}</div>
-                      <h3 className="tree-card-title">{item.title}</h3>
-                      <p className="tree-card-desc">{item.description}</p>
-                    </div>
-                    {/* The branch arm fills from card edge → trunk */}
-                    <div className="tree-branch-arm arm-right-to-trunk" />
-                  </>
-                ) : (
-                  /* empty left half when card is on the right */
-                  <div className="tree-half-empty" />
-                )}
-              </div>
+              {/* Year label */}
+              <div className="tree-year">{item.year}</div>
 
-              {/* CENTER: trunk dot */}
+              {/* Central node dot */}
               <div className="tree-node">
                 <div className="tree-dot">
                   <Icon size={14} />
                 </div>
               </div>
 
-              {/* RIGHT half */}
-              <div className="tree-half tree-half-right">
-                {!isLeft ? (
-                  /* branch line from trunk → card */
-                  <>
-                    <div className="tree-branch-arm arm-trunk-to-right" />
-                    <div className="tree-card">
-                      <div className="tree-card-year">{item.year}</div>
-                      <h3 className="tree-card-title">{item.title}</h3>
-                      <p className="tree-card-desc">{item.description}</p>
-                    </div>
-                  </>
-                ) : (
-                  <div className="tree-half-empty" />
-                )}
+              {/* Card Container */}
+              <div className="tree-card-container">
+                <div className="tree-card">
+                  <h3 className="tree-card-title">{item.title}</h3>
+                  <p className="tree-card-desc">{item.description}</p>
+                </div>
               </div>
             </div>
           );
