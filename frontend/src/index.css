@@ -870,7 +870,8 @@ h6 {
   position: relative;
 }
 
-.services-section-wrapper {
+.services-section-wrapper,
+.assist-section {
   max-width: none !important;
   margin: 0 !important;
   padding-left: 0 !important;
