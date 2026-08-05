@@ -7424,59 +7424,60 @@ html.lenis body {
     height: 12px !important;
   }
 
-  /* ── 8. BLOG CARDS — COMPACT SQUARE BOXES ── */
+  /* ── 8. BLOG CARDS — 2 PER LINE COMPACT SQUARE BOXES ── */
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr) !important; /* 2 items per line */
+    gap: 10px !important;
+  }
+
   .blog-card-premium {
     border-radius: 8px !important;
     box-shadow: var(--shadow-sm) !important;
     overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
+    height: 100% !important;
   }
 
   .blog-card-img-container {
-    height: 100px !important; /* Small header image */
+    height: 80px !important; /* Extremely small image height for square feel */
     border-radius: 8px 8px 0 0 !important;
   }
 
   .blog-card-img-container .blog-card-tag {
-    display: none !important; /* Hide overlays for clean look */
+    display: none !important; /* Hide overlays */
   }
 
   .blog-card-content {
-    padding: 10px !important;
-    gap: 4px !important;
+    padding: 8px !important;
+    gap: 2px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
   }
 
   .blog-card-title {
-    font-size: 0.82rem !important;
-    line-height: 1.3 !important;
-    margin-bottom: 2px !important;
+    font-size: 0.74rem !important;
+    line-height: 1.25 !important;
+    margin-top: 4px !important;
+    margin-bottom: 0 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
   }
 
   .blog-card-excerpt {
-    display: none !important; /* Hide excerpt text to save space */
+    display: none !important; /* Hide excerpt completely */
   }
 
   .blog-date, .blog-read-time {
-    font-size: 0.65rem !important;
+    font-size: 0.6rem !important;
   }
 
+  /* Hide the author details and read button completely to save space */
   .blog-card-footer {
-    padding: 8px 10px !important;
-  }
-
-  .blog-author-avatar {
-    width: 20px !important;
-    height: 20px !important;
-    font-size: 0.65rem !important;
-  }
-
-  .blog-author-name {
-    font-size: 0.68rem !important;
-  }
-
-  .blog-read-btn {
-    font-size: 0.68rem !important;
+    display: none !important;
   }
 
   /* ── 9. BOOKING SECTION ── */
