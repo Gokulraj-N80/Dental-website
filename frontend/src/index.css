@@ -7457,26 +7457,59 @@ html.lenis body {
 
   /* ── 9. FOOTER ── */
   .footer-container {
-    padding: 20px 12px 12px !important; /* Compact footer padding */
+    padding: 16px 12px 10px !important; /* Minimal padding */
+  }
+
+  .brand-description {
+    display: none !important; /* Hide long text */
   }
 
   .footer-grid {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 1fr 1fr !important; /* 2-column grid instead of single vertical column */
     gap: 12px !important;
-    text-align: center;
+    text-align: left !important;
   }
 
-  .footer-links-col {
-    align-items: center !important;
-    gap: 6px !important;
+  .footer-brand {
+    grid-column: 1 / span 2;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4px !important;
   }
 
-  .footer-links-col h4 {
-    margin-bottom: 8px !important;
+  .footer-links-col, .footer-hours-col, .footer-contact-col {
+    align-items: flex-start !important;
+    gap: 4px !important;
   }
 
-  .footer-logo-col {
-    align-items: center;
+  /* Span contact info full width for better space management */
+  .footer-contact-col {
+    grid-column: 1 / span 2;
+    margin-top: 4px !important;
+  }
+
+  .footer-links-col h4, .footer-hours-col h4, .footer-contact-col h4 {
+    font-size: 0.76rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 4px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .footer-links button, .hours-row, .contact-row {
+    font-size: 0.68rem !important;
+    gap: 4px !important;
+  }
+
+  .hours-row svg, .contact-row svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .footer-bottom {
+    margin-top: 10px !important;
+    padding-top: 6px !important;
+    font-size: 0.62rem !important;
     text-align: center;
   }
 }
