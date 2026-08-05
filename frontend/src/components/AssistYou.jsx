@@ -231,7 +231,7 @@ export default function AssistYou({ onSelectTriage }) {
                 <h3 className="assist-card-title">{option.name}</h3>
                 <p className="assist-card-desc">{option.desc}</p>
                 <div className="assist-card-action">
-                  <span className="assist-card-btn" style={{ backgroundColor: option.accent }}>
+                  <span className="assist-card-btn">
                     Book Appointment <ChevronRight size={14} />
                   </span>
                 </div>
