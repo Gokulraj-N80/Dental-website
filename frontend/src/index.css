@@ -6009,6 +6009,39 @@ button.service-learn-more:hover {
   background: linear-gradient(to top, color-mix(in srgb, var(--color-secondary) 25%, transparent) 0%, transparent 100%);
 }
 
+/* Distinct separate look for Book Appointment card */
+.assist-card-highlighted {
+  background: linear-gradient(135deg, var(--color-secondary-dark) 0%, var(--color-gradient-end) 100%) !important;
+  border: 1px solid var(--color-secondary) !important;
+  box-shadow: 0 12px 30px rgba(var(--shadow-color-rgb), 0.15) !important;
+}
+
+.assist-card-highlighted .assist-card-title {
+  color: var(--color-primary) !important;
+}
+
+.assist-card-highlighted .assist-card-desc {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.assist-card-highlighted .assist-card-btn {
+  background-color: var(--color-primary) !important;
+  color: var(--color-secondary-dark) !important;
+  padding: 8px 18px !important;
+  border-radius: 99px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none !important;
+}
+
+.assist-card-highlighted:hover .assist-card-btn {
+  background-color: var(--color-lime-neemz) !important;
+  color: var(--color-primary) !important;
+  text-decoration: none !important;
+  transform: translateY(-2px);
+}
+
 .assist-action-wrap button {
   display: inline-flex;
   align-items: center;

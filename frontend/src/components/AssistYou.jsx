@@ -221,7 +221,7 @@ export default function AssistYou({ onSelectTriage }) {
           {ASSIST_OPTIONS.map((option) => (
             <div
               key={option.id}
-              className="assist-card interactive-card"
+              className={`assist-card interactive-card ${option.id === 'book' ? 'assist-card-highlighted' : ''}`}
               onClick={() => onSelectTriage(option.treatment)}
             >
               <div className="assist-img-wrap">
