@@ -166,7 +166,7 @@ export default function App() {
         <Navbar
           currentTab={currentTab}
           setCurrentTab={(tab) => {
-            setCurrentTab(tab);
+            navigate(tab);
             setSelectedTreatment(null);
           }}
           onSelectTreatment={(item) => {

@@ -25,7 +25,6 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
   const handleNavClick = (tab) => {
     setCurrentTab(tab);
     setActiveDropdown(null);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleScroll = (id) => {
@@ -47,7 +46,6 @@ export default function Navbar({ currentTab, setCurrentTab, onSelectTreatment, t
   const handleTreatmentClick = (item) => {
     onSelectTreatment(item);
     setActiveDropdown(null);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
 
