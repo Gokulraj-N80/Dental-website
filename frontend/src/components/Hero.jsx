@@ -112,8 +112,12 @@ export default function Hero({ onBookClick, onServicesClick, startAnimation }) {
           <span className="word-span hero-title-accent" style={{ display: 'inline-block' }}>Limits.</span>
         </h1>
 
+        <p style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: '700', color: 'var(--color-secondary)', margin: '4px 0 12px' }}>
+          Because Every Smile Deserves Perfection.
+        </p>
+
         <p className="hero-split-desc">
-          Because Every Smile Deserves Perfection. We deliver professional,
+          Welcome to Dr Neemz Dentistry. We deliver professional,
           anxiety-free treatments in a calming environment using
           surgical-grade safety procedures and 100% digital diagnostics.
         </p>
