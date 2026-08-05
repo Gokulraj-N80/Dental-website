@@ -249,6 +249,8 @@
   gap: 0;
   text-decoration: none;
   overflow: hidden;
+  z-index: 1;
+  pointer-events: auto;
 }
 
 .admin-v2-nav-item::before {
