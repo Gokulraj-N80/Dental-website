@@ -35,8 +35,8 @@ html.lenis, html.lenis body {
   /* Deepest green gradient color */
   --color-footer-bg: #0A1910;
   /* Dark green footer background */
-  --color-footer-text: #D1E6DA;
-  /* Cool green text color for footer */
+  --color-footer-text: #ffffff;
+  /* White text color for footer */
   --shadow-color-rgb: 30, 94, 58;
   /* Green shadow color rgb */
 
@@ -86,8 +86,8 @@ html.lenis, html.lenis body {
   /* Dark blue gradient color */
   --color-footer-bg: #0B192C;
   /* Slate blue footer background */
-  --color-footer-text: #D2E4F9;
-  /* Cool blue text color for footer */
+  --color-footer-text: #ffffff;
+  /* White text color for footer */
   --shadow-color-rgb: 2, 132, 199;
   /* Blue shadow color rgb */
 
@@ -137,8 +137,8 @@ html.lenis, html.lenis body {
   /* Rich warm medium rose instead of dark maroon */
   --color-footer-bg: #4F1E2A;
   /* Softer dark rose instead of black-burgundy */
-  --color-footer-text: #FFE4E8;
-  /* Soft pink text color for footer */
+  --color-footer-text: #ffffff;
+  /* White text color for footer */
   --shadow-color-rgb: 225, 90, 128;
   /* Pink shadow color rgb */
 
