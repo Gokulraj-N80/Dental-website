@@ -8,7 +8,6 @@ import AdminTopBar from './admin/AdminTopBar';
 import Dashboard from './admin/Dashboard';
 import Appointments from './admin/Appointments';
 import Patients from './admin/Patients';
-import Doctors from './admin/Doctors';
 import Treatments from './admin/Treatments';
 import Invoices from './admin/Invoices';
 import Payments from './admin/Payments';
@@ -162,7 +161,6 @@ export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
           {currentSection === 'dashboard' && <Dashboard onNavigateToSection={setCurrentSection} />}
           {currentSection === 'appointments' && <Appointments searchGlobal={globalSearch} />}
           {currentSection === 'patients' && <Patients searchGlobal={globalSearch} />}
-          {currentSection === 'doctors' && <Doctors />}
           {currentSection === 'treatments' && <Treatments />}
           {currentSection === 'invoices' && <Invoices />}
           {currentSection === 'payments' && <Payments />}

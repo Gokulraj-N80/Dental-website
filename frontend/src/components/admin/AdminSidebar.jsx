@@ -9,7 +9,6 @@ const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'appointments', label: 'Appointments', icon: Calendar },
   { id: 'patients', label: 'Patients', icon: Users },
-  { id: 'doctors', label: 'Doctors', icon: HeartPulse },
   { id: 'treatments', label: 'Treatments', icon: Laptop },
   { id: 'payments', label: 'Payments', icon: DollarSign },
   { id: 'reports', label: 'Reports', icon: BarChart3 },

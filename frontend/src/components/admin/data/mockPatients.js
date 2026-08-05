@@ -144,7 +144,7 @@ function generatePatient() {
   };
 }
 
-// Generate 155 patients
-export const PATIENTS = Array.from({ length: 155 }, generatePatient);
+// Generate 20 patients
+export const PATIENTS = Array.from({ length: 20 }, generatePatient);
 
 export const getPatientById = (id) => PATIENTS.find(p => p.id === id);

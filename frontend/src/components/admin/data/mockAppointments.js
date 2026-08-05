@@ -70,33 +70,23 @@ function makeAppt(patient, daysOffset, status) {
 
 const appointments = [];
 
-// Today's appointments (12)
-for (let i = 0; i < 12; i++) {
-  appointments.push(makeAppt(PATIENTS[i], 0, rnd(['Pending','Confirmed','Checked In','In Consultation','Completed'])));
+// Today's appointments (8)
+for (let i = 0; i < 8; i++) {
+  appointments.push(makeAppt(PATIENTS[i % PATIENTS.length], 0, rnd(['Pending','Confirmed','Checked In','In Consultation','Completed'])));
 }
-// Tomorrow (8)
-for (let i = 12; i < 20; i++) {
-  appointments.push(makeAppt(PATIENTS[i], 1, rnd(['Confirmed','Pending'])));
+// Tomorrow (5)
+for (let i = 8; i < 13; i++) {
+  appointments.push(makeAppt(PATIENTS[i % PATIENTS.length], 1, rnd(['Confirmed','Pending'])));
 }
-// Next 7 days (25)
-for (let i = 20; i < 45; i++) {
+// Next 7 days (7)
+for (let i = 13; i < 20; i++) {
   const day = rndInt(2, 7);
   appointments.push(makeAppt(PATIENTS[i % PATIENTS.length], day, rnd(['Confirmed','Pending'])));
 }
-// Past 30 days (80)
-for (let i = 45; i < 125; i++) {
+// Past 30 days (20)
+for (let i = 20; i < 40; i++) {
   const day = -rndInt(1, 30);
-  appointments.push(makeAppt(PATIENTS[i % PATIENTS.length], day, rnd(['Completed','Completed','Completed','Cancelled','No Show','Rescheduled'])));
-}
-// Past 60–90 days (80)
-for (let i = 125; i < 205; i++) {
-  const day = -rndInt(31, 90);
   appointments.push(makeAppt(PATIENTS[i % PATIENTS.length], day, rnd(['Completed','Completed','Cancelled','No Show'])));
-}
-// Future 8–30 days (30)
-for (let i = 205; i < 235; i++) {
-  const day = rndInt(8, 30);
-  appointments.push(makeAppt(PATIENTS[i % PATIENTS.length], day, rnd(['Confirmed','Pending'])));
 }
 
 export const APPOINTMENTS = appointments;
