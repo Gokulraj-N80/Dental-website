@@ -139,7 +139,7 @@ export default function AssistYou({ onSelectTriage }) {
           }
         });
 
-        // Horizontal pin scroll timeline (Optimized speed)
+        // Horizontal pin scroll timeline (Slower, smoother translation)
         gsap.to(grid, {
           x: () => {
             const scrollDistance = grid.scrollWidth - viewport.offsetWidth + 480; 
@@ -149,9 +149,9 @@ export default function AssistYou({ onSelectTriage }) {
           scrollTrigger: {
             trigger: section,
             pin: true,
-            scrub: 0.6, // Snappier follow
+            scrub: 1.0, // Smooth follow
             start: 'top top',
-            end: () => `+=${(grid.scrollWidth - viewport.offsetWidth + 480) * 0.7}`, // Shorter scroll distance to finish translation
+            end: () => `+=${(grid.scrollWidth - viewport.offsetWidth + 480) * 1.4}`, // Longer scroll distance to slow down the animation
             invalidateOnRefresh: true,
             anticipatePin: 1
           }
