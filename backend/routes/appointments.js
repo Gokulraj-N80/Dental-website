@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
   try {
     const { name, email, phone, date, timeSlot, service, notes } = req.body;
 
-    if (!name || !email || !phone || !date || !timeSlot || !service) {
+    if (!name || !phone || !date || !timeSlot || !service) {
       return res.status(400).json({ message: 'Please fill in all required fields' });
     }
 
