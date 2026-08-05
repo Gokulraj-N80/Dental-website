@@ -3,11 +3,8 @@ import { gsap } from 'gsap';
 
 export default function BrandRevealLoader({ onComplete }) {
   const containerRef = useRef(null);
-  const dotRef = useRef(null);
-  const ringRef = useRef(null);
   const logoSvgRef = useRef(null);
   const textRef = useRef(null);
-  const particlesRef = useRef(null);
 
   // SVG Paths of Dr. Neemz logo
   const crossPathRef = useRef(null);
@@ -44,22 +41,18 @@ export default function BrandRevealLoader({ onComplete }) {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (prefersReducedMotion) {
-      // Direct simple transition for accessibility
       const tl = gsap.timeline({
         onComplete: () => {
           onComplete(logoSvgRef.current, textRef.current, containerRef.current);
         }
       });
-      tl.to(containerRef.current, { opacity: 1, duration: 1.5 });
+      tl.to(containerRef.current, { opacity: 1, duration: 1.0 });
       return () => tl.kill();
     }
 
     // Set initial states
-    gsap.set(dotRef.current, { scale: 0, opacity: 0 });
-    gsap.set(ringRef.current, { scale: 0.6, opacity: 0 });
-    gsap.set(logoSvgRef.current, { scale: 0.8, opacity: 0 });
+    gsap.set(logoSvgRef.current, { scale: 0.85, opacity: 0 });
     gsap.set(textRef.current, { opacity: 0, x: -15 });
-    gsap.set(particlesRef.current, { opacity: 0 });
 
     // Initialize SVG dash lengths
     const paths = [crossPathRef.current, trunkPathRef.current, rootsPathRef.current];
@@ -88,90 +81,42 @@ export default function BrandRevealLoader({ onComplete }) {
       // Stage 1: Initial Silence (100ms)
       .to({}, { duration: 0.1 })
 
-      // Stage 2: Center Dot Appears & Glows
-      .to(dotRef.current, {
-        scale: 1,
-        opacity: 1,
-        duration: 0.4,
-        ease: 'power3.out'
-      })
-      .to(dotRef.current, {
-        boxShadow: '0 0 15px 6px rgba(61, 107, 83, 0.4)',
-        duration: 0.3,
-        yoyo: true,
-        repeat: 1,
-        ease: 'sine.inOut'
-      })
-
-      // Stage 3: Dot morphs into Rotating Ring with Particles
-      .to(dotRef.current, {
-        scale: 0,
-        opacity: 0,
-        duration: 0.2,
-        ease: 'power2.in'
-      }, '+=0.05')
-      .to(ringRef.current, {
-        scale: 1,
-        opacity: 1,
-        duration: 0.4,
-        ease: 'back.out(1.5)'
-      }, '-=0.15')
-      .to(particlesRef.current, {
-        opacity: 1,
-        duration: 0.25
-      }, '-=0.2')
-      .to(ringRef.current, {
-        rotation: 180,
-        duration: 1.2,
-        ease: 'power1.out'
-      }, '-=0.3')
-
-      // Stage 4: Ring morphs/fades out while SVG draws sequentially
-      .to(ringRef.current, {
-        scale: 1.15,
-        opacity: 0,
-        duration: 0.3,
-        ease: 'power2.inOut'
-      }, '-=0.6')
-      .to(particlesRef.current, {
-        opacity: 0,
-        duration: 0.3
-      }, '-=0.6')
+      // Stage 2: Logo SVG container fades & scales in
       .to(logoSvgRef.current, {
         opacity: 1,
         scale: 1,
-        duration: 0.4,
-        ease: 'power2.out'
-      }, '-=0.5')
+        duration: 0.5,
+        ease: 'power3.out'
+      })
 
-      // Draw SVG Paths sequentially
+      // Stage 3: Deliberate and natural SVG Outline drawing (Slightly increased time 0.3-0.5s)
       .to(crossPathRef.current, {
         strokeDashoffset: 0,
-        duration: 0.3,
+        duration: 0.8, // increased for elegant, distinct speed
         ease: 'sine.inOut'
-      }, '-=0.35')
+      })
       .to(trunkPathRef.current, {
         strokeDashoffset: 0,
-        duration: 0.4,
+        duration: 1.1, // increased for botanic organic growth feel
         ease: 'sine.inOut'
-      }, '-=0.25')
+      }, '-=0.4')
       .to(rootsPathRef.current, {
         strokeDashoffset: 0,
-        duration: 0.3,
+        duration: 0.8, // increased for root anchoring feel
         ease: 'sine.inOut'
-      }, '-=0.2')
+      }, '-=0.4')
 
-      // Stage 5: Gradient Fill & Leaf Cluster Fade-In
+      // Stage 4: Fill Paths and Leaf Cluster Fade-In
       .to([crossPathRef.current, trunkPathRef.current, rootsPathRef.current], {
         fillOpacity: 1,
         strokeWidth: 0,
         duration: 0.4,
         ease: 'power2.out'
-      }, '-=0.1')
+      }, '-=0.15')
       .to(leafRefs.current, {
         scale: 1,
         opacity: 1,
-        duration: 0.4,
+        duration: 0.5,
         stagger: {
           each: 0.008,
           from: 'center'
@@ -179,11 +124,11 @@ export default function BrandRevealLoader({ onComplete }) {
         ease: 'back.out(1.2)'
       }, '-=0.3')
 
-      // Stage 6: Typography Reveal & Soft Ambient Glow
+      // Stage 5: Typography Reveal & Ambient Glow
       .to(textRef.current, {
         opacity: 1,
         x: 0,
-        duration: 0.4,
+        duration: 0.5,
         ease: 'power3.out'
       }, '-=0.2')
       .to(logoSvgRef.current, {
@@ -199,7 +144,7 @@ export default function BrandRevealLoader({ onComplete }) {
         yoyo: true,
         ease: 'sine.inOut'
       })
-      .to({}, { duration: 0.1 });
+      .to({}, { duration: 0.15 });
 
     return () => {
       master.kill();
@@ -208,23 +153,7 @@ export default function BrandRevealLoader({ onComplete }) {
 
   return (
     <div className="brand-reveal-loader-container" ref={containerRef}>
-      {/* Ambient background particles wrapper */}
-      <div className="loader-ambient-particles" ref={particlesRef}>
-        <div className="loader-particle p1" />
-        <div className="loader-particle p2" />
-        <div className="loader-particle p3" />
-        <div className="loader-particle p4" />
-      </div>
-
       <div className="loader-stage">
-        {/* Stage 2 Center Dot */}
-        <div className="loader-center-dot" ref={dotRef} />
-
-        {/* Stage 3 Rotating Ring */}
-        <svg className="loader-ring-svg" ref={ringRef} viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="45" stroke="var(--color-secondary)" strokeWidth="1.5" fill="none" strokeDasharray="4 8" />
-        </svg>
-
         {/* Shared Logo Reveal Core */}
         <div className="loader-logo-wrapper">
           <div className="loader-logo-flex">
@@ -246,7 +175,7 @@ export default function BrandRevealLoader({ onComplete }) {
                 strokeWidth="1.5"
               />
 
-              {/* Tree Trunk & Branches (Outline -> Fill) */}
+              {/* Tree Trunk & Branches */}
               <path 
                 ref={trunkPathRef}
                 d="M 48,75 C 49,70 49,62 48,54 C 44,46 39,41 36,38 C 39,41 42,47 48,50 C 49,42 47,35 41,31 C 46,35 49,41 50,47 C 51,41 54,35 59,31 C 53,35 51,42 52,50 C 58,47 61,41 64,38 C 61,41 56,46 52,54 C 51,62 51,70 52,75 Z" 
@@ -254,7 +183,7 @@ export default function BrandRevealLoader({ onComplete }) {
                 strokeWidth="1.5"
               />
 
-              {/* Roots (Outline -> Fill) */}
+              {/* Roots */}
               <path 
                 ref={rootsPathRef}
                 d="M 48,75 C 44,77 40,79 36,81 C 40,79 44,77 47,76 C 45,77 42,79 40,82 C 43,80 46,78 48,77 C 47,79 46,81 45,84 C 48,81 49,79 50,77 C 51,79 52,81 55,84 C 54,81 53,79 52,77 C 54,78 57,80 60,82 C 58,79 55,77 53,76 C 56,77 60,79 64,81 C 60,79 56,77 52,75 Z" 
