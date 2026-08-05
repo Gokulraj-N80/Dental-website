@@ -4999,40 +4999,92 @@ button.service-learn-more:hover {
 
 /* ─── Mobile ─── */
 @media (max-width: 640px) {
-  .tree-trunk {
-    left: 20px;
+  .tree-timeline {
+    padding: 0 12px 24px !important;
   }
 
-  .tree-timeline {
-    padding-left: 48px;
-    padding-right: 12px;
+  .tree-trunk {
+    left: 45px !important;
+    width: 3px !important;
   }
 
   .tree-row {
-    grid-template-columns: 0 40px 1fr;
-    min-height: auto;
-    margin-bottom: 20px;
+    grid-template-columns: 35px 30px 1fr !important;
+    gap: 8px !important;
+    min-height: auto !important;
+    margin-bottom: 12px !important;
   }
 
+  /* We'll display the year in the left column directly */
   .tree-half-left {
+    display: flex !important;
+    justify-content: flex-end;
+    align-items: center;
+    height: auto;
+  }
+  
+  .tree-half-left .tree-half-empty {
     display: none;
+  }
+
+  /* Force display of year in left half */
+  .tree-half-left::before {
+    content: attr(data-year);
+    font-family: var(--font-main);
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--color-secondary);
+    white-space: nowrap;
+  }
+
+  /* Hide the duplicate year inside the card on mobile to save vertical space */
+  .tree-card-year {
+    display: none !important;
+  }
+
+  .tree-node {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+  }
+
+  .tree-dot {
+    width: 22px !important;
+    height: 22px !important;
+    border-width: 1.5px !important;
+  }
+
+  .tree-dot svg {
+    width: 10px !important;
+    height: 10px !important;
   }
 
   .tree-half-right {
-    flex-direction: row;
+    display: flex !important;
+    width: 100% !important;
+    padding-left: 4px !important;
   }
 
-  .tree-half-right .tree-card {
-    width: 100%;
+  .tree-card {
+    padding: 10px 12px !important;
+    border-radius: 10px !important;
+    width: 100% !important;
+    box-shadow: var(--shadow-sm) !important;
+  }
+
+  .tree-card-title {
+    font-size: 0.88rem !important;
+    margin-bottom: 3px !important;
+  }
+
+  .tree-card-desc {
+    font-size: 0.76rem !important;
+    line-height: 1.4 !important;
   }
 
   .tree-branch-arm {
-    min-width: 20px;
-    flex: 0 0 20px;
-  }
-
-  .tree-half-right .tree-card::after {
-    display: none;
+    display: none !important;
   }
 }
 

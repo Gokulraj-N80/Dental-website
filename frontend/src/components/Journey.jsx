@@ -61,7 +61,7 @@ export default function Journey() {
               data-delay={index * 140}
             >
               {/* LEFT half */}
-              <div className="tree-half tree-half-left">
+              <div className="tree-half tree-half-left" data-year={item.year}>
                 {isLeft ? (
                   /* card + branch line reaching right toward trunk */
                   <>
