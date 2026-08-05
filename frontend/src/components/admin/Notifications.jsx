@@ -6,11 +6,11 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState(NOTIFICATIONS);
 
   const markAllRead = () => {
-    setNotifications(prev => prev.map(n => ({ ...n, unread: false })));
+    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
   };
 
   const toggleRead = (id) => {
-    setNotifications(prev => prev.map(n => n.id === id ? { ...n, unread: !n.unread } : n));
+    setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: !n.read } : n));
   };
 
   const getRelativeTime = (isoString) => {
@@ -61,7 +61,7 @@ export default function Notifications() {
                   display: 'flex', 
                   justifyContent: 'space-between', 
                   alignItems: 'center',
-                  background: n.unread ? 'var(--adm-accent-subtle)' : 'transparent',
+                  background: !n.read ? 'var(--adm-accent-subtle)' : 'transparent',
                   padding: '18px 12px',
                   borderRadius: '12px',
                   margin: '4px 0',
@@ -69,25 +69,25 @@ export default function Notifications() {
                 }}
               >
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', backgroundColor: n.unread ? 'white' : 'var(--adm-bg)', border: '1px solid var(--adm-border)' }}>
+                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', backgroundColor: !n.read ? 'white' : 'var(--adm-bg)', border: '1px solid var(--adm-border)' }}>
                     {n.icon || '🔔'}
                   </div>
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <h4 style={{ margin: 0, fontSize: '0.875rem', fontWeight: n.unread ? 800 : 650, color: 'var(--adm-text-primary)' }}>
+                      <h4 style={{ margin: 0, fontSize: '0.875rem', fontWeight: !n.read ? 800 : 650, color: 'var(--adm-text-primary)' }}>
                         {n.title}
                       </h4>
-                      {n.unread && <span className="admin-v2-pulse-dot" style={{ position: 'relative', top: 0, right: 0 }} />}
+                      {!n.read && <span className="admin-v2-pulse-dot" style={{ position: 'relative', top: 0, right: 0 }} />}
                     </div>
                     <p style={{ margin: '4px 0 0', fontSize: '0.8rem', color: 'var(--adm-text-secondary)', lineHeight: '1.4' }}>{n.body}</p>
-                    <span className="admin-v2-activity-time">{getRelativeTime(n.createdAt)}</span>
+                    <span className="admin-v2-activity-time">{getRelativeTime(n.time)}</span>
                   </div>
                 </div>
 
                 <button 
                   onClick={() => toggleRead(n.id)}
-                  className={`admin-v2-btn admin-v2-btn-icon ${n.unread ? 'admin-v2-btn-primary' : 'admin-v2-btn-secondary'}`}
-                  title={n.unread ? 'Mark Read' : 'Mark Unread'}
+                  className={`admin-v2-btn admin-v2-btn-icon ${!n.read ? 'admin-v2-btn-primary' : 'admin-v2-btn-secondary'}`}
+                  title={!n.read ? 'Mark Read' : 'Mark Unread'}
                   style={{ width: '30px', height: '30px', padding: 0 }}
                 >
                   <Check size={14} />

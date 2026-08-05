@@ -6,18 +6,21 @@ export default function Payments() {
   const [invoices] = useState(INVOICES);
 
   const totalCollected = invoices
-    .filter(i => i.status === 'Paid')
-    .reduce((sum, i) => sum + i.amount, 0);
+    .filter(i => i.paymentStatus === 'Paid')
+    .reduce((sum, i) => sum + i.total, 0);
 
   const totalPending = invoices
-    .filter(i => i.status === 'Partial' || i.status === 'Unpaid')
-    .reduce((sum, i) => sum + (i.amount - (i.paidAmount || 0)), 0);
+    .filter(i => i.paymentStatus === 'Partial' || i.paymentStatus === 'Pending')
+    .reduce((sum, i) => {
+      const paid = i.paymentStatus === 'Paid' ? i.total : i.paymentStatus === 'Partial' ? Math.round(i.total * 0.4) : 0;
+      return sum + (i.total - paid);
+    }, 0);
 
   // Group transactions by method
   const methods = ['Cash', 'UPI', 'Credit Card', 'Debit Card', 'Insurance', 'Net Banking'];
   const methodStats = methods.map(m => {
     const matching = invoices.filter(i => i.paymentMethod === m);
-    const sum = matching.reduce((acc, curr) => acc + curr.amount, 0);
+    const sum = matching.reduce((acc, curr) => acc + curr.total, 0);
     return { name: m, amount: sum, count: matching.length };
   });
 
@@ -95,17 +98,19 @@ export default function Payments() {
                   <tr key={inv.id}>
                     <td style={{ fontWeight: 800, color: 'var(--adm-accent)' }}>{inv.id}</td>
                     <td style={{ fontWeight: 700, color: 'var(--adm-text-primary)' }}>{inv.patientName}</td>
-                    <td style={{ fontWeight: 800 }}>₹{inv.amount.toLocaleString('en-IN')}</td>
-                    <td style={{ fontWeight: 650, color: 'var(--adm-text-secondary)' }}>₹{(inv.paidAmount || 0).toLocaleString('en-IN')}</td>
+                    <td style={{ fontWeight: 800 }}>₹{inv.total.toLocaleString('en-IN')}</td>
+                    <td style={{ fontWeight: 650, color: 'var(--adm-text-secondary)' }}>
+                      ₹{(inv.paymentStatus === 'Paid' ? inv.total : inv.paymentStatus === 'Partial' ? Math.round(inv.total * 0.4) : 0).toLocaleString('en-IN')}
+                    </td>
                     <td>
                       <span className="admin-v2-stat-pill" style={{ fontSize: '0.7rem', padding: '3px 8px' }}>
                         {inv.paymentMethod}
                       </span>
                     </td>
                     <td>
-                      <span className={`admin-v2-badge ${inv.status.toLowerCase()}`} style={{ fontSize: '0.7rem' }}>
+                      <span className={`admin-v2-badge ${inv.paymentStatus.toLowerCase()}`} style={{ fontSize: '0.7rem' }}>
                         <span className="admin-v2-badge-dot" />
-                        {inv.status}
+                        {inv.paymentStatus}
                       </span>
                     </td>
                   </tr>

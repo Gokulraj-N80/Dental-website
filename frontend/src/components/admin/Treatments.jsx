@@ -79,7 +79,7 @@ export default function Treatments() {
                       ₹{t.cost}
                     </div>
                   </td>
-                  <td style={{ fontWeight: 500 }}>{t.equipmentsRequired}</td>
+                  <td style={{ fontWeight: 500 }}>{t.equipment}</td>
                   <td>
                     <span className="admin-v2-badge confirmed" style={{ fontSize: '0.7rem' }}>
                       <span className="admin-v2-badge-dot" />
