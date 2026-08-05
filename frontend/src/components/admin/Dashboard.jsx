@@ -91,28 +91,99 @@ export default function Dashboard({ onNavigateToSection }) {
       </div>
 
       <div className="admin-v2-dashboard-row-2">
-        {/* Weekly Trend Chart */}
+        {/* Revenue Trend Area/Line SVG Chart */}
         <div className="admin-v2-card">
           <div className="admin-v2-card-header">
-            <h3>Weekly Appointment & Revenue Volume</h3>
-            <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>Active Week</span>
+            <h3>Revenue Growth & Patient Volume Trends</h3>
+            <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>Last 6 Months</span>
           </div>
-          <div className="admin-v2-sparkline-container">
-            {daysOfWeek.map((day, idx) => {
-              const pct = (day.count / 50) * 100;
-              return (
-                <div className="admin-v2-sparkline-bar-wrap" key={idx}>
-                  <div 
-                    className="admin-v2-sparkline-bar" 
-                    style={{ height: `${pct}%` }} 
-                    data-value={`${day.count} Appts (${day.revenue})`}
-                  />
-                  <span className="admin-v2-sparkline-label">{day.name}</span>
-                </div>
-              );
-            })}
+          <div style={{ position: 'relative', height: '220px', width: '100%', marginTop: '10px' }}>
+            <svg viewBox="0 0 500 200" width="100%" height="100%" style={{ overflow: 'visible' }}>
+              <defs>
+                <linearGradient id="chart-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#10b981" stopOpacity="0.25" />
+                  <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
+                </linearGradient>
+              </defs>
+              {/* Grid Lines */}
+              <line x1="0" y1="40" x2="500" y2="40" stroke="#f1f5f9" strokeWidth="1" />
+              <line x1="0" y1="90" x2="500" y2="90" stroke="#f1f5f9" strokeWidth="1" />
+              <line x1="0" y1="140" x2="500" y2="140" stroke="#f1f5f9" strokeWidth="1" />
+              {/* Area path */}
+              <path 
+                d="M 10 140 Q 90 90 170 120 T 330 60 T 490 40 L 490 180 L 10 180 Z" 
+                fill="url(#chart-grad)" 
+              />
+              {/* Trend Line */}
+              <path 
+                d="M 10 140 Q 90 90 170 120 T 330 60 T 490 40" 
+                fill="none" 
+                stroke="#10b981" 
+                strokeWidth="3.5" 
+                strokeLinecap="round"
+              />
+              {/* Points */}
+              <circle cx="10" cy="140" r="5" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
+              <circle cx="90" cy="90" r="5" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
+              <circle cx="170" cy="120" r="5" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
+              <circle cx="250" cy="80" r="5" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
+              <circle cx="330" cy="60" r="5" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
+              <circle cx="410" cy="50" r="5" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
+              <circle cx="490" cy="40" r="5" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
+            </svg>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '12px', padding: '0 10px' }}>
+            {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'].map((month, idx) => (
+              <span key={idx} style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>{month}</span>
+            ))}
           </div>
         </div>
+
+        {/* Treatment Share SVG Donut Ring Chart */}
+        <div className="admin-v2-card">
+          <div className="admin-v2-card-header">
+            <h3>Treatment Distribution Share</h3>
+            <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>Total Share</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px', height: '220px' }}>
+            <div style={{ position: 'relative', width: '140px', height: '140px', flexShrink: 0 }}>
+              <svg viewBox="0 0 36 36" width="100%" height="100%">
+                {/* Background circle */}
+                <circle cx="18" cy="18" r="15.915" fill="none" stroke="#f1f5f9" strokeWidth="3" />
+                {/* Root Canal - 40% */}
+                <circle cx="18" cy="18" r="15.915" fill="none" stroke="#10b981" strokeWidth="3" strokeDasharray="40 60" strokeDashoffset="25" />
+                {/* Implants - 30% */}
+                <circle cx="18" cy="18" r="15.915" fill="none" stroke="#3b82f6" strokeWidth="3" strokeDasharray="30 70" strokeDashoffset="85" />
+                {/* Braces - 20% */}
+                <circle cx="18" cy="18" r="15.915" fill="none" stroke="#8b5cf6" strokeWidth="3" strokeDasharray="20 80" strokeDashoffset="55" />
+                {/* Others - 10% */}
+                <circle cx="18" cy="18" r="15.915" fill="none" stroke="#f59e0b" strokeWidth="3" strokeDasharray="10 90" strokeDashoffset="35" />
+              </svg>
+              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
+                <span style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', display: 'block' }}>230+</span>
+                <span style={{ fontSize: '0.65rem', color: '#64748b', fontWeight: 600 }}>Cases</span>
+              </div>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%' }}>
+              {[
+                { name: 'Root Canal', pct: '40%', color: '#10b981' },
+                { name: 'Implants', pct: '30%', color: '#3b82f6' },
+                { name: 'Braces', pct: '20%', color: '#8b5cf6' },
+                { name: 'Others', pct: '10%', color: '#f59e0b' }
+              ].map((item, idx) => (
+                <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: item.color }} />
+                    <span style={{ color: '#475569', fontWeight: 500 }}>{item.name}</span>
+                  </div>
+                  <strong style={{ color: '#0f172a' }}>{item.pct}</strong>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
 
         {/* Doctor Performance Summary */}
         <div className="admin-v2-card">
@@ -141,6 +212,5 @@ export default function Dashboard({ onNavigateToSection }) {
           </div>
         </div>
       </div>
-    </div>
   );
 }
