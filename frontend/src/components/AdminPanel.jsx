@@ -206,6 +206,21 @@ export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
           <div className="admin-login-header">
             <h2>Admin Console</h2>
             <p>Enter clinic admin credentials to manage appointments</p>
+            <div style={{
+              marginTop: '14px',
+              padding: '10px 14px',
+              backgroundColor: 'var(--color-secondary-soft)',
+              border: '1px dashed var(--color-secondary)',
+              borderRadius: 'var(--radius-md)',
+              fontSize: '0.8rem',
+              color: 'var(--color-secondary)',
+              textAlign: 'left',
+              lineHeight: '1.5'
+            }}>
+              <strong>Demo Admin Credentials:</strong><br />
+              Username: <code style={{ fontStyle: 'normal', fontWeight: 'bold' }}>admin</code><br />
+              Password: <code style={{ fontStyle: 'normal', fontWeight: 'bold' }}>adminpassword123</code>
+            </div>
           </div>
           
           <form onSubmit={handleLoginSubmit}>
