@@ -163,19 +163,21 @@ export default function App() {
           <div className="ambient-blob ambient-blob-2" />
         </div>
 
-        <Navbar
-          currentTab={currentTab}
-          setCurrentTab={(tab) => {
-            navigate(tab);
-            setSelectedTreatment(null);
-          }}
-          onSelectTreatment={(item) => {
-            setSelectedTreatment(item);
-            navigate('treatment-details');
-          }}
-          theme={theme}
-          setTheme={setTheme}
-        />
+        {currentTab !== 'admin' && (
+          <Navbar
+            currentTab={currentTab}
+            setCurrentTab={(tab) => {
+              navigate(tab);
+              setSelectedTreatment(null);
+            }}
+            onSelectTreatment={(item) => {
+              setSelectedTreatment(item);
+              navigate('treatment-details');
+            }}
+            theme={theme}
+            setTheme={setTheme}
+          />
+        )}
 
         <main className="main-content">
           {currentTab === 'home' && (
