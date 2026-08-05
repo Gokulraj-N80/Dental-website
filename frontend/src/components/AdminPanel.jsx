@@ -157,14 +157,6 @@ export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
       />
 
       <main className="admin-v2-main">
-        <AdminTopBar 
-          adminUser={adminUser}
-          searchVal={globalSearch}
-          setSearchVal={setGlobalSearch}
-          onNotificationClick={() => setCurrentSection('notifications')}
-          theme={theme}
-          setTheme={setTheme}
-        />
 
         <div className="admin-v2-content-area">
           {currentSection === 'dashboard' && <Dashboard onNavigateToSection={setCurrentSection} />}
