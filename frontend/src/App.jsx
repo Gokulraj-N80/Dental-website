@@ -60,7 +60,7 @@ export default function App() {
   const [currentTab, setCurrentTab] = useState('home');
   const [selectedTreatment, setSelectedTreatment] = useState(null);
   const [isPreloading, setIsPreloading] = useState(true);
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'neem');
+  const [theme, setTheme] = useState('neem');
   
   const lenisRef = useRef(null);
 
