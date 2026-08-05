@@ -85,19 +85,19 @@ export default function BrandRevealLoader({ onComplete }) {
     });
 
     master
-      // Stage 1: Initial Silence (300ms)
-      .to({}, { duration: 0.3 })
+      // Stage 1: Initial Silence (100ms)
+      .to({}, { duration: 0.1 })
 
       // Stage 2: Center Dot Appears & Glows
       .to(dotRef.current, {
         scale: 1,
         opacity: 1,
-        duration: 0.8,
+        duration: 0.4,
         ease: 'power3.out'
       })
       .to(dotRef.current, {
-        boxShadow: '0 0 20px 8px rgba(61, 107, 83, 0.4)',
-        duration: 0.6,
+        boxShadow: '0 0 15px 6px rgba(61, 107, 83, 0.4)',
+        duration: 0.3,
         yoyo: true,
         repeat: 1,
         ease: 'sine.inOut'
@@ -107,100 +107,99 @@ export default function BrandRevealLoader({ onComplete }) {
       .to(dotRef.current, {
         scale: 0,
         opacity: 0,
-        duration: 0.4,
+        duration: 0.2,
         ease: 'power2.in'
-      }, '+=0.1')
+      }, '+=0.05')
       .to(ringRef.current, {
         scale: 1,
         opacity: 1,
-        duration: 0.8,
-        ease: 'back.out(1.7)'
-      }, '-=0.3')
+        duration: 0.4,
+        ease: 'back.out(1.5)'
+      }, '-=0.15')
       .to(particlesRef.current, {
         opacity: 1,
-        duration: 0.4
-      }, '-=0.4')
+        duration: 0.25
+      }, '-=0.2')
       .to(ringRef.current, {
-        rotation: 360,
-        duration: 3,
-        ease: 'none',
-        repeat: 0
-      }, '-=0.8')
+        rotation: 180,
+        duration: 1.2,
+        ease: 'power1.out'
+      }, '-=0.3')
 
       // Stage 4: Ring morphs/fades out while SVG draws sequentially
       .to(ringRef.current, {
-        scale: 1.2,
+        scale: 1.15,
         opacity: 0,
-        duration: 0.6,
+        duration: 0.3,
         ease: 'power2.inOut'
-      }, '-=1.8')
+      }, '-=0.6')
       .to(particlesRef.current, {
         opacity: 0,
-        duration: 0.5
-      }, '-=1.8')
+        duration: 0.3
+      }, '-=0.6')
       .to(logoSvgRef.current, {
         opacity: 1,
         scale: 1,
-        duration: 0.8,
+        duration: 0.4,
         ease: 'power2.out'
-      }, '-=1.6')
+      }, '-=0.5')
 
       // Draw SVG Paths sequentially
       .to(crossPathRef.current, {
         strokeDashoffset: 0,
-        duration: 0.6,
+        duration: 0.3,
         ease: 'sine.inOut'
-      }, '-=1.0')
+      }, '-=0.35')
       .to(trunkPathRef.current, {
         strokeDashoffset: 0,
-        duration: 0.8,
+        duration: 0.4,
         ease: 'sine.inOut'
-      }, '-=0.6')
+      }, '-=0.25')
       .to(rootsPathRef.current, {
         strokeDashoffset: 0,
-        duration: 0.6,
+        duration: 0.3,
         ease: 'sine.inOut'
-      }, '-=0.3')
+      }, '-=0.2')
 
       // Stage 5: Gradient Fill & Leaf Cluster Fade-In
       .to([crossPathRef.current, trunkPathRef.current, rootsPathRef.current], {
         fillOpacity: 1,
         strokeWidth: 0,
-        duration: 0.8,
+        duration: 0.4,
         ease: 'power2.out'
       }, '-=0.1')
       .to(leafRefs.current, {
         scale: 1,
         opacity: 1,
-        duration: 0.7,
+        duration: 0.4,
         stagger: {
-          each: 0.015,
+          each: 0.008,
           from: 'center'
         },
-        ease: 'back.out(1.5)'
-      }, '-=0.6')
+        ease: 'back.out(1.2)'
+      }, '-=0.3')
 
       // Stage 6: Typography Reveal & Soft Ambient Glow
       .to(textRef.current, {
         opacity: 1,
         x: 0,
-        duration: 0.8,
+        duration: 0.4,
         ease: 'power3.out'
-      }, '-=0.4')
+      }, '-=0.2')
       .to(logoSvgRef.current, {
-        filter: 'drop-shadow(0 0 12px rgba(61, 107, 83, 0.25))',
-        duration: 0.8
-      }, '-=0.8')
+        filter: 'drop-shadow(0 0 8px rgba(61, 107, 83, 0.2))',
+        duration: 0.4
+      }, '-=0.4')
 
       // Breathe Animation stage (Subtle looping scale while waiting briefly)
       .to(logoSvgRef.current, {
-        scale: 1.02,
-        duration: 1.2,
+        scale: 1.01,
+        duration: 0.6,
         repeat: 0,
         yoyo: true,
         ease: 'sine.inOut'
       })
-      .to({}, { duration: 0.2 }); // brief pause before flight
+      .to({}, { duration: 0.1 });
 
     return () => {
       master.kill();

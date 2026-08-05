@@ -1439,7 +1439,12 @@ h6 {
   width: 420px;
   height: 500px;
   background: linear-gradient(135deg, #e8f5ee 0%, #f0faf3 100%);
-  animation: morphShape 10s ease-in-out infinite;
+  animation: morphShape 10s ease-in-out infinite, floatAesthetic 6s ease-in-out infinite;
+}
+
+@keyframes floatAesthetic {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
 
 @keyframes morphShape {

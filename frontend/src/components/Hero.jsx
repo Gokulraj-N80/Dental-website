@@ -89,41 +89,9 @@ export default function Hero({ onBookClick, onServicesClick, startAnimation }) {
       .to('.hero-float-badge', { opacity: 1, scale: 1, duration: 0.8, stagger: 0.15, ease: 'elastic.out(1, 0.5)' }, '-=0.6')
       .to('.strip-item', { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' }, '-=0.5');
 
-    // Continuous slow floating animations
-    const floatImg = gsap.to('.hero-img-wrap', {
-      y: -12,
-      duration: 4,
-      yoyo: true,
-      repeat: -1,
-      ease: 'sine.inOut'
-    });
-
-    const floatRing1 = gsap.to('.hero-img-ring', {
-      y: 10,
-      x: -5,
-      rotation: 15,
-      duration: 6,
-      yoyo: true,
-      repeat: -1,
-      ease: 'sine.inOut'
-    });
-
-    const floatRing2 = gsap.to('.hero-img-ring-2', {
-      y: -8,
-      x: 8,
-      rotation: -10,
-      duration: 8,
-      yoyo: true,
-      repeat: -1,
-      ease: 'sine.inOut'
-    });
-
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       tl.kill();
-      floatImg.kill();
-      floatRing1.kill();
-      floatRing2.kill();
     };
   }, [startAnimation]);
 
