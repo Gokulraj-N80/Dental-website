@@ -7595,7 +7595,8 @@ html.lenis body {
 .floating-theme-switch-indicator {
   position: fixed;
   top: 100px; /* Positioned below the navbar level */
-  left: 24px;
+  right: 24px;
+  left: auto;
   background: rgba(var(--color-primary-rgb, 255, 255, 255), 0.72);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -7665,9 +7666,9 @@ html.lenis body {
 @media (max-width: 600px) {
   .floating-theme-switch-indicator {
     top: 76px; /* Below mobile navbar level */
-    left: 16px;
+    right: 16px;
+    left: auto;
     bottom: auto;
-    right: auto;
     padding: 4px 8px;
   }
   .ft-btn {
