@@ -3,50 +3,58 @@ import { FileText, Download, BarChart2, TrendingUp, Users } from 'lucide-react';
 
 export default function Reports() {
   const reportCards = [
-    { title: 'Clinic Appointments Summary', desc: 'Detailed log of checkins, cancellations, rescheduled slots, and doctor workloads.', icon: BarChart2, type: 'excel' },
-    { title: 'Revenue & Financial Ledger', desc: 'Earnings logs, tax statements, billing breakdowns, outstanding payments, and methods analysis.', icon: TrendingUp, type: 'csv' },
-    { title: 'Patient Registration Directory', desc: 'List of registered patients base, demographics breakdown, medical logs catalog.', icon: Users, type: 'excel' },
-    { title: 'Treatments Frequency Report', desc: 'Statistical frequency logs of treatments, costs, categories, and duration analytics.', icon: FileText, type: 'pdf' },
+    { 
+      title: 'Clinic Appointments Summary', 
+      desc: 'Detailed log of checkins, cancellations, no shows, and scheduling channels statistics.',
+      icon: FileText,
+      color: 'var(--adm-blue)',
+      bg: 'var(--adm-blue-subtle)'
+    },
+    { 
+      title: 'Financial Ledger & Tax Audit', 
+      desc: 'Compiled ledger billing statements, pending dues balances, tax cuts and payments history export.',
+      icon: TrendingUp,
+      color: 'var(--adm-accent)',
+      bg: 'var(--adm-accent-subtle)'
+    },
+    { 
+      title: 'Patients Medical Histories', 
+      desc: 'Complete case files record indexes containing diagnosed tags, treatment durations and doctors logs.',
+      icon: Users,
+      color: 'var(--adm-purple)',
+      bg: 'rgba(139, 92, 246, 0.08)'
+    },
   ];
 
-  const handleDownload = (title) => {
-    alert(`Exporting ${title} report. The document is being compiled and downloaded.`);
-  };
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <div>
-        <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', margin: '0 0 6px 0' }}>Reports & Analytics</h2>
-        <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>Export medical performance audits, transaction logs, and appointments metrics charts.</p>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+      
+      {/* Heading */}
+      <div className="admin-v2-page-heading">
+        <span className="admin-v2-page-eyebrow">Data Center</span>
+        <h2 className="admin-v2-page-title">Reporting & Exports</h2>
+        <p className="admin-v2-page-subtitle">Download clinic ledger balances sheets, patient clinical files records, and calendar statistics.</p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}>
-        {reportCards.map((rep, idx) => {
-          const Icon = rep.icon;
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+        {reportCards.map((card, i) => {
+          const Icon = card.icon;
           return (
-            <div className="admin-v2-card" key={idx} style={{ display: 'flex', flexDirection: 'column', justifyBlock: 'space-between', height: '100%' }}>
-              <div style={{ display: 'flex', gap: '16px', marginBottom: '20px' }}>
-                <div style={{ padding: '12px', backgroundColor: '#e6fbf4', color: '#10b981', borderRadius: '10px', height: 'fit-content' }}>
-                  <Icon size={24} />
+            <div key={i} className="admin-v2-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '24px', padding: '28px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '12px', display: 'flex', alignItems: 'center', backgroundColor: card.bg, color: card.color, justifyContent: 'center' }}>
+                  <Icon size={20} strokeWidth={2.5} />
                 </div>
                 <div>
-                  <h3 style={{ margin: '0 0 8px 0', fontSize: '1rem', fontWeight: 700, color: '#0f172a' }}>{rep.title}</h3>
-                  <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b', lineHeight: '1.5' }}>{rep.desc}</p>
+                  <h3 style={{ margin: '0 0 8px 0', fontSize: '0.95rem', fontWeight: 700, color: 'var(--adm-text-primary)' }}>{card.title}</h3>
+                  <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--adm-text-tertiary)', lineHeight: '1.5', fontWeight: 400 }}>{card.desc}</p>
                 </div>
               </div>
-
-              <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #f1f5f9', paddingTop: '16px' }}>
-                <span className="admin-v2-badge confirmed" style={{ fontSize: '0.7rem', fontWeight: 700 }}>
-                  Format: {rep.type.toUpperCase()}
-                </span>
-                <button 
-                  onClick={() => handleDownload(rep.title)}
-                  className="admin-v2-btn admin-v2-btn-primary"
-                  style={{ fontSize: '0.8rem', padding: '6px 12px', display: 'flex', alignItems: 'center', gap: '6px' }}
-                >
-                  <Download size={14} /> Export
-                </button>
-              </div>
+              
+              <button className="admin-v2-btn admin-v2-btn-secondary" style={{ width: '100%' }}>
+                <Download size={14} />
+                Generate CSV Report
+              </button>
             </div>
           );
         })}

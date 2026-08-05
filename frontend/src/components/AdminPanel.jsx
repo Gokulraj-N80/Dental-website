@@ -58,62 +58,46 @@ export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
 
   if (!isAuthenticated) {
     return (
-      <div style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-        fontFamily: 'system-ui'
-      }}>
-        <div style={{
-          width: '400px',
-          padding: '40px',
-          background: 'rgba(255, 255, 255, 0.03)',
-          backdropFilter: 'blur(10px)',
-          borderRadius: '16px',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
-          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.3)',
-          color: '#f8fafc'
-        }}>
+      <div className="admin-v2-login-wrap">
+        <div className="admin-v2-login-card">
           <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-            <span style={{ fontSize: '3rem' }}>🦷</span>
-            <h2 style={{ margin: '12px 0 6px 0', fontSize: '1.5rem', fontWeight: 800 }}>DR. MARCUS DENTISTRY</h2>
-            <p style={{ margin: 0, fontSize: '0.85rem', color: '#94a3b8' }}>Enterprise Management Administration Gate</p>
+            <span style={{ fontSize: '3rem', display: 'inline-block', marginBottom: '12px' }}>🦷</span>
+            <h2 style={{ margin: '0 0 6px 0', fontSize: '1.4rem', fontWeight: 800, color: 'white', letterSpacing: '-0.02em' }}>DR. MARCUS DENTISTRY</h2>
+            <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--adm-sidebar-text)', fontWeight: 500 }}>Enterprise Console Gate</p>
           </div>
 
           <form onSubmit={handleLoginSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {errorMsg && (
-              <div style={{ padding: '12px', backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: '8px', color: '#fca5a5', fontSize: '0.85rem', textAlign: 'center' }}>
+              <div style={{ padding: '12px', backgroundColor: 'rgba(244, 63, 94, 0.1)', border: '1px solid rgba(244, 63, 94, 0.2)', borderRadius: '10px', color: '#fca5a5', fontSize: '0.82rem', textAlign: 'center', fontWeight: 600 }}>
                 {errorMsg}
               </div>
             )}
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase' }}>Username</label>
-              <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '10px 14px' }}>
-                <UserIcon size={18} color="#94a3b8" />
+              <label style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--adm-sidebar-text)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Username</label>
+              <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', padding: '10px 14px' }}>
+                <UserIcon size={18} color="var(--adm-sidebar-text)" />
                 <input 
                   type="text" 
                   placeholder="Enter admin username"
                   value={loginForm.username}
                   onChange={(e) => setLoginForm(prev => ({ ...prev, username: e.target.value }))}
-                  style={{ border: 'none', background: 'transparent', outline: 'none', color: '#f8fafc', fontSize: '0.9rem', marginLeft: '10px', width: '100%' }}
+                  style={{ border: 'none', background: 'transparent', outline: 'none', color: '#f8fafc', fontSize: '0.875rem', marginLeft: '10px', width: '100%' }}
                   required
                 />
               </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase' }}>Password</label>
-              <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '10px 14px' }}>
-                <Lock size={18} color="#94a3b8" />
+              <label style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--adm-sidebar-text)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Password</label>
+              <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', padding: '10px 14px' }}>
+                <Lock size={18} color="var(--adm-sidebar-text)" />
                 <input 
                   type="password" 
                   placeholder="Enter admin password"
                   value={loginForm.password}
                   onChange={(e) => setLoginForm(prev => ({ ...prev, password: e.target.value }))}
-                  style={{ border: 'none', background: 'transparent', outline: 'none', color: '#f8fafc', fontSize: '0.9rem', marginLeft: '10px', width: '100%' }}
+                  style={{ border: 'none', background: 'transparent', outline: 'none', color: '#f8fafc', fontSize: '0.875rem', marginLeft: '10px', width: '100%' }}
                   required
                 />
               </div>
@@ -121,20 +105,8 @@ export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
 
             <button 
               type="submit"
-              style={{
-                marginTop: '10px',
-                padding: '12px',
-                backgroundColor: '#10b981',
-                border: 'none',
-                borderRadius: '8px',
-                color: 'white',
-                fontWeight: 700,
-                fontSize: '0.9rem',
-                cursor: 'pointer',
-                transition: 'background-color 0.2s'
-              }}
-              onMouseOver={(e) => e.target.style.backgroundColor = '#059669'}
-              onMouseOut={(e) => e.target.style.backgroundColor = '#10b981'}
+              className="admin-v2-btn admin-v2-btn-primary"
+              style={{ marginTop: '10px', padding: '12px' }}
             >
               Sign In to Console
             </button>

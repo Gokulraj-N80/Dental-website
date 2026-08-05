@@ -1,56 +1,101 @@
 import React, { useState } from 'react';
 import { NOTIFICATIONS } from './data/mockNotifications';
+import { Check, CheckSquare } from 'lucide-react';
 
 export default function Notifications() {
   const [notifications, setNotifications] = useState(NOTIFICATIONS);
 
   const markAllRead = () => {
-    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+    setNotifications(prev => prev.map(n => ({ ...n, unread: false })));
   };
 
   const toggleRead = (id) => {
-    setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: !n.read } : n));
+    setNotifications(prev => prev.map(n => n.id === id ? { ...n, unread: !n.unread } : n));
+  };
+
+  const getRelativeTime = (isoString) => {
+    const d = new Date(isoString);
+    const now = new Date();
+    const diffMs = now - d;
+    const diffMins = Math.round(diffMs / 60000);
+    
+    if (diffMins < 1) return 'Just now';
+    if (diffMins < 60) return `${diffMins}m ago`;
+    
+    const diffHrs = Math.round(diffMins / 60);
+    if (diffHrs < 24) return `${diffHrs}h ago`;
+    
+    return d.toLocaleDateString();
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+      
+      {/* Heading */}
+      <div className="admin-v2-page-heading" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '16px' }}>
         <div>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', margin: '0 0 6px 0' }}>Clinic Notifications</h2>
-          <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>Activity alerts, payments received, bookings status, and diagnostic checkins tracking.</p>
+          <span className="admin-v2-page-eyebrow">System Events</span>
+          <h2 className="admin-v2-page-title">Notifications Manager</h2>
+          <p className="admin-v2-page-subtitle">View booking events logs, system logs, patient entries alerts, and payments updates.</p>
         </div>
-        <button onClick={markAllRead} className="admin-v2-btn admin-v2-btn-secondary" style={{ fontSize: '0.85rem' }}>
-          Mark all as read
+        <button className="admin-v2-btn admin-v2-btn-secondary" onClick={markAllRead}>
+          <CheckSquare size={14} />
+          Mark All Read
         </button>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        {notifications.map((notif) => (
-          <div 
-            className="admin-v2-card" 
-            key={notif.id}
-            onClick={() => toggleRead(notif.id)}
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '16px', 
-              cursor: 'pointer',
-              borderLeft: notif.read ? '1px solid #e2e8f0' : `4px solid ${notif.color}`,
-              backgroundColor: notif.read ? 'white' : '#f8fafc'
-            }}
-          >
-            <div style={{ fontSize: '1.5rem' }}>
-              {notif.icon}
+      <div className="admin-v2-card" style={{ padding: '8px 24px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {notifications.length === 0 ? (
+            <div className="admin-v2-empty">
+              <div className="admin-v2-empty-icon">🔔</div>
+              <p className="admin-v2-empty-title">All caught up!</p>
+              <p className="admin-v2-empty-sub">No new system alerts or bookings events.</p>
             </div>
-            <div style={{ flex: 1 }}>
-              <h4 style={{ margin: '0 0 4px 0', fontSize: '0.9rem', fontWeight: 700, color: '#0f172a' }}>{notif.title}</h4>
-              <p style={{ margin: 0, fontSize: '0.85rem', color: '#475569' }}>{notif.body}</p>
-            </div>
-            <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
-              {new Date(notif.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-            </span>
-          </div>
-        ))}
+          ) : (
+            notifications.map((n) => (
+              <div 
+                key={n.id} 
+                className="admin-v2-activity-item" 
+                style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  alignItems: 'center',
+                  background: n.unread ? 'var(--adm-accent-subtle)' : 'transparent',
+                  padding: '18px 12px',
+                  borderRadius: '12px',
+                  margin: '4px 0',
+                  borderBottom: 'none'
+                }}
+              >
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', backgroundColor: n.unread ? 'white' : 'var(--adm-bg)', border: '1px solid var(--adm-border)' }}>
+                    {n.icon || '🔔'}
+                  </div>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <h4 style={{ margin: 0, fontSize: '0.875rem', fontWeight: n.unread ? 800 : 650, color: 'var(--adm-text-primary)' }}>
+                        {n.title}
+                      </h4>
+                      {n.unread && <span className="admin-v2-pulse-dot" style={{ position: 'relative', top: 0, right: 0 }} />}
+                    </div>
+                    <p style={{ margin: '4px 0 0', fontSize: '0.8rem', color: 'var(--adm-text-secondary)', lineHeight: '1.4' }}>{n.body}</p>
+                    <span className="admin-v2-activity-time">{getRelativeTime(n.createdAt)}</span>
+                  </div>
+                </div>
+
+                <button 
+                  onClick={() => toggleRead(n.id)}
+                  className={`admin-v2-btn admin-v2-btn-icon ${n.unread ? 'admin-v2-btn-primary' : 'admin-v2-btn-secondary'}`}
+                  title={n.unread ? 'Mark Read' : 'Mark Unread'}
+                  style={{ width: '30px', height: '30px', padding: 0 }}
+                >
+                  <Check size={14} />
+                </button>
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
