@@ -74,6 +74,39 @@ flowchart LR
 * **Step 3: Calendar Grid:** An interactive calendar shows available days and real-time open slots (e.g., 10:00 AM, 2:30 PM) for the chosen dentist.
 * **Step 4: Contact Details:** The patient inputs their name, phone, and email. Once submitted, the slot is instantly locked in the database.
 
+### System Workflow Sequence
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Patient
+    actor Admin
+    participant Frontend as React App
+    participant Backend as Express API
+    participant DB as MongoDB
+
+    Patient->>Frontend: Select Doctor, Service, Date & Slot
+    Patient->>Frontend: Fill contact form & submit
+    Frontend->>Backend: POST /api/appointments (details)
+    Note over Backend: Validate input data & check slot status
+    Backend->>DB: Query: Match date, time, doctor
+    DB-->>Backend: Return match results
+    alt Slot is Available
+        Backend->>DB: Save new Appointment (status: confirmed)
+        DB-->>Backend: Success
+        Backend-->>Frontend: Appointment Confirmed
+        Frontend-->>Patient: Display Success Screen
+        Admin->>Frontend: Live-load Dashboard
+        Frontend->>Backend: GET /api/appointments
+        Backend->>DB: Fetch latest appointments
+        DB-->>Backend: Return list
+        Backend-->>Frontend: Return list
+        Frontend-->>Admin: Show new booking in dashboard
+    else Slot already taken
+        Backend-->>Frontend: Error: Slot already booked
+        Frontend-->>Patient: Prompt to select new time slot
+    end
+```
+
 ---
 
 ## 7. Key Features
