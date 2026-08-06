@@ -1,4 +1,4 @@
-# SmileCraft Dental Clinic Website: Technical Project Report
+# DrNeemz Dental Clinic Website: Technical Project Report
 *A Detailed Developer & System Documentation of the Full-Stack Application*
 
 ---

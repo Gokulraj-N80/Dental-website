@@ -1,11 +1,11 @@
-# SmileCraft Dental Clinic: Case Study
+# DrNeemz Dental Clinic: Case Study
 *A Full-Stack Appointment Scheduling & Clinic Management Web Application*
 
 ---
 
 ## 1. Project Summary
 
-* **Project Name:** SmileCraft Dental Clinic Website
+* **Project Name:** DrNeemz Dental Clinic Website
 * **Project Type:** Full-Stack Web Application (SPA)
 * **Duration:** 6 Weeks
 * **Tech Stack:** React, Vite, Node.js, Express.js, MongoDB, Mongoose, JWT, Bcrypt
@@ -15,7 +15,7 @@
 
 ## 2. System Architecture
 
-SmileCraft is structured as a decoupled client-server architecture:
+DrNeemz is structured as a decoupled client-server architecture:
 
 ```mermaid
 flowchart TD
