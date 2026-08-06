@@ -66,7 +66,7 @@ export default function Journey() {
               {/* Central node dot */}
               <div className="tree-node">
                 <div className="tree-dot">
-                  <Icon size={14} />
+                  <Icon size={16} />
                 </div>
               </div>
 

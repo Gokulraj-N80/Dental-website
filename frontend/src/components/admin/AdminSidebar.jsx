@@ -24,9 +24,7 @@ export default function AdminSidebar({
   isCollapsed, 
   setIsCollapsed,
   onGoToPublic,
-  onLogout,
-  isDark,
-  onToggleDark
+  onLogout
 }) {
   return (
     <aside className={`admin-v2-sidebar ${isCollapsed ? 'collapsed' : ''}`}>
@@ -77,21 +75,8 @@ export default function AdminSidebar({
         })}
       </nav>
 
-      {/* Footer */}
       <div className="admin-v2-sidebar-footer">
         <span className="admin-v2-nav-section-label" style={{ padding: '0 4px 6px' }}>Quick Links</span>
-
-        <button
-          onClick={onToggleDark}
-          className="admin-v2-nav-item"
-          title={isCollapsed ? 'Toggle Theme' : undefined}
-          style={{ color: '#6b7a99' }}
-        >
-          <div className="admin-v2-nav-item-icon">
-            {isDark ? <Sun size={18} strokeWidth={2} /> : <Moon size={18} strokeWidth={2} />}
-          </div>
-          <span className="admin-v2-nav-item-text">{isDark ? 'Light Mode' : 'Dark Mode'}</span>
-        </button>
 
         <button
           onClick={onGoToPublic}

@@ -53,31 +53,45 @@ gsap.registerPlugin(ScrollTrigger);
 /* ---- Global scroll-reveal ---- */
 function useScrollReveal(currentTab) {
   useEffect(() => {
-    const observe = () => {
-      const targets = document.querySelectorAll('[data-reveal]');
-      if (!targets.length) return;
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const el = entry.target;
-              const delay = Number(el.dataset.delay || 0);
-              setTimeout(() => el.classList.add('visible'), delay);
-              io.unobserve(el);
-            }
-          });
-        },
-        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-      );
-      targets.forEach((el) => io.observe(el));
-      return io;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const delay = Number(el.dataset.delay || 0);
+            setTimeout(() => el.classList.add('visible'), delay);
+            io.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    const observeNewTargets = () => {
+      const targets = document.querySelectorAll('[data-reveal]:not(.revealer-observed)');
+      targets.forEach((el) => {
+        el.classList.add('revealer-observed');
+        io.observe(el);
+      });
     };
 
-    const frame = requestAnimationFrame(() => {
-      const io = observe();
-      return () => io && io.disconnect();
+    // Initial check
+    observeNewTargets();
+
+    // Setup mutation observer to watch for lazy loaded components mounting
+    const mutationObserver = new MutationObserver(() => {
+      observeNewTargets();
     });
-    return () => cancelAnimationFrame(frame);
+
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+
+    return () => {
+      io.disconnect();
+      mutationObserver.disconnect();
+    };
   }, [currentTab]);
 }
 

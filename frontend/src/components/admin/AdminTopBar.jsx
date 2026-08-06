@@ -23,8 +23,6 @@ export default function AdminTopBar({
   setSearchVal,
   onNotificationClick,
   currentSection = 'dashboard',
-  isDark,
-  onToggleDark,
 }) {
   const unreadCount = getUnreadCount();
   const sectionTitle = SECTION_TITLES[currentSection] || 'Console';
@@ -65,14 +63,6 @@ export default function AdminTopBar({
       </div>
 
       <div className="admin-v2-topbar-actions">
-        <button
-          type="button"
-          onClick={onToggleDark}
-          className="admin-v2-action-btn"
-          title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-        >
-          {isDark ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
 
         <button
           type="button"
