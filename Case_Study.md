@@ -132,26 +132,7 @@ The application is built on a modern full-stack development framework:
 
 ---
 
-## 10. Suggested Visual Layout & Screenshot Placement
-
-To showcase this case study in a design portfolio (such as Behance or Dribbble), place your interface mockups in these specific spots:
-
-1. **[Screenshot: Desktop Homepage Hero Banner]**
-   * *Location:* Directly after Section 3 (Solution).
-   * *Context:* Showcases the soft-blue theme, clean navigation links, and primary booking button.
-2. **[Screenshot: Live Booking Calendar & Slot Picker]**
-   * *Location:* Directly after Section 6 (User Flow).
-   * *Context:* Displays the date selection grid and clickable time slots on desktop viewports.
-3. **[Screenshot: Mobile Booking Views Side-by-Side]**
-   * *Location:* Directly after Section 9 (Challenges & Solutions).
-   * *Context:* Demonstrates the responsive layout, vertical slot button stacks, and mobile-optimized forms.
-4. **[Screenshot: Admin Dashboard Analytics Panel]**
-   * *Location:* Directly after Section 7 (Admin Dashboard).
-   * *Context:* Displays statistical summary cards, graphs, and the sidebar control panel.
-
----
-
-## 11. Key Learnings
+## 10. Key Learnings
 
 * **Fewer Input Fields Improve Conversion:** Trimming unnecessary questions from the booking form reduced form abandonment by 35%.
 * **Transparency Builds Confidence:** Presenting transparent pricing and doctor credentials upfront reduced patient anxiety and increased booking rates.
@@ -159,6 +140,7 @@ To showcase this case study in a design portfolio (such as Behance or Dribbble),
 
 ---
 
-## 12. Conclusion
+## 11. Conclusion
 
 SmileCraft proves that clinic websites do not have to feel cold or complicated. By replacing phone-based booking with a simple, visual web scheduler and providing a centralized admin panel, the system saves time for both patients and staff, demonstrating how thoughtful UX design can streamline health services.
+
