@@ -1,43 +1,44 @@
 import React from 'react';
 
 export default function Logo({ size = 48, showText = true, textColor = 'var(--color-accent)' }) {
-  // A collection of coordinates for leaves to form the outer shape of a tooth
+  // Each leaf is a small SVG ellipse rotated at an angle to look like a real leaf
   const leaves = [
     // Left Lobe / Crown top left
-    { cx: 32, cy: 15, r: 2.5 }, { cx: 28, cy: 18, r: 3 }, { cx: 24, cy: 22, r: 2.5 },
-    { cx: 22, cy: 27, r: 3 }, { cx: 20, cy: 33, r: 2.5 }, { cx: 22, cy: 39, r: 3 },
-    { cx: 25, cy: 44, r: 2.5 }, { cx: 29, cy: 48, r: 3 },
+    { cx: 32, cy: 15, r: 2.5, rotate: -30 }, { cx: 28, cy: 18, r: 3, rotate: -45 }, { cx: 24, cy: 22, r: 2.5, rotate: -60 },
+    { cx: 22, cy: 27, r: 3, rotate: -70 }, { cx: 20, cy: 33, r: 2.5, rotate: -75 }, { cx: 22, cy: 39, r: 3, rotate: -60 },
+    { cx: 25, cy: 44, r: 2.5, rotate: -45 }, { cx: 29, cy: 48, r: 3, rotate: -30 },
     
     // Right Lobe / Crown top right
-    { cx: 68, cy: 15, r: 2.5 }, { cx: 72, cy: 18, r: 3 }, { cx: 76, cy: 22, r: 2.5 },
-    { cx: 78, cy: 27, r: 3 }, { cx: 80, cy: 33, r: 2.5 }, { cx: 78, cy: 39, r: 3 },
-    { cx: 75, cy: 44, r: 2.5 }, { cx: 71, cy: 48, r: 3 },
+    { cx: 68, cy: 15, r: 2.5, rotate: 30 }, { cx: 72, cy: 18, r: 3, rotate: 45 }, { cx: 76, cy: 22, r: 2.5, rotate: 60 },
+    { cx: 78, cy: 27, r: 3, rotate: 70 }, { cx: 80, cy: 33, r: 2.5, rotate: 75 }, { cx: 78, cy: 39, r: 3, rotate: 60 },
+    { cx: 75, cy: 44, r: 2.5, rotate: 45 }, { cx: 71, cy: 48, r: 3, rotate: 30 },
 
     // Valley / Dip at the top
-    { cx: 50, cy: 25, r: 2.5 }, { cx: 45, cy: 22, r: 3 }, { cx: 55, cy: 22, r: 3 },
-    { cx: 40, cy: 18, r: 2.5 }, { cx: 60, cy: 18, r: 2.5 },
+    { cx: 50, cy: 25, r: 2.5, rotate: 0 }, { cx: 45, cy: 22, r: 3, rotate: -15 }, { cx: 55, cy: 22, r: 3, rotate: 15 },
+    { cx: 40, cy: 18, r: 2.5, rotate: -20 }, { cx: 60, cy: 18, r: 2.5, rotate: 20 },
     
     // Left side curve / roots area
-    { cx: 33, cy: 53, r: 2.5 }, { cx: 36, cy: 58, r: 3 }, { cx: 38, cy: 63, r: 2.5 },
-    { cx: 40, cy: 68, r: 3 }, { cx: 42, cy: 72, r: 2 },
+    { cx: 33, cy: 53, r: 2.5, rotate: -30 }, { cx: 36, cy: 58, r: 3, rotate: -20 }, { cx: 38, cy: 63, r: 2.5, rotate: -10 },
+    { cx: 40, cy: 68, r: 3, rotate: -5 }, { cx: 42, cy: 72, r: 2, rotate: 5 },
     
     // Right side curve / roots area
-    { cx: 67, cy: 53, r: 2.5 }, { cx: 64, cy: 58, r: 3 }, { cx: 62, cy: 63, r: 2.5 },
-    { cx: 60, cy: 68, r: 3 }, { cx: 58, cy: 72, r: 2 },
+    { cx: 67, cy: 53, r: 2.5, rotate: 30 }, { cx: 64, cy: 58, r: 3, rotate: 20 }, { cx: 62, cy: 63, r: 2.5, rotate: 10 },
+    { cx: 60, cy: 68, r: 3, rotate: 5 }, { cx: 58, cy: 72, r: 2, rotate: -5 },
 
-    // Inner foliage / body of the tooth
-    { cx: 30, cy: 28, r: 2 }, { cx: 35, cy: 25, r: 3 }, { cx: 40, cy: 28, r: 2.5 },
-    { cx: 34, cy: 34, r: 3 }, { cx: 38, cy: 38, r: 2.5 }, { cx: 33, cy: 42, r: 3 },
-    { cx: 42, cy: 44, r: 2 }, { cx: 37, cy: 48, r: 2.5 }, { cx: 41, cy: 52, r: 3 },
+    // Inner foliage / body of the tooth - left
+    { cx: 30, cy: 28, r: 2, rotate: -50 }, { cx: 35, cy: 25, r: 3, rotate: -25 }, { cx: 40, cy: 28, r: 2.5, rotate: -10 },
+    { cx: 34, cy: 34, r: 3, rotate: -40 }, { cx: 38, cy: 38, r: 2.5, rotate: -20 }, { cx: 33, cy: 42, r: 3, rotate: -50 },
+    { cx: 42, cy: 44, r: 2, rotate: -15 }, { cx: 37, cy: 48, r: 2.5, rotate: -35 }, { cx: 41, cy: 52, r: 3, rotate: -20 },
     
-    { cx: 70, cy: 28, r: 2 }, { cx: 65, cy: 25, r: 3 }, { cx: 60, cy: 28, r: 2.5 },
-    { cx: 66, cy: 34, r: 3 }, { cx: 62, cy: 38, r: 2.5 }, { cx: 67, cy: 42, r: 3 },
-    { cx: 58, cy: 44, r: 2 }, { cx: 63, cy: 48, r: 2.5 }, { cx: 59, cy: 52, r: 3 },
+    // Inner foliage / body of the tooth - right
+    { cx: 70, cy: 28, r: 2, rotate: 50 }, { cx: 65, cy: 25, r: 3, rotate: 25 }, { cx: 60, cy: 28, r: 2.5, rotate: 10 },
+    { cx: 66, cy: 34, r: 3, rotate: 40 }, { cx: 62, cy: 38, r: 2.5, rotate: 20 }, { cx: 67, cy: 42, r: 3, rotate: 50 },
+    { cx: 58, cy: 44, r: 2, rotate: 15 }, { cx: 63, cy: 48, r: 2.5, rotate: 35 }, { cx: 59, cy: 52, r: 3, rotate: 20 },
 
     // Upper center foliage
-    { cx: 46, cy: 30, r: 2 }, { cx: 54, cy: 30, r: 2 }, { cx: 50, cy: 33, r: 3 },
-    { cx: 45, cy: 36, r: 2.5 }, { cx: 55, cy: 36, r: 2.5 }, { cx: 49, cy: 40, r: 3 },
-    { cx: 46, cy: 45, r: 2 }, { cx: 54, cy: 45, r: 2 }, { cx: 50, cy: 48, r: 3 }
+    { cx: 46, cy: 30, r: 2, rotate: -10 }, { cx: 54, cy: 30, r: 2, rotate: 10 }, { cx: 50, cy: 33, r: 3, rotate: 0 },
+    { cx: 45, cy: 36, r: 2.5, rotate: -15 }, { cx: 55, cy: 36, r: 2.5, rotate: 15 }, { cx: 49, cy: 40, r: 3, rotate: -5 },
+    { cx: 46, cy: 45, r: 2, rotate: -10 }, { cx: 54, cy: 45, r: 2, rotate: 10 }, { cx: 50, cy: 48, r: 3, rotate: 0 }
   ];
 
   return (
@@ -70,14 +71,16 @@ export default function Logo({ size = 48, showText = true, textColor = 'var(--co
           fill="#795548" 
         />
 
-        {/* Leaf Cluster forming the Tooth (Dynamic Theme Color) */}
+        {/* Leaf Cluster forming the Tooth — using ellipses rotated to look like real leaves */}
         {leaves.map((leaf, index) => (
-          <circle 
-            key={index} 
-            cx={leaf.cx} 
-            cy={leaf.cy} 
-            r={leaf.r} 
-            fill={index % 4 === 0 ? 'var(--color-logo-leaf-1)' : 'var(--color-logo-leaf-2)'} 
+          <ellipse
+            key={index}
+            cx={leaf.cx}
+            cy={leaf.cy}
+            rx={leaf.r * 1.6}   // wider horizontally
+            ry={leaf.r}          // normal height
+            fill={index % 4 === 0 ? 'var(--color-logo-leaf-1)' : 'var(--color-logo-leaf-2)'}
+            transform={`rotate(${leaf.rotate}, ${leaf.cx}, ${leaf.cy})`}
           />
         ))}
       </svg>

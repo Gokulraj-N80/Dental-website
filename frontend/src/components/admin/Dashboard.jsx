@@ -46,16 +46,9 @@ export default function Dashboard() {
   ];
 
   // Monthly data mapping points: Width=500, Height=180
-  // Values: Jan(18), Feb(24), Mar(20), Apr(30), May(35), Jun(42)
-  // Max = 45. Min = 0.
-  // Y calculation: Y = 160 - (value / 45) * 120
-  // Jan: 18 -> 160 - (18/45)*120 = 112
-  // Feb: 24 -> 160 - (24/45)*120 = 96
-  // Mar: 20 -> 160 - (20/45)*120 = 106.6
-  // Apr: 30 -> 160 - (30/45)*120 = 80
-  // May: 35 -> 160 - (35/45)*120 = 66.6
-  // Jun: 42 -> 160 - (42/45)*120 = 48
-  const graphPoints = [
+  // Values Line 1 (Appointments): Jan(18), Feb(24), Mar(20), Apr(30), May(35), Jun(42)
+  // Values Line 2 (Completed): Jan(12), Feb(18), Mar(15), Apr(25), May(28), Jun(38)
+  const line1Points = [
     { label: 'Jan', value: 18, x: 40,  y: 112 },
     { label: 'Feb', value: 24, x: 120, y: 96 },
     { label: 'Mar', value: 20, x: 200, y: 106.6 },
@@ -64,18 +57,33 @@ export default function Dashboard() {
     { label: 'Jun', value: 42, x: 440, y: 48 },
   ];
 
-  // Curve: cubic bezier control points for smooth flow
-  // Path formula d
-  const linePath = "M 40,112 C 80,104 80,96 120,96 C 160,96 160,106.6 200,106.6 C 240,106.6 240,80 280,80 C 320,80 320,66.6 360,66.6 C 400,66.6 400,48 440,48";
-  const areaPath = `${linePath} L 440,160 L 40,160 Z`;
+  const line2Points = [
+    { label: 'Jan', value: 12, x: 40,  y: 128 },
+    { label: 'Feb', value: 18, x: 120, y: 112 },
+    { label: 'Mar', value: 15, x: 200, y: 120 },
+    { label: 'Apr', value: 25, x: 280, y: 93.3 },
+    { label: 'May', value: 28, x: 360, y: 85.3 },
+    { label: 'Jun', value: 38, x: 440, y: 58.6 },
+  ];
 
-  // Concentric Radial Progress Rings calculations
-  // Center is (50, 50). Stroke width = 6.
-  const concentricRings = [
-    { name: 'Dental Cleaning', pct: 35, color: '#4f7ef8', radius: 36, circ: 2 * Math.PI * 36 }, // outer
-    { name: 'Root Canal',      pct: 25, color: '#10b981', radius: 28, circ: 2 * Math.PI * 28 },
-    { name: 'Dental Implant',  pct: 20, color: '#8b5cf6', radius: 20, circ: 2 * Math.PI * 20 },
-    { name: 'Others',          pct: 20, color: '#f43f5e', radius: 12, circ: 2 * Math.PI * 12 }, // inner
+  const line1Path = "M 40,112 C 80,104 80,96 120,96 C 160,96 160,106.6 200,106.6 C 240,106.6 240,80 280,80 C 320,80 320,66.6 360,66.6 C 400,66.6 400,48 440,48";
+  const area1Path = `${line1Path} L 440,160 L 40,160 Z`;
+
+  const line2Path = "M 40,128 C 80,120 80,112 120,112 C 160,112 160,120 200,120 C 240,120 240,93.3 280,93.3 C 320,93.3 320,85.3 360,85.3 C 400,85.3 400,58.6 440,58.6";
+  const area2Path = `${line2Path} L 440,160 L 40,160 Z`;
+
+  // Semi-Circular Gauge calculations
+  // Radius = 32. Path starts left, curves up, ends right.
+  // Circumference of semi-circle = Math.PI * 32 ≈ 100.53
+  const gaugeCirc = Math.PI * 32;
+  const capacityPct = 85; // Clinic Capacity Rate
+  const gaugeOffset = gaugeCirc - (capacityPct / 100) * gaugeCirc;
+
+  // Categories list below the gauge
+  const categories = [
+    { name: 'Appointments Booked', pct: 85, color: '#4f7ef8' },
+    { name: 'Successful Consultations', pct: 76, color: '#10b981' },
+    { name: 'Active Treatment Slots', pct: 60, color: '#8b5cf6' },
   ];
 
   return (
@@ -122,72 +130,86 @@ export default function Dashboard() {
       {/* 2 Graphs Row */}
       <div className="admin-v2-dashboard-row-2">
 
-        {/* Gradient Curve Area Graph */}
-        <div className="admin-v2-card" style={{ position: 'relative' }}>
+        {/* Dual-Line Comparison Area Chart */}
+        <div className="admin-v2-card chart-canvas" style={{ position: 'relative' }}>
           <div className="admin-v2-card-header">
-            <h3 className="admin-v2-card-title">Patient Intake & Trend Curve</h3>
-            <span className="admin-v2-card-subtitle">Last 6 Months</span>
+            <div>
+              <h3 className="admin-v2-card-title">Bookings vs. Completed Cases</h3>
+              <p style={{ margin: '4px 0 0', fontSize: '0.78rem', color: 'var(--adm-text-tertiary)' }}>Comparative intake trends analysis</p>
+            </div>
+            <div style={{ display: 'flex', gap: '12px', fontSize: '0.75rem', fontWeight: 600 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#4f7ef8' }} />
+                <span style={{ color: 'var(--adm-text-secondary)' }}>Booked</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981' }} />
+                <span style={{ color: 'var(--adm-text-secondary)' }}>Completed</span>
+              </div>
+            </div>
           </div>
 
           <div style={{ position: 'relative', width: '100%', height: '180px', marginTop: '16px' }}>
             <svg viewBox="0 0 480 180" width="100%" height="100%" style={{ overflow: 'visible' }}>
               <defs>
-                {/* Glowing area fill gradient */}
-                <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                <linearGradient id="area1" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#4f7ef8" stopOpacity="0.28" />
                   <stop offset="100%" stopColor="#4f7ef8" stopOpacity="0.00" />
                 </linearGradient>
-                {/* Curve border stroke gradient */}
-                <linearGradient id="strokeGradient" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#8b5cf6" />
-                  <stop offset="50%" stopColor="#4f7ef8" />
+                <linearGradient id="area2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#10b981" stopOpacity="0.28" />
+                  <stop offset="100%" stopColor="#10b981" stopOpacity="0.00" />
+                </linearGradient>
+                <linearGradient id="lineGrad1" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#7aa2ff" />
+                  <stop offset="100%" stopColor="#4f7ef8" />
+                </linearGradient>
+                <linearGradient id="lineGrad2" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#34d399" />
                   <stop offset="100%" stopColor="#10b981" />
                 </linearGradient>
+                <filter id="glowBlue" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3.5" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3.5" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
               </defs>
 
               {/* Grid Lines */}
-              <line x1="40" y1="48" x2="440" y2="48" stroke="var(--adm-border)" strokeWidth="1" strokeDasharray="3,3" />
-              <line x1="40" y1="80" x2="440" y2="80" stroke="var(--adm-border)" strokeWidth="1" strokeDasharray="3,3" />
-              <line x1="40" y1="112" x2="440" y2="112" stroke="var(--adm-border)" strokeWidth="1" strokeDasharray="3,3" />
-              <line x1="40" y1="160" x2="440" y2="160" stroke="var(--adm-border)" strokeWidth="1.5" />
+              <line x1="40" y1="48" x2="440" y2="48" stroke="var(--adm-chart-grid)" strokeWidth="1" strokeDasharray="4,4" />
+              <line x1="40" y1="80" x2="440" y2="80" stroke="var(--adm-chart-grid)" strokeWidth="1" strokeDasharray="4,4" />
+              <line x1="40" y1="112" x2="440" y2="112" stroke="var(--adm-chart-grid)" strokeWidth="1" strokeDasharray="4,4" />
+              <line x1="40" y1="160" x2="440" y2="160" stroke="var(--adm-chart-grid)" strokeWidth="1.5" />
 
-              {/* Shaded Area Fill */}
-              <path d={areaPath} fill="url(#areaGradient)" />
+              {/* Area fills */}
+              <path d={area1Path} fill="url(#area1)" />
+              <path d={area2Path} fill="url(#area2)" />
 
-              {/* Curve Stroke Line */}
-              <path d={linePath} fill="none" stroke="url(#strokeGradient)" strokeWidth="3.5" strokeLinecap="round" />
+              {/* Lines with soft glow */}
+              <path d={line1Path} fill="none" stroke="url(#lineGrad1)" strokeWidth="3.5" strokeLinecap="round" filter="url(#glowBlue)" />
+              <path d={line2Path} fill="none" stroke="url(#lineGrad2)" strokeWidth="3.5" strokeLinecap="round" filter="url(#glowGreen)" />
 
-              {/* Circular Node Points */}
-              {graphPoints.map((pt, i) => (
-                <g key={i} className="admin-v2-tooltip-wrap">
-                  <circle
-                    cx={pt.x}
-                    cy={pt.y}
-                    r="5"
-                    fill="white"
-                    stroke="#4f7ef8"
-                    strokeWidth="3.5"
-                    style={{ cursor: 'pointer', transition: 'r 0.15s' }}
-                    onMouseOver={(e) => e.target.setAttribute('r', '7')}
-                    onMouseOut={(e) => e.target.setAttribute('r', '5')}
-                  />
-                  {/* Floating Value Labels */}
-                  <text
-                    x={pt.x}
-                    y={pt.y - 12}
-                    textAnchor="middle"
-                    fill="var(--adm-text-secondary)"
-                    fontSize="9.5"
-                    fontWeight="700"
-                  >
-                    {pt.value}
-                  </text>
-                  {/* Month Label */}
+              {/* Highlighted data-point nodes */}
+              {line1Points.map((pt, i) => (
+                <g key={i}>
+                  <circle cx={pt.x} cy={pt.y} r="7" fill="#4f7ef8" opacity="0.18" />
+                  <circle cx={pt.x} cy={pt.y} r="4" fill="var(--adm-surface)" stroke="#4f7ef8" strokeWidth="2.5" />
+                  <circle cx={pt.x} cy={line2Points[i].y} r="7" fill="#10b981" opacity="0.18" />
+                  <circle cx={pt.x} cy={line2Points[i].y} r="4" fill="var(--adm-surface)" stroke="#10b981" strokeWidth="2.5" />
                   <text
                     x={pt.x}
                     y="176"
                     textAnchor="middle"
-                    fill="var(--adm-text-tertiary)"
+                    fill="var(--adm-chart-axis)"
                     fontSize="10"
                     fontWeight="600"
                   >
@@ -199,67 +221,79 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Concentric Radial Rings Chart */}
-        <div className="admin-v2-card">
+        {/* Semi-Circular Radial Gauge Chart */}
+        <div className="admin-v2-card chart-canvas">
           <div className="admin-v2-card-header">
-            <h3 className="admin-v2-card-title">Treatment Concentric Split</h3>
-            <span className="admin-v2-card-subtitle">Volume</span>
+            <h3 className="admin-v2-card-title">Clinic Efficiency Index</h3>
+            <span className="admin-v2-card-subtitle">Performance</span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '28px', padding: '12px 0 0 0' }}>
-            {/* SVG concentric loops */}
-            <div style={{ position: 'relative', width: '130px', height: '130px' }}>
-              <svg viewBox="0 0 100 100" width="100%" height="100%" style={{ transform: 'rotate(-90deg)' }}>
-                {concentricRings.map((ring, idx) => {
-                  const dashOffset = ring.circ - (ring.pct / 100) * ring.circ;
-                  return (
-                    <g key={idx}>
-                      {/* Background track loop */}
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r={ring.radius}
-                        fill="none"
-                        stroke="#f1f5f9"
-                        strokeWidth="5"
-                      />
-                      {/* Animated progress loop */}
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r={ring.radius}
-                        fill="none"
-                        stroke={ring.color}
-                        strokeWidth="5.2"
-                        strokeDasharray={ring.circ}
-                        strokeDashoffset={dashOffset}
-                        strokeLinecap="round"
-                        style={{
-                          transition: 'stroke-dashoffset 0.8s ease-out',
-                          animation: 'adm-spin-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both',
-                          animationDelay: `${idx * 0.1}s`
-                        }}
-                      />
-                    </g>
-                  );
-                })}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', padding: '16px 0 0 0' }}>
+            {/* SVG semi-circular gauge */}
+            <div style={{ position: 'relative', width: '150px', height: '90px', overflow: 'hidden' }}>
+              <svg viewBox="0 0 100 60" width="100%" height="100%">
+                <defs>
+                  <linearGradient id="gaugeGradient" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#4f7ef8" />
+                    <stop offset="60%" stopColor="#6366f1" />
+                    <stop offset="100%" stopColor="#10b981" />
+                  </linearGradient>
+                  <filter id="gaugeGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="2.5" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+                {/* Background track path */}
+                <path
+                  d="M 18,50 A 32,32 0 0,1 82,50"
+                  fill="none"
+                  stroke="var(--adm-chart-track)"
+                  strokeWidth="8"
+                  strokeLinecap="round"
+                />
+                {/* Colored progress path with glow */}
+                <path
+                  d="M 18,50 A 32,32 0 0,1 82,50"
+                  fill="none"
+                  stroke="url(#gaugeGradient)"
+                  strokeWidth="8.2"
+                  strokeDasharray={gaugeCirc}
+                  strokeDashoffset={gaugeOffset}
+                  strokeLinecap="round"
+                  filter="url(#gaugeGlow)"
+                  style={{
+                    transition: 'stroke-dashoffset 0.8s ease-out',
+                    animation: 'adm-spin-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both',
+                  }}
+                />
+                {/* Cap dot at the leading edge of the arc (85% of the semi-circle) */}
+                <circle
+                  cx="78.5"
+                  cy="35.5"
+                  r="3"
+                  fill="#10b981"
+                  filter="url(#gaugeGlow)"
+                />
               </svg>
-              {/* Inner label */}
-              <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--adm-text-primary)', letterSpacing: '-0.02em' }}>100%</span>
-                <span style={{ fontSize: '0.62rem', color: 'var(--adm-text-tertiary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Case Base</span>
+              {/* Central text stats */}
+              <div style={{ position: 'absolute', bottom: '0', left: '0', right: '0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', lineHeight: '1.2' }}>
+                <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--adm-text-primary)', letterSpacing: '-0.03em' }}>{capacityPct}%</div>
+                <div style={{ fontSize: '0.62rem', color: 'var(--adm-text-tertiary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginTop: '2px' }}>Capacity Rate</div>
               </div>
             </div>
 
-            {/* Premium details list with color indicators */}
+            {/* List breakdown */}
             <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {concentricRings.map((ring, idx) => (
-                <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+              {categories.map((c, idx) => (
+                <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.78rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: ring.color, flexShrink: 0 }} />
-                    <span style={{ color: 'var(--adm-text-secondary)', fontWeight: 600 }}>{ring.name}</span>
+                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: c.color, flexShrink: 0 }} />
+                    <span style={{ color: 'var(--adm-text-secondary)', fontWeight: 600 }}>{c.name}</span>
                   </div>
-                  <strong style={{ color: 'var(--adm-text-primary)', fontWeight: 700 }}>{ring.pct}%</strong>
+                  <strong style={{ color: 'var(--adm-text-primary)', fontWeight: 700 }}>{c.pct}%</strong>
                 </div>
               ))}
             </div>

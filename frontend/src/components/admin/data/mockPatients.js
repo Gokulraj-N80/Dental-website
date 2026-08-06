@@ -106,7 +106,7 @@ function generatePatient() {
     city,
     occupation: randomFrom(OCCUPATIONS),
     insurance: randomFrom(INSURANCES),
-    emergencyContact: `+91 ${randomInt(6,9)}${String(randomInt(000000000,999999999)).padStart(9,'0')}`,
+    emergencyContact: `+91 ${randomInt(6,9)}${String(randomInt(100000000,999999999))}`,
     registrationDate: generateDate(registrationDaysAgo),
     lastVisit: generateDate(lastVisitDaysAgo),
     nextAppointment: generateFutureDate(nextVisitDaysAhead),

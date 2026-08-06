@@ -28,6 +28,7 @@ export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [currentSection, setCurrentSection] = useState('dashboard');
   const [globalSearch, setGlobalSearch] = useState('');
+  const [isDark, setIsDark] = useState(false);
 
   // Check auth token
   useEffect(() => {
@@ -117,7 +118,7 @@ export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
   }
 
   return (
-    <div className="admin-v2-wrapper">
+    <div className={`admin-v2-wrapper${isDark ? ' dark' : ''}`}>
       <AdminSidebar 
         currentSection={currentSection}
         onSelectSection={setCurrentSection}
@@ -125,6 +126,8 @@ export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
         setIsCollapsed={setIsSidebarCollapsed}
         onGoToPublic={onGoToPublic}
         onLogout={handleLogout}
+        isDark={isDark}
+        onToggleDark={() => setIsDark(d => !d)}
       />
 
       <main className="admin-v2-main">
