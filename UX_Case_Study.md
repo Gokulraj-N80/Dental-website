@@ -73,11 +73,33 @@ We designed SmileCraft to solve these everyday problems with a clean, friendly, 
 * **Online Booking:** An interactive calendar where users can select their doctor, view available time slots, and book instantly.
 * **Mobile-friendly Design:** Large buttons, readable fonts, and fast loading speeds for users on the go.
 
+### User Booking Journey Flow
+```mermaid
+graph LR
+    A["1. Land on Homepage"] --> B["2. Click 'Book Appointment'"]
+    B --> C["3. Select Service & Doctor"]
+    C --> D["4. Choose Date & Time Slot"]
+    D --> E["5. Enter Contact Details"]
+    E --> F["6. Booking Confirmed!"]
+    style F fill:#4CAF50,stroke:#388E3C,stroke-width:2px,color:#fff
+    style A fill:#2196F3,stroke:#1976D2,stroke-width:2px,color:#fff
+```
+
 ---
 
 ## 7. Design Process
 
 We followed a simple, user-centered design process to bring SmileCraft to life:
+
+```mermaid
+flowchart TD
+    1["🔍 Research (Interviews & Personas)"] --> 2["🗺️ Planning (Sitemaps & User Flows)"]
+    2 --> 3["✏️ Wireframing (Sketches & Layouts)"]
+    3 --> 4["🎨 UI Design (Colors & Typography)"]
+    4 --> 5["💻 Development (Coding components)"]
+    5 --> 6["🧪 Testing (User feedback & Bug fixes)"]
+    6 --> 7["🚀 Final Launch (Website live!)"]
+```
 
 1. **Research:** We interviewed 10 patients to understand their fears and booking habits.
 2. **Planning:** We mapped out the website structure (Sitemap) to keep the journey short.
@@ -107,6 +129,23 @@ The SmileCraft website is packed with essential features to make the patient's j
 ## 9. Admin Dashboard
 
 Behind the scenes, we built a powerful, easy-to-use control panel for the clinic staff:
+
+```mermaid
+mindmap
+  root((Admin Dashboard))
+    Appointments
+      View Live Calendar
+      Reschedule Slots
+    Patients
+      Patient Database
+      Booking History
+    Doctors
+      Manage Rosters
+      Set Holidays
+    Content Management
+      Update Treatment Prices
+      Add Announcements
+```
 
 * **View Appointments:** A live calendar showing all booked, completed, or cancelled appointments.
 * **Manage Patients:** A digital list of patients, their booking history, and contact details.
