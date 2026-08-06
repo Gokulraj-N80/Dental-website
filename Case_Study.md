@@ -1,5 +1,5 @@
-# SmileCraft Dental Clinic: UX/UI Case Study
-*Designing a seamless, anxiety-free digital experience for patients and clinic staff.*
+# SmileCraft Dental Clinic: Case Study
+*Designing a seamless, easy-to-use digital experience for patients and clinic staff.*
 
 ---
 
