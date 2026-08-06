@@ -4,6 +4,7 @@ import { gsap } from 'gsap';
 import BookingCalendar from './BookingCalendar';
 import TimeSlots       from './TimeSlots';
 import './BookingCalendar.css';
+import { DOCTORS } from './admin/data/mockDoctors';
 
 /* ─── Static data ─────────────────────────────────────────────────────────── */
 
@@ -52,6 +53,7 @@ function SuccessScreen({ data, onReset }) {
         <div className="booking-summary-card">
           <h3>Appointment Details</h3>
           <div className="summary-row"><span>Treatment:</span><strong>{data.service}</strong></div>
+          {data.doctor && <div className="summary-row"><span>Doctor:</span><strong>{data.doctor}</strong></div>}
           <div className="summary-row">
             <span>Date:</span>
             <strong>
@@ -78,13 +80,55 @@ function SuccessScreen({ data, onReset }) {
 
 export default function BookingForm({ defaultService }) {
   const availMap = useMemo(() => buildAvailMap(), []);
+  const DAYS_OF_WEEK = useMemo(() => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], []);
 
   const [formData,    setFormData]    = useState({
-    name:'', email:'', phone:'', service: defaultService||'', branch:'', notes:'',
+    name:'', email:'', phone:'', service: defaultService||'', doctor:'', branch:'', notes:'',
   });
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState('');
   const [captchaValue, setCaptchaValue] = useState('');
+
+  // Helper to convert "02:30 PM" -> "14:30"
+  const convert12hTo24h = useCallback((slotStr) => {
+    if (!slotStr) return '';
+    const [time, modifier] = slotStr.split(' ');
+    let [hours, minutes] = time.split(':');
+    if (hours === '12') {
+      hours = '00';
+    }
+    if (modifier === 'PM') {
+      hours = String(parseInt(hours, 10) + 12);
+    }
+    return `${hours.padStart(2, '0')}:${minutes}`;
+  }, []);
+
+  // Filter available doctors based on selectedDate and selectedSlot
+  const availableDoctors = useMemo(() => {
+    return DOCTORS.filter(doc => {
+      // Weekday check
+      if (selectedDate) {
+        const dayName = DAYS_OF_WEEK[selectedDate.getDay()];
+        if (!doc.workingDays.includes(dayName)) return false;
+      }
+      // Time slot check
+      if (selectedSlot) {
+        const slot24 = convert12hTo24h(selectedSlot);
+        if (!doc.timeSlots.includes(slot24)) return false;
+      }
+      return true;
+    });
+  }, [selectedDate, selectedSlot, DAYS_OF_WEEK, convert12hTo24h]);
+
+  // Reset doctor selection if they become unavailable
+  useEffect(() => {
+    if (formData.doctor) {
+      const isAvailable = availableDoctors.some(doc => doc.name === formData.doctor);
+      if (!isAvailable) {
+        setFormData(prev => ({ ...prev, doctor: '' }));
+      }
+    }
+  }, [selectedDate, selectedSlot, availableDoctors, formData.doctor]);
   
   // Dynamic random captcha generator
   const generateRandomCaptcha = useCallback(() => {
@@ -94,6 +138,14 @@ export default function BookingForm({ defaultService }) {
   const [captchaCode, setCaptchaCode]                   = useState('');
   const [loading,      setLoading]      = useState(false);
   const [error,        setError]        = useState('');
+  const [doctorHint,   setDoctorHint]   = useState(false);
+
+  const handleDoctorLockedClick = useCallback(() => {
+    if (!selectedDate || !selectedSlot) {
+      setDoctorHint(true);
+      setTimeout(() => setDoctorHint(false), 2500);
+    }
+  }, [selectedDate, selectedSlot]);
   const [successData,  setSuccessData]  = useState(null);
 
   const containerRef = useRef(null);
@@ -174,7 +226,7 @@ export default function BookingForm({ defaultService }) {
     e.preventDefault();
     setError('');
 
-    if (!formData.name || !formData.phone || !formData.service || !formData.branch) {
+    if (!formData.name || !formData.phone || !formData.service || !formData.doctor || !formData.branch) {
       setError('Please fill in all required fields.'); return;
     }
     if (!selectedDate) {
@@ -200,7 +252,7 @@ export default function BookingForm({ defaultService }) {
 
     const payload = {
       name: formData.name, email: formData.email, phone: formData.phone,
-      service: formData.service, date: dateStr, timeSlot: selectedSlot,
+      service: formData.service, doctor: formData.doctor, date: dateStr, timeSlot: selectedSlot,
       notes: `[Branch: ${formData.branch}] ${formData.notes}`.trim(),
     };
 
@@ -302,14 +354,65 @@ export default function BookingForm({ defaultService }) {
                   value={formData.email} onChange={handleChange} autoComplete="email" />
               </div>
 
-              {/* Service — spans 2 columns */}
-              <div className="bfield-wrap" style={{ gridColumn:'1 / span 2' }}>
+              {/* Service */}
+              <div className="bfield-wrap">
                 <select name="service" value={formData.service} onChange={handleChange} required>
                   <option value="">Select Treatment *</option>
                   {SERVICES.map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
               </div>
 
+              {/* Doctor */}
+              <div className="bfield-wrap" style={{ position: 'relative' }}>
+                {/* Invisible overlay to catch clicks when select is disabled */}
+                {(!selectedDate || !selectedSlot) && (
+                  <div
+                    onClick={handleDoctorLockedClick}
+                    style={{
+                      position: 'absolute', inset: 0,
+                      zIndex: 2, cursor: 'not-allowed',
+                    }}
+                    title="Select a date and time slot first"
+                  />
+                )}
+                {/* Hint tooltip */}
+                {doctorHint && (
+                  <div style={{
+                    position: 'absolute', bottom: 'calc(100% + 6px)', left: 0,
+                    background: '#1e293b', color: '#fff',
+                    fontSize: '0.78rem', fontFamily: 'var(--font-main)',
+                    padding: '6px 12px', borderRadius: '8px',
+                    whiteSpace: 'nowrap', zIndex: 10,
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.18)',
+                    pointerEvents: 'none',
+                    animation: 'fadeIn 0.2s ease',
+                  }}>
+                    📅 Please select a date &amp; time slot first
+                  </div>
+                )}
+                <select 
+                  name="doctor" 
+                  value={formData.doctor} 
+                  onChange={handleChange} 
+                  required
+                  disabled={!selectedDate || !selectedSlot}
+                  style={!selectedDate || !selectedSlot ? { opacity: 0.55, cursor: 'not-allowed' } : {}}
+                >
+                  <option value="">
+                    {!selectedDate || !selectedSlot
+                      ? 'Select Date & Time first *'
+                      : availableDoctors.length === 0
+                        ? 'No Doctors Available at this time'
+                        : 'Select Doctor *'
+                    }
+                  </option>
+                  {availableDoctors.map(d => (
+                    <option key={d.id} value={d.name}>{d.name} ({d.specialization})</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* City / Branch */}
               <div className="bfield-wrap">
                 <select name="branch" value={formData.branch} onChange={handleChange} required>
                   <option value="">Select City *</option>

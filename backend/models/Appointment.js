@@ -28,6 +28,11 @@ const appointmentSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  doctor: {
+    type: String,
+    trim: true,
+    default: ''
+  },
   notes: {
     type: String,
     trim: true,

@@ -25,7 +25,7 @@ const authenticateAdmin = (req, res, next) => {
 // @desc    Create a new appointment (Public)
 router.post('/', async (req, res) => {
   try {
-    const { name, email, phone, date, timeSlot, service, notes } = req.body;
+    const { name, email, phone, date, timeSlot, service, doctor, notes } = req.body;
 
     if (!name || !phone || !date || !timeSlot || !service) {
       return res.status(400).json({ message: 'Please fill in all required fields' });
@@ -58,6 +58,7 @@ router.post('/', async (req, res) => {
       date: parsedDate,
       timeSlot,
       service,
+      doctor,
       notes
     });
 
