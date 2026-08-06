@@ -207,7 +207,7 @@ export default function BrandRevealLoader({ onComplete }) {
             {/* Typography Side */}
             <div className="loader-logo-text" ref={textRef}>
               <div className="loader-text-row">
-                <span className="ltext-bold">DR. MARCUS</span>
+                <span className="ltext-bold">DRNEEMZ</span>
                 <span className="ltext-light">DENTISTRY</span>
               </div>
               <span className="ltext-tagline">Smile Confident with Neem</span>

@@ -36,7 +36,7 @@ export default function AdminSidebar({
         <div style={{ display: 'flex', alignItems: 'center', minWidth: 0 }}>
           <div className="admin-v2-sidebar-logo-icon">🦷</div>
           <span className="admin-v2-sidebar-logo-text">
-            DR. MARCUS
+            DRNEEMZ
             <small>Admin Console</small>
           </span>
         </div>

@@ -1,22 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Lock, User as UserIcon, LogOut } from 'lucide-react';
 import './admin/AdminPanel.css';
 
 // Importing sub-components
 import AdminSidebar from './admin/AdminSidebar';
 import AdminTopBar from './admin/AdminTopBar';
-import Dashboard from './admin/Dashboard';
-import Appointments from './admin/Appointments';
-import Patients from './admin/Patients';
-import Treatments from './admin/Treatments';
-import Invoices from './admin/Invoices';
-import Payments from './admin/Payments';
-import Reviews from './admin/Reviews';
-import Messages from './admin/Messages';
-import Reports from './admin/Reports';
-import WebsiteCMS from './admin/WebsiteCMS';
-import Notifications from './admin/Notifications';
-import Settings from './admin/Settings';
+
+const Dashboard = lazy(() => import('./admin/Dashboard'));
+const Appointments = lazy(() => import('./admin/Appointments'));
+const Patients = lazy(() => import('./admin/Patients'));
+const Treatments = lazy(() => import('./admin/Treatments'));
+const Invoices = lazy(() => import('./admin/Invoices'));
+const Payments = lazy(() => import('./admin/Payments'));
+const Reviews = lazy(() => import('./admin/Reviews'));
+const Messages = lazy(() => import('./admin/Messages'));
+const Reports = lazy(() => import('./admin/Reports'));
+const WebsiteCMS = lazy(() => import('./admin/WebsiteCMS'));
+const Notifications = lazy(() => import('./admin/Notifications'));
+const Settings = lazy(() => import('./admin/Settings'));
+
+function AdminViewFallback() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', padding: '40px', gap: '20px', width: '100%', height: '80vh' }}>
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 0.6; }
+          50% { opacity: 0.3; }
+        }
+      `}</style>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <div style={{ width: '200px', height: '28px', borderRadius: '6px', background: 'var(--adm-border)', animation: 'pulse 1.5s infinite' }} />
+        <div style={{ width: '120px', height: '36px', borderRadius: '8px', background: 'var(--adm-border)', animation: 'pulse 1.5s infinite' }} />
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '20px' }}>
+        <div style={{ height: '120px', borderRadius: '12px', background: 'var(--adm-surface-2)', border: '1px solid var(--adm-border)', animation: 'pulse 1.5s infinite' }} />
+        <div style={{ height: '120px', borderRadius: '12px', background: 'var(--adm-surface-2)', border: '1px solid var(--adm-border)', animation: 'pulse 1.5s infinite' }} />
+        <div style={{ height: '120px', borderRadius: '12px', background: 'var(--adm-surface-2)', border: '1px solid var(--adm-border)', animation: 'pulse 1.5s infinite' }} />
+      </div>
+      <div style={{ height: '250px', borderRadius: '16px', background: 'var(--adm-surface)', border: '1px solid var(--adm-border)', animation: 'pulse 1.5s infinite' }} />
+    </div>
+  );
+}
 
 export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -63,7 +87,7 @@ export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
         <div className="admin-v2-login-card">
           <div style={{ textAlign: 'center', marginBottom: '32px' }}>
             <span style={{ fontSize: '3rem', display: 'inline-block', marginBottom: '12px' }}>🦷</span>
-            <h2 style={{ margin: '0 0 6px 0', fontSize: '1.4rem', fontWeight: 800, color: 'white', letterSpacing: '-0.02em' }}>DR. MARCUS DENTISTRY</h2>
+            <h2 style={{ margin: '0 0 6px 0', fontSize: '1.4rem', fontWeight: 800, color: 'white', letterSpacing: '-0.02em' }}>DRNEEMZ DENTISTRY</h2>
             <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--adm-sidebar-text)', fontWeight: 500 }}>Enterprise Console Gate</p>
           </div>
 
@@ -131,20 +155,31 @@ export default function AdminPanel({ onGoToPublic, theme, setTheme }) {
       />
 
       <main className="admin-v2-main">
+        <AdminTopBar
+          adminUser={adminUser}
+          searchVal={globalSearch}
+          setSearchVal={setGlobalSearch}
+          onNotificationClick={() => setCurrentSection('notifications')}
+          currentSection={currentSection}
+          isDark={isDark}
+          onToggleDark={() => setIsDark((d) => !d)}
+        />
 
         <div className="admin-v2-content-area" data-lenis-prevent>
-          {currentSection === 'dashboard' && <Dashboard onNavigateToSection={setCurrentSection} />}
-          {currentSection === 'appointments' && <Appointments searchGlobal={globalSearch} />}
-          {currentSection === 'patients' && <Patients searchGlobal={globalSearch} />}
-          {currentSection === 'treatments' && <Treatments />}
-          {currentSection === 'invoices' && <Invoices />}
-          {currentSection === 'payments' && <Payments />}
-          {currentSection === 'reviews' && <Reviews />}
-          {currentSection === 'messages' && <Messages />}
-          {currentSection === 'reports' && <Reports />}
-          {currentSection === 'cms' && <WebsiteCMS />}
-          {currentSection === 'notifications' && <Notifications />}
-          {currentSection === 'settings' && <Settings />}
+          <Suspense fallback={<AdminViewFallback />}>
+            {currentSection === 'dashboard' && <Dashboard onNavigateToSection={setCurrentSection} />}
+            {currentSection === 'appointments' && <Appointments searchGlobal={globalSearch} />}
+            {currentSection === 'patients' && <Patients searchGlobal={globalSearch} />}
+            {currentSection === 'treatments' && <Treatments />}
+            {currentSection === 'invoices' && <Invoices />}
+            {currentSection === 'payments' && <Payments />}
+            {currentSection === 'reviews' && <Reviews />}
+            {currentSection === 'messages' && <Messages />}
+            {currentSection === 'reports' && <Reports />}
+            {currentSection === 'cms' && <WebsiteCMS />}
+            {currentSection === 'notifications' && <Notifications />}
+            {currentSection === 'settings' && <Settings />}
+          </Suspense>
         </div>
       </main>
     </div>

@@ -39,7 +39,7 @@ export default function Journey() {
     <section className="journey-section section" id="journey">
       <div className="section-header" data-reveal>
         <span className="section-tag">Our History</span>
-        <h2 className="section-title">The Journey of Dr. Marcus Dentistry</h2>
+        <h2 className="section-title">The Journey of DrNeemz Dentistry</h2>
         <p className="section-subtitle">
           Milestones that shaped who we are — from clinical foundations to state-of-the-art care.
         </p>

@@ -19,8 +19,8 @@ const BLOG_POSTS = [
     excerpt: 'Gum health is often overlooked, but it is the foundation of a beautiful smile. Discover 5 daily habits you can build today to protect your gums.',
     readTime: '5 min read',
     date: 'July 28, 2026',
-    author: 'Dr. Marcus Vance',
-    initials: 'MV',
+    author: 'Dr. Neemz Vance',
+    initials: 'NV',
     image: blogGums
   },
   {
@@ -41,8 +41,8 @@ const BLOG_POSTS = [
     excerpt: 'Thinking about dental implants? From candidacy requirements to recovery timelines, our implantologist walks you through the entire process step-by-step.',
     readTime: '8 min read',
     date: 'May 20, 2026',
-    author: 'Dr. Marcus Vance',
-    initials: 'MV',
+    author: 'Dr. Neemz Vance',
+    initials: 'NV',
     image: imgImplants
   },
   {
@@ -52,8 +52,8 @@ const BLOG_POSTS = [
     excerpt: 'Considering teeth straightening? We compare the clinical advantages, comfort level, and treatment timelines of Invisalign aligners versus metal braces.',
     readTime: '7 min read',
     date: 'May 10, 2026',
-    author: 'Dr. Marcus Vance',
-    initials: 'MV',
+    author: 'Dr. Neemz Vance',
+    initials: 'NV',
     image: imgOrtho
   },
   {

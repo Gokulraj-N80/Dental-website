@@ -40,7 +40,7 @@ export default function About() {
             Redefining the Dental Experience
           </h3>
           <p className="about-p">
-            At Dr. Marcus Dentistry, we believe dental care shouldn't feel stressful. We have created a bright,
+            At DrNeemz Dentistry, we believe dental care shouldn't feel stressful. We have created a bright,
             quiet, and welcoming space where patients receive high-quality dental treatments from a team of qualified specialists.
           </p>
           <p className="about-p">

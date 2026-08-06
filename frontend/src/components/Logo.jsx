@@ -95,7 +95,7 @@ export default function Logo({ size = 48, showText = true, textColor = 'var(--co
               letterSpacing: '0.8px', 
               color: 'var(--color-secondary)' 
             }}>
-              DR. MARCUS
+              DRNEEMZ
             </span>
             <span style={{ 
               fontWeight: '800', 

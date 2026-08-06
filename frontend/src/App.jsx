@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import BrandRevealLoader from './components/BrandRevealLoader';
@@ -6,22 +6,47 @@ import WhyTrust from './components/WhyTrust';
 import QuickBooking from './components/QuickBooking';
 import TreatmentsGrid from './components/TreatmentsGrid';
 import Journey from './components/Journey';
-import About from './components/About';
-import Services from './components/Services';
-import Blog from './components/Blog';
-import BookingForm from './components/BookingForm';
-import TreatmentDetails from './components/TreatmentDetails';
-import PatientCare from './components/PatientCare';
-import OurDoctors from './components/OurDoctors';
 import Footer from './components/Footer';
 import Logo from './components/Logo';
 import AssistYou from './components/AssistYou';
 import GoogleReviewsBar from './components/GoogleReviewsBar';
 import Testimonials from './components/Testimonials';
-import AdminPanel from './components/AdminPanel';
+
+// Lazy loaded page components
+const About = lazy(() => import('./components/About'));
+const Services = lazy(() => import('./components/Services'));
+const Blog = lazy(() => import('./components/Blog'));
+const BookingForm = lazy(() => import('./components/BookingForm'));
+const TreatmentDetails = lazy(() => import('./components/TreatmentDetails'));
+const PatientCare = lazy(() => import('./components/PatientCare'));
+const OurDoctors = lazy(() => import('./components/OurDoctors'));
+const AdminPanel = lazy(() => import('./components/AdminPanel'));
+
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
+
+function TabLoadingFallback() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '50vh', gap: '16px' }}>
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+      <div style={{
+        width: '36px',
+        height: '36px',
+        borderRadius: '50%',
+        border: '3px solid var(--color-accent-light, #e2e8f0)',
+        borderTopColor: 'var(--color-secondary, #0d9488)',
+        animation: 'spin 0.8s linear infinite'
+      }} />
+      <span style={{ fontSize: '0.85rem', color: 'var(--color-accent-medium, #64748b)', fontWeight: 500, letterSpacing: '0.5px' }}>Loading page...</span>
+    </div>
+  );
+}
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -180,67 +205,69 @@ export default function App() {
         )}
 
         <main className="main-content">
-          {currentTab === 'home' && (
-            <>
-              <Hero 
-                onBookClick={() => navigate('booking')} 
-                onServicesClick={() => navigate('services')}
-                startAnimation={!isPreloading}
+          <Suspense fallback={<TabLoadingFallback />}>
+            {currentTab === 'home' && (
+              <>
+                <Hero 
+                  onBookClick={() => navigate('booking')} 
+                  onServicesClick={() => navigate('services')}
+                  startAnimation={!isPreloading}
+                />
+                <GoogleReviewsBar />
+                
+                {/* 1. How May We Assist You */}
+                <AssistYou onSelectTriage={(treatment) => {
+                  setSelectedTreatment(treatment);
+                  navigate('booking');
+                }} />
+                
+                <hr className="section-divider" />
+                
+                {/* 2. Why Trust Dr */}
+                <WhyTrust />
+                
+                <hr className="section-divider" />
+                
+                {/* 3. Inline Booking Form */}
+                <section className="home-booking-inline-section section">
+                  <div className="section-header">
+                    <span className="section-tag">Appointment</span>
+                    <h2 className="section-title">Book an Appointment</h2>
+                    <p className="section-subtitle">Select your preferred date, time, and service to secure your visit instantly.</p>
+                  </div>
+                  <BookingForm defaultService={selectedTreatment} />
+                </section>
+                
+                <hr className="section-divider" />
+                
+                {/* 5. Google reviews & video testimonial slide */}
+                <Testimonials />
+
+              </>
+            )}
+
+            {currentTab === 'about' && <About />}
+            {currentTab === 'services' && <Services onBookClick={() => navigate('booking')} />}
+            {currentTab === 'blog' && <Blog />}
+            {currentTab === 'booking' && <BookingForm defaultService={selectedTreatment} />}
+            {currentTab === 'patient-care' && <PatientCare />}
+            {currentTab === 'doctors' && <OurDoctors />}
+            {currentTab === 'admin' && (
+              <AdminPanel
+                onGoToPublic={() => setCurrentTab('home')}
+                theme={theme}
+                setTheme={setTheme}
               />
-              <GoogleReviewsBar />
-              
-              {/* 1. How May We Assist You */}
-              <AssistYou onSelectTriage={(treatment) => {
-                setSelectedTreatment(treatment);
-                navigate('booking');
-              }} />
-              
-              <hr className="section-divider" />
-              
-              {/* 2. Why Trust Dr */}
-              <WhyTrust />
-              
-              <hr className="section-divider" />
-              
-              {/* 3. Inline Booking Form */}
-              <section className="home-booking-inline-section section">
-                <div className="section-header">
-                  <span className="section-tag">Appointment</span>
-                  <h2 className="section-title">Book an Appointment</h2>
-                  <p className="section-subtitle">Select your preferred date, time, and service to secure your visit instantly.</p>
-                </div>
-                <BookingForm defaultService={selectedTreatment} />
-              </section>
-              
-              <hr className="section-divider" />
-              
-              {/* 5. Google reviews & video testimonial slide */}
-              <Testimonials />
+            )}
 
-            </>
-          )}
-
-          {currentTab === 'about' && <About />}
-          {currentTab === 'services' && <Services onBookClick={() => navigate('booking')} />}
-          {currentTab === 'blog' && <Blog />}
-          {currentTab === 'booking' && <BookingForm defaultService={selectedTreatment} />}
-          {currentTab === 'patient-care' && <PatientCare />}
-          {currentTab === 'doctors' && <OurDoctors />}
-          {currentTab === 'admin' && (
-            <AdminPanel
-              onGoToPublic={() => setCurrentTab('home')}
-              theme={theme}
-              setTheme={setTheme}
-            />
-          )}
-
-          {currentTab === 'treatment-details' && selectedTreatment && (
-            <TreatmentDetails
-              treatmentName={selectedTreatment}
-              onBack={() => { setSelectedTreatment(null); navigate('home'); }}
-              onBook={(item) => { setSelectedTreatment(item); navigate('booking'); }}
-            />
-          )}
+            {currentTab === 'treatment-details' && selectedTreatment && (
+              <TreatmentDetails
+                treatmentName={selectedTreatment}
+                onBack={() => { setSelectedTreatment(null); navigate('home'); }}
+                onBook={(item) => { setSelectedTreatment(item); navigate('booking'); }}
+              />
+            )}
+          </Suspense>
         </main>
 
         {currentTab !== 'admin' && (

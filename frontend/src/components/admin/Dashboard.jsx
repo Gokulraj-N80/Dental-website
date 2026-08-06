@@ -1,125 +1,194 @@
 import React from 'react';
-import { Calendar, Users, DollarSign, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import {
+  Calendar,
+  Users,
+  DollarSign,
+  ArrowUpRight,
+  ArrowDownRight,
+  ChevronRight,
+  Clock,
+} from 'lucide-react';
 import { APPOINTMENTS } from './data/mockAppointments';
 import { PATIENTS } from './data/mockPatients';
 
-export default function Dashboard() {
+function statusBadgeClass(status) {
+  return `admin-v2-badge ${status.toLowerCase().replace(/\s+/g, '-')}`;
+}
+
+const MONTHLY = [
+  { label: 'Jan', booked: 18, completed: 12 },
+  { label: 'Feb', booked: 24, completed: 18 },
+  { label: 'Mar', booked: 20, completed: 15 },
+  { label: 'Apr', booked: 30, completed: 25 },
+  { label: 'May', booked: 35, completed: 28 },
+  { label: 'Jun', booked: 42, completed: 38 },
+];
+
+const CHART_MAX = 48;
+
+function DonutChart({ segments, centerValue, centerLabel }) {
+  const r = 54;
+  const stroke = 13;
+  const C = 2 * Math.PI * r;
+  const total = segments.reduce((sum, s) => sum + s.value, 0);
+  let accumulated = 0;
+
+  return (
+    <div className="admin-v2-donut-svg-wrap">
+      <svg viewBox="0 0 120 120" width="100%" height="100%" aria-hidden>
+        <circle
+          cx="60"
+          cy="60"
+          r={r}
+          fill="none"
+          stroke="var(--adm-chart-track)"
+          strokeWidth={stroke}
+        />
+        <g transform="translate(60, 60) rotate(-90)">
+          {segments.map((seg, i) => {
+            const len = total > 0 ? (seg.value / total) * C : 0;
+            const gap = 3;
+            const dash = Math.max(len - gap, 0);
+            const el = (
+              <circle
+                key={seg.label}
+                cx="0"
+                cy="0"
+                r={r}
+                fill="none"
+                stroke={seg.color}
+                strokeWidth={stroke}
+                strokeLinecap="round"
+                strokeDasharray={`${dash} ${C - dash}`}
+                strokeDashoffset={-accumulated}
+                className="admin-v2-donut-segment"
+                style={{ animationDelay: `${i * 0.08}s` }}
+              />
+            );
+            accumulated += len;
+            return el;
+          })}
+        </g>
+      </svg>
+      <div className="admin-v2-donut-center">
+        <div className="admin-v2-donut-center-value">{centerValue}</div>
+        <div className="admin-v2-donut-center-label">{centerLabel}</div>
+      </div>
+    </div>
+  );
+}
+
+export default function Dashboard({ onNavigateToSection }) {
   const today = new Date().toISOString().split('T')[0];
 
-  const todayAppts = APPOINTMENTS.filter(a => a.date === today);
+  const todayAppts = APPOINTMENTS.filter((a) => a.date === today);
+  const upcomingToday = [...todayAppts]
+    .sort((a, b) => (a.time || '').localeCompare(b.time || ''))
+    .slice(0, 5);
+
   const totalPatients = PATIENTS.length;
-  const totalRevenue = APPOINTMENTS
-    .filter(a => a.status === 'Completed')
-    .reduce((sum, a) => sum + (a.fee || 0), 0);
+  const totalRevenue = APPOINTMENTS.filter((a) => a.status === 'Completed').reduce(
+    (sum, a) => sum + (a.fee || 0),
+    0,
+  );
+
+  const pendingToday = todayAppts.filter((a) =>
+    ['Pending', 'Confirmed'].includes(a.status),
+  ).length;
 
   const kpis = [
     {
       label: "Today's Appointments",
       value: todayAppts.length,
-      sub: "Scheduled for today",
+      sub: `${pendingToday} awaiting check-in`,
       icon: Calendar,
-      color: '#4f7ef8',
-      bg: 'rgba(79, 126, 248, 0.08)',
-      trend: { pct: "12%", up: true, since: "since yesterday" },
-      accent: '#4f7ef8',
+      iconClass: 'admin-v2-kpi-icon-wrap--teal',
+      trend: { pct: '12%', up: true, since: 'since yesterday' },
+      accent: 'var(--adm-chart-1)',
     },
     {
-      label: "Total Patients",
+      label: 'Total Patients',
       value: totalPatients,
-      sub: "Registered in system",
+      sub: 'Registered in system',
       icon: Users,
-      color: '#10b981',
-      bg: 'rgba(16, 185, 129, 0.08)',
-      trend: { pct: "4%", up: true, since: "this month" },
-      accent: '#10b981',
+      iconClass: 'admin-v2-kpi-icon-wrap--green',
+      trend: { pct: '4%', up: true, since: 'this month' },
+      accent: 'var(--adm-green)',
     },
     {
-      label: "Revenue Collected",
+      label: 'Revenue Collected',
       value: `₹${totalRevenue.toLocaleString('en-IN')}`,
-      sub: "From completed cases",
+      sub: 'From completed cases',
       icon: DollarSign,
-      color: '#f59e0b',
-      bg: 'rgba(245, 158, 11, 0.08)',
-      trend: { pct: "8.2%", up: true, since: "since last week" },
-      accent: '#f59e0b',
+      iconClass: 'admin-v2-kpi-icon-wrap--coral',
+      trend: { pct: '8.2%', up: true, since: 'since last week' },
+      accent: 'var(--adm-chart-2)',
     },
   ];
 
-  // Monthly data mapping points: Width=500, Height=180
-  // Values Line 1 (Appointments): Jan(18), Feb(24), Mar(20), Apr(30), May(35), Jun(42)
-  // Values Line 2 (Completed): Jan(12), Feb(18), Mar(15), Apr(25), May(28), Jun(38)
-  const line1Points = [
-    { label: 'Jan', value: 18, x: 40,  y: 112 },
-    { label: 'Feb', value: 24, x: 120, y: 96 },
-    { label: 'Mar', value: 20, x: 200, y: 106.6 },
-    { label: 'Apr', value: 30, x: 280, y: 80 },
-    { label: 'May', value: 35, x: 360, y: 66.6 },
-    { label: 'Jun', value: 42, x: 440, y: 48 },
+  const efficiencySegments = [
+    { label: 'Booked', value: 85, color: 'var(--adm-chart-1)' },
+    { label: 'Consultations', value: 76, color: 'var(--adm-chart-2)' },
+    { label: 'Treatment slots', value: 60, color: 'var(--adm-chart-3)' },
   ];
 
-  const line2Points = [
-    { label: 'Jan', value: 12, x: 40,  y: 128 },
-    { label: 'Feb', value: 18, x: 120, y: 112 },
-    { label: 'Mar', value: 15, x: 200, y: 120 },
-    { label: 'Apr', value: 25, x: 280, y: 93.3 },
-    { label: 'May', value: 28, x: 360, y: 85.3 },
-    { label: 'Jun', value: 38, x: 440, y: 58.6 },
-  ];
-
-  const line1Path = "M 40,112 C 80,104 80,96 120,96 C 160,96 160,106.6 200,106.6 C 240,106.6 240,80 280,80 C 320,80 320,66.6 360,66.6 C 400,66.6 400,48 440,48";
-  const area1Path = `${line1Path} L 440,160 L 40,160 Z`;
-
-  const line2Path = "M 40,128 C 80,120 80,112 120,112 C 160,112 160,120 200,120 C 240,120 240,93.3 280,93.3 C 320,93.3 320,85.3 360,85.3 C 400,85.3 400,58.6 440,58.6";
-  const area2Path = `${line2Path} L 440,160 L 40,160 Z`;
-
-  // Semi-Circular Gauge calculations
-  // Radius = 32. Path starts left, curves up, ends right.
-  // Circumference of semi-circle = Math.PI * 32 ≈ 100.53
-  const gaugeCirc = Math.PI * 32;
-  const capacityPct = 85; // Clinic Capacity Rate
-  const gaugeOffset = gaugeCirc - (capacityPct / 100) * gaugeCirc;
-
-  // Categories list below the gauge
-  const categories = [
-    { name: 'Appointments Booked', pct: 85, color: '#4f7ef8' },
-    { name: 'Successful Consultations', pct: 76, color: '#10b981' },
-    { name: 'Active Treatment Slots', pct: 60, color: '#8b5cf6' },
-  ];
+  const capacityPct = Math.round(
+    efficiencySegments.reduce((s, c) => s + c.value, 0) / efficiencySegments.length,
+  );
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+    <div className="admin-v2-dashboard-stack">
 
-      {/* Page Heading */}
-      <div className="admin-v2-page-heading">
-        <span className="admin-v2-page-eyebrow">Enterprise Overview</span>
-        <h2 className="admin-v2-page-title">Dashboard Overview</h2>
-        <p className="admin-v2-page-subtitle">
-          Real-time summary of appointments, patient demographic distribution, and clinical billing.
-        </p>
+      <div className="admin-v2-dashboard-hero">
+        <div className="admin-v2-dashboard-hero-content">
+          <span className="admin-v2-page-eyebrow">Clinical overview</span>
+          <h2 className="admin-v2-dashboard-hero-title">Your practice, today</h2>
+          <p className="admin-v2-page-subtitle">
+            Schedule, patient growth, and collections — updated from live clinic data.
+          </p>
+        </div>
+        <div className="admin-v2-dashboard-hero-actions">
+          <button
+            type="button"
+            className="admin-v2-btn admin-v2-btn-primary"
+            onClick={() => onNavigateToSection?.('appointments')}
+          >
+            <Calendar size={16} />
+            Manage appointments
+          </button>
+          <button
+            type="button"
+            className="admin-v2-btn admin-v2-btn-ghost"
+            onClick={() => onNavigateToSection?.('reports')}
+          >
+            View reports
+            <ChevronRight size={16} />
+          </button>
+        </div>
       </div>
 
-      {/* 3 KPI Cards */}
       <div className="admin-v2-dashboard-grid">
         {kpis.map((kpi, idx) => {
           const Icon = kpi.icon;
           return (
             <div key={idx} className="admin-v2-kpi-card">
-              <div className="admin-v2-kpi-accent-bar" style={{ backgroundColor: kpi.accent }} />
-              
+              <div className="admin-v2-kpi-accent-bar" style={{ background: kpi.accent }} />
+
               <div className="admin-v2-kpi-info">
                 <p className="admin-v2-kpi-label">{kpi.label}</p>
                 <h3 className="admin-v2-kpi-value">{kpi.value}</h3>
-                
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                <p className="admin-v2-kpi-sub">{kpi.sub}</p>
+
+                <div className="admin-v2-kpi-trend-row">
                   <span className={`admin-v2-kpi-trend ${kpi.trend.up ? 'up' : 'down'}`}>
                     {kpi.trend.up ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
                     {kpi.trend.pct}
                   </span>
-                  <span style={{ fontSize: '0.72rem', color: '#8b96b0' }}>{kpi.trend.since}</span>
+                  <span className="admin-v2-kpi-trend-since">{kpi.trend.since}</span>
                 </div>
               </div>
 
-              <div className="admin-v2-kpi-icon-wrap" style={{ backgroundColor: kpi.bg, color: kpi.color }}>
+              <div className={`admin-v2-kpi-icon-wrap ${kpi.iconClass}`}>
                 <Icon size={22} strokeWidth={2.2} />
               </div>
             </div>
@@ -127,179 +196,155 @@ export default function Dashboard() {
         })}
       </div>
 
-      {/* 2 Graphs Row */}
       <div className="admin-v2-dashboard-row-2">
-
-        {/* Dual-Line Comparison Area Chart */}
-        <div className="admin-v2-card chart-canvas" style={{ position: 'relative' }}>
+        <div className="admin-v2-card chart-canvas admin-v2-chart-card admin-v2-chart-panel">
           <div className="admin-v2-card-header">
             <div>
-              <h3 className="admin-v2-card-title">Bookings vs. Completed Cases</h3>
-              <p style={{ margin: '4px 0 0', fontSize: '0.78rem', color: 'var(--adm-text-tertiary)' }}>Comparative intake trends analysis</p>
+              <h3 className="admin-v2-card-title">Bookings vs. completed</h3>
+              <p className="admin-v2-card-desc">Monthly comparison — last 6 months</p>
             </div>
-            <div style={{ display: 'flex', gap: '12px', fontSize: '0.75rem', fontWeight: 600 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#4f7ef8' }} />
-                <span style={{ color: 'var(--adm-text-secondary)' }}>Booked</span>
+            <div className="admin-v2-chart-legend">
+              <div className="admin-v2-chart-legend-item">
+                <span className="admin-v2-chart-legend-dot admin-v2-chart-legend-dot--teal" />
+                Booked
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981' }} />
-                <span style={{ color: 'var(--adm-text-secondary)' }}>Completed</span>
+              <div className="admin-v2-chart-legend-item">
+                <span className="admin-v2-chart-legend-dot admin-v2-chart-legend-dot--coral" />
+                Completed
               </div>
             </div>
           </div>
 
-          <div style={{ position: 'relative', width: '100%', height: '180px', marginTop: '16px' }}>
-            <svg viewBox="0 0 480 180" width="100%" height="100%" style={{ overflow: 'visible' }}>
-              <defs>
-                <linearGradient id="area1" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#4f7ef8" stopOpacity="0.28" />
-                  <stop offset="100%" stopColor="#4f7ef8" stopOpacity="0.00" />
-                </linearGradient>
-                <linearGradient id="area2" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#10b981" stopOpacity="0.28" />
-                  <stop offset="100%" stopColor="#10b981" stopOpacity="0.00" />
-                </linearGradient>
-                <linearGradient id="lineGrad1" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#7aa2ff" />
-                  <stop offset="100%" stopColor="#4f7ef8" />
-                </linearGradient>
-                <linearGradient id="lineGrad2" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#34d399" />
-                  <stop offset="100%" stopColor="#10b981" />
-                </linearGradient>
-                <filter id="glowBlue" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="3.5" result="blur" />
-                  <feMerge>
-                    <feMergeNode in="blur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-                <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="3.5" result="blur" />
-                  <feMerge>
-                    <feMergeNode in="blur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
-
-              {/* Grid Lines */}
-              <line x1="40" y1="48" x2="440" y2="48" stroke="var(--adm-chart-grid)" strokeWidth="1" strokeDasharray="4,4" />
-              <line x1="40" y1="80" x2="440" y2="80" stroke="var(--adm-chart-grid)" strokeWidth="1" strokeDasharray="4,4" />
-              <line x1="40" y1="112" x2="440" y2="112" stroke="var(--adm-chart-grid)" strokeWidth="1" strokeDasharray="4,4" />
-              <line x1="40" y1="160" x2="440" y2="160" stroke="var(--adm-chart-grid)" strokeWidth="1.5" />
-
-              {/* Area fills */}
-              <path d={area1Path} fill="url(#area1)" />
-              <path d={area2Path} fill="url(#area2)" />
-
-              {/* Lines with soft glow */}
-              <path d={line1Path} fill="none" stroke="url(#lineGrad1)" strokeWidth="3.5" strokeLinecap="round" filter="url(#glowBlue)" />
-              <path d={line2Path} fill="none" stroke="url(#lineGrad2)" strokeWidth="3.5" strokeLinecap="round" filter="url(#glowGreen)" />
-
-              {/* Highlighted data-point nodes */}
-              {line1Points.map((pt, i) => (
-                <g key={i}>
-                  <circle cx={pt.x} cy={pt.y} r="7" fill="#4f7ef8" opacity="0.18" />
-                  <circle cx={pt.x} cy={pt.y} r="4" fill="var(--adm-surface)" stroke="#4f7ef8" strokeWidth="2.5" />
-                  <circle cx={pt.x} cy={line2Points[i].y} r="7" fill="#10b981" opacity="0.18" />
-                  <circle cx={pt.x} cy={line2Points[i].y} r="4" fill="var(--adm-surface)" stroke="#10b981" strokeWidth="2.5" />
-                  <text
-                    x={pt.x}
-                    y="176"
-                    textAnchor="middle"
-                    fill="var(--adm-chart-axis)"
-                    fontSize="10"
-                    fontWeight="600"
-                  >
-                    {pt.label}
-                  </text>
-                </g>
+          <div className="admin-v2-chart-bar-wrap admin-v2-chart-bar-wrap--grouped">
+            <div className="admin-v2-chart-grid" aria-hidden>
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className="admin-v2-chart-grid-line" />
               ))}
-            </svg>
+            </div>
+
+            {MONTHLY.map((m, i) => (
+              <div key={m.label} className="admin-v2-chart-bar-col admin-v2-chart-bar-col--grouped">
+                <div className="admin-v2-chart-bar-group">
+                  <div
+                    className="admin-v2-chart-bar-pair admin-v2-chart-bar-pair--booked"
+                    style={{
+                      height: `${(m.booked / CHART_MAX) * 100}%`,
+                      animationDelay: `${i * 0.06}s`,
+                    }}
+                    title={`Booked: ${m.booked}`}
+                  />
+                  <div
+                    className="admin-v2-chart-bar-pair admin-v2-chart-bar-pair--done"
+                    style={{
+                      height: `${(m.completed / CHART_MAX) * 100}%`,
+                      animationDelay: `${i * 0.06 + 0.03}s`,
+                    }}
+                    title={`Completed: ${m.completed}`}
+                  />
+                </div>
+                <span className="admin-v2-chart-bar-label">{m.label}</span>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Semi-Circular Radial Gauge Chart */}
-        <div className="admin-v2-card chart-canvas">
+        <div className="admin-v2-card chart-canvas admin-v2-chart-panel">
           <div className="admin-v2-card-header">
-            <h3 className="admin-v2-card-title">Clinic Efficiency Index</h3>
-            <span className="admin-v2-card-subtitle">Performance</span>
+            <h3 className="admin-v2-card-title">Capacity mix</h3>
+            <span className="admin-v2-card-subtitle">Efficiency</span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', padding: '16px 0 0 0' }}>
-            {/* SVG semi-circular gauge */}
-            <div style={{ position: 'relative', width: '150px', height: '90px', overflow: 'hidden' }}>
-              <svg viewBox="0 0 100 60" width="100%" height="100%">
-                <defs>
-                  <linearGradient id="gaugeGradient" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#4f7ef8" />
-                    <stop offset="60%" stopColor="#6366f1" />
-                    <stop offset="100%" stopColor="#10b981" />
-                  </linearGradient>
-                  <filter id="gaugeGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="2.5" result="blur" />
-                    <feMerge>
-                      <feMergeNode in="blur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                </defs>
-                {/* Background track path */}
-                <path
-                  d="M 18,50 A 32,32 0 0,1 82,50"
-                  fill="none"
-                  stroke="var(--adm-chart-track)"
-                  strokeWidth="8"
-                  strokeLinecap="round"
-                />
-                {/* Colored progress path with glow */}
-                <path
-                  d="M 18,50 A 32,32 0 0,1 82,50"
-                  fill="none"
-                  stroke="url(#gaugeGradient)"
-                  strokeWidth="8.2"
-                  strokeDasharray={gaugeCirc}
-                  strokeDashoffset={gaugeOffset}
-                  strokeLinecap="round"
-                  filter="url(#gaugeGlow)"
-                  style={{
-                    transition: 'stroke-dashoffset 0.8s ease-out',
-                    animation: 'adm-spin-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both',
-                  }}
-                />
-                {/* Cap dot at the leading edge of the arc (85% of the semi-circle) */}
-                <circle
-                  cx="78.5"
-                  cy="35.5"
-                  r="3"
-                  fill="#10b981"
-                  filter="url(#gaugeGlow)"
-                />
-              </svg>
-              {/* Central text stats */}
-              <div style={{ position: 'absolute', bottom: '0', left: '0', right: '0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', lineHeight: '1.2' }}>
-                <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--adm-text-primary)', letterSpacing: '-0.03em' }}>{capacityPct}%</div>
-                <div style={{ fontSize: '0.62rem', color: 'var(--adm-text-tertiary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginTop: '2px' }}>Capacity Rate</div>
-              </div>
-            </div>
+          <div className="admin-v2-donut-layout">
+            <DonutChart
+              segments={efficiencySegments}
+              centerValue={`${capacityPct}%`}
+              centerLabel="Avg. utilization"
+            />
 
-            {/* List breakdown */}
-            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {categories.map((c, idx) => (
-                <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.78rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: c.color, flexShrink: 0 }} />
-                    <span style={{ color: 'var(--adm-text-secondary)', fontWeight: 600 }}>{c.name}</span>
+            <div className="admin-v2-donut-legend">
+              {efficiencySegments.map((seg) => (
+                <div key={seg.label} className="admin-v2-donut-legend-row">
+                  <div className="admin-v2-donut-legend-left">
+                    <span className="admin-v2-chart-legend-dot" style={{ background: seg.color }} />
+                    {seg.label}
                   </div>
-                  <strong style={{ color: 'var(--adm-text-primary)', fontWeight: 700 }}>{c.pct}%</strong>
+                  <span className="admin-v2-donut-legend-pct">{seg.value}%</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
+      </div>
 
+      <div className="admin-v2-card admin-v2-today-card admin-v2-chart-panel">
+        <div className="admin-v2-card-header">
+          <div>
+            <h3 className="admin-v2-card-title">Today&apos;s schedule</h3>
+            <p className="admin-v2-card-desc">
+              {todayAppts.length === 0
+                ? 'No appointments booked for today'
+                : `${todayAppts.length} appointment${todayAppts.length === 1 ? '' : 's'} on the calendar`}
+            </p>
+          </div>
+          <button
+            type="button"
+            className="admin-v2-link-btn"
+            onClick={() => onNavigateToSection?.('appointments')}
+          >
+            View all
+            <ChevronRight size={14} />
+          </button>
+        </div>
+
+        {upcomingToday.length === 0 ? (
+          <div className="admin-v2-empty-inline">
+            <Clock size={28} strokeWidth={1.5} />
+            <p>Your calendar is clear for today. New bookings will appear here.</p>
+          </div>
+        ) : (
+          <div className="admin-v2-table-wrapper admin-v2-table-wrapper--flush">
+            <table className="admin-v2-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Patient</th>
+                  <th>Treatment</th>
+                  <th>Doctor</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {upcomingToday.map((appt) => (
+                  <tr key={appt.id}>
+                    <td>
+                      <span className="admin-v2-time-cell">{appt.time}</span>
+                    </td>
+                    <td>
+                      <div className="admin-v2-table-avatar-cell">
+                        <div className="admin-v2-mini-avatar">
+                          {appt.patientName
+                            .split(' ')
+                            .map((n) => n[0])
+                            .join('')
+                            .slice(0, 2)}
+                        </div>
+                        <span>{appt.patientName}</span>
+                      </div>
+                    </td>
+                    <td>{appt.treatment}</td>
+                    <td className="admin-v2-muted-cell">{appt.doctor}</td>
+                    <td>
+                      <span className={statusBadgeClass(appt.status)}>
+                        <span className="admin-v2-badge-dot" />
+                        {appt.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

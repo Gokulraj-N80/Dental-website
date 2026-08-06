@@ -3,7 +3,7 @@ import { DOCTORS } from './mockDoctors';
 
 const REVIEW_TEXTS = [
   "Absolutely outstanding experience! The team is warm, professional, and incredibly skilled. My smile has never looked better.",
-  "I was terrified of dentists but Dr. Marcus made me feel completely at ease. Painless root canal – I could not believe it!",
+  "I was terrified of dentists but Dr. Neemz made me feel completely at ease. Painless root canal – I could not believe it!",
   "Best dental clinic in the city. State-of-the-art equipment and spotless hygiene. Highly recommended.",
   "My child loved the visit! Dr. Ananya is so gentle and friendly with kids. No more dental anxiety for us.",
   "The implant procedure was explained step by step. Dr. Arjun is a true expert. Very happy with the results.",
@@ -48,7 +48,7 @@ export const REVIEWS = PATIENTS.slice(0, 30).map((patient, i) => {
     reviewDate: daysAgo(i * 4),
     platform: i % 3 === 0 ? 'Google' : i % 3 === 1 ? 'Website' : 'Direct',
     replied: i % 3 !== 0,
-    reply: i % 3 !== 0 ? 'Thank you for your kind words! We look forward to seeing you again at Dr. Marcus Dentistry.' : '',
+    reply: i % 3 !== 0 ? 'Thank you for your kind words! We look forward to seeing you again at DrNeemz Dentistry.' : '',
     status: 'Published',
   };
 });

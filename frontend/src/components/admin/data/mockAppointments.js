@@ -15,7 +15,7 @@ const NOTES = [
   'Patient requested morning slot',
   'First time visit',
   'Follow-up from previous root canal',
-  'Referred by Dr. Marcus',
+  'Referred by Dr. Neemz',
   'Patient has dental anxiety',
   'Insurance pre-authorization required',
   'Post-surgery checkup',

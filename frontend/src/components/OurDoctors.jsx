@@ -6,7 +6,7 @@ import drOseiImg from '../assets/dr_kelvin_osei.png';
 
 const DOCTORS = [
   {
-    name: 'Dr. Marcus Vance',
+    name: 'Dr. Neemz Vance',
     title: 'Lead Dentist & Implantologist',
     experience: '14 Years Experience',
     specializations: ['Dental Implants', 'Cosmetic Dentistry', 'Oral Surgery'],

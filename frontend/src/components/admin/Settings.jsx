@@ -5,7 +5,7 @@ export default function Settings() {
   const [activeTab, setActiveTab] = useState('general');
 
   // Config options
-  const [clinicName, setClinicName] = useState('Dr. Marcus Dentistry');
+  const [clinicName, setClinicName] = useState('DrNeemz Dentistry');
   const [currency, setCurrency] = useState('INR');
   const [smsGateway, setSmsGateway] = useState('twilio');
   const [autoSms, setAutoSms] = useState(true);

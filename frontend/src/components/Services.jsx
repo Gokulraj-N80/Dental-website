@@ -107,7 +107,7 @@ export default function Services({ onBookClick }) {
       <div className="services-pin-panel">
         <div className="section-header services-anim-header">
           <span className="section-tag">Treatments</span>
-          <h2 className="section-title">Dr. Marcus Treatments</h2>
+          <h2 className="section-title">DrNeemz Treatments</h2>
           <p className="section-subtitle">
             We combine medical precision with patient comfort to deliver high-quality dental treatments.
           </p>

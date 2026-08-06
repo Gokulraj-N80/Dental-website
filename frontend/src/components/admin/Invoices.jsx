@@ -105,7 +105,7 @@ export default function Invoices() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #e2e8f0', paddingBottom: '16px' }}>
                   <div>
-                    <h3 style={{ margin: '0 0 4px 0', color: '#0f172a' }}>Dr. Marcus Dentistry</h3>
+                    <h3 style={{ margin: '0 0 4px 0', color: '#0f172a' }}>DrNeemz Dentistry</h3>
                     <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>12, Cathedral Road, Chennai - 600086</p>
                   </div>
                   <div style={{ textAlign: 'right' }}>

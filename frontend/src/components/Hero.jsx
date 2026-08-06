@@ -115,7 +115,7 @@ export default function Hero({ onBookClick, onServicesClick, startAnimation }) {
         </h1>
 
         <p className="hero-split-desc">
-          Welcome to Dr. Marcus Dentistry. We deliver professional,
+          Welcome to DrNeemz Dentistry. We deliver professional,
           anxiety-free treatments in a calming environment using
           surgical-grade safety procedures and 100% digital diagnostics.
         </p>
@@ -166,7 +166,7 @@ export default function Hero({ onBookClick, onServicesClick, startAnimation }) {
         <div className="hero-img-wrap">
           <img
             src={heroDentist}
-            alt="Professional Dentist at Dr. Marcus Dentistry"
+            alt="Professional Dentist at DrNeemz Dentistry"
             className="hero-dentist-img"
           />
         </div>

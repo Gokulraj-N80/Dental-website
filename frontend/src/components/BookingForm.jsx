@@ -235,7 +235,7 @@ export default function BookingForm({ defaultService }) {
         {/* ══ LEFT — Dark Branding Card (original, unchanged) ══ */}
         <div className="booking-left-text">
           <h2 className="booking-display-title">
-            Book an<br />Appointment<br />at Dr. Marcus<br />Dental
+            Book an<br />Appointment<br />at DrNeemz<br />Dental
           </h2>
 
           <div style={{ marginTop:'auto', paddingTop:'24px' }}>

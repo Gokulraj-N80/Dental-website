@@ -20,7 +20,7 @@ const TESTIMONIALS_DATA = [
     id: 3,
     name: 'Kalaiselvi N',
     role: 'Composite Filling Patient',
-    text: "I done my light cure composite filling treatment in Dr. Marcus Dentistry... it's very good treatment... and the doctor treated me very friendly and gave so many information about my teeth... and the staff also very friendly. It's a very nice experience.",
+    text: "I done my light cure composite filling treatment in DrNeemz Dentistry... it's very good treatment... and the doctor treated me very friendly and gave so many information about my teeth... and the staff also very friendly. It's a very nice experience.",
     stars: 5
   }
 ];

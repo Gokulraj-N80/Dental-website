@@ -8,7 +8,7 @@ export const NOTIFICATIONS = [
   { id:'N-001', type:'appointment', icon:'📅', color:'#3b82f6', title:'New Appointment Booked', body:'Arjun Kumar booked a Root Canal for tomorrow at 10:00 AM', time: minsAgo(5), read:false },
   { id:'N-002', type:'payment', icon:'💳', color:'#10b981', title:'Payment Received', body:'₹8,500 received from Priya Sharma (INV-00045) via UPI', time: minsAgo(18), read:false },
   { id:'N-003', type:'checkin', icon:'✅', color:'#06b6d4', title:'Patient Checked In', body:'Meera Iyer has checked in for her 11:00 AM Dental Cleaning', time: minsAgo(32), read:false },
-  { id:'N-004', type:'review', icon:'⭐', color:'#eab308', title:'New 5-Star Review', body:'Kavitha Nair left a 5-star review for Dr. Marcus Williams on Google', time: minsAgo(55), read:false },
+  { id:'N-004', type:'review', icon:'⭐', color:'#eab308', title:'New 5-Star Review', body:'Kavitha Nair left a 5-star review for Dr. Neemz Williams on Google', time: minsAgo(55), read:false },
   { id:'N-005', type:'message', icon:'💬', color:'#8b5cf6', title:'New Website Inquiry', body:'Karthikeyan Murugan sent an urgent message about tooth pain', time: minsAgo(60), read:false },
   { id:'N-006', type:'cancel', icon:'❌', color:'#ef4444', title:'Appointment Cancelled', body:'Ramesh Kumar cancelled his 3:00 PM appointment (Braces Consultation)', time: minsAgo(90), read:true },
   { id:'N-007', type:'payment', icon:'⏳', color:'#f97316', title:'Payment Pending', body:'₹12,000 pending from Suresh Gupta (INV-00032) – overdue 5 days', time: minsAgo(120), read:true },
