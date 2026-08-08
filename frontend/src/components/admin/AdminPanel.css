@@ -98,6 +98,11 @@
 
 
 
+
+
+
+
+
 /* ── Keyframe Animations ───────────────────────────────────────────────────── */
 @keyframes adm-fadeUp {
   from { opacity: 0; transform: translateY(16px); }
@@ -549,7 +554,6 @@
   align-items: center;
   justify-content: center;
   border: 2px solid white;
-  animation: adm-pulse 2s infinite;
 }
 
 .admin-v2-admin-profile {
@@ -1690,6 +1694,16 @@ textarea.admin-v2-input {
   box-shadow: 0 6px 20px var(--adm-accent-glow);
   transform: translateY(-1px);
 }
+
+.admin-v2-btn-primary.btn-blue {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+}
+
+.admin-v2-btn-primary.btn-blue:hover {
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+}
+
 
 .admin-v2-btn-secondary {
   background: var(--adm-surface);

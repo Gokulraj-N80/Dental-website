@@ -11,6 +11,7 @@ import Logo from './components/Logo';
 import AssistYou from './components/AssistYou';
 import GoogleReviewsBar from './components/GoogleReviewsBar';
 import Testimonials from './components/Testimonials';
+import FAQ from './components/FAQ';
 
 // Lazy loaded page components
 const About = lazy(() => import('./components/About'));
@@ -254,8 +255,12 @@ export default function App() {
                 
                 <hr className="section-divider" />
                 
-                {/* 5. Google reviews & video testimonial slide */}
                 <Testimonials />
+
+                <hr className="section-divider" />
+
+                {/* 6. Frequently Asked Questions */}
+                <FAQ />
 
               </>
             )}

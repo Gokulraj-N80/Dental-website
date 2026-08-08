@@ -145,7 +145,18 @@ const TREATMENT_DETAILS_DATA = {
 };
 
 export default function TreatmentDetails({ treatmentName, onBack, onBook }) {
-  const details = TREATMENT_DETAILS_DATA[treatmentName] || {
+  const normalizedKey = (() => {
+    if (!treatmentName) return '';
+    const key = treatmentName.toUpperCase().trim();
+    if (key === 'GENERAL CHECKUP' || key === 'ROUTINE CHECK UP') return 'ROUTINE CHECK UP';
+    if (key === 'SCALE AND CLEAN' || key === 'GUM TREATMENT') return 'GUM TREATMENT';
+    if (key === 'BRACES ALIGNMENT' || key === 'DENTAL BRACES') return 'DENTAL BRACES';
+    if (key === 'COSMETIC DENTISTRY' || key === 'SMILE MAKEOVERS') return 'SMILE MAKEOVERS';
+    if (key === 'CHILD DENTISTRY' || key === 'PEDIATRIC DENTISTRY') return 'PEDIATRIC DENTISTRY';
+    return key;
+  })();
+
+  const details = TREATMENT_DETAILS_DATA[normalizedKey] || {
     title: treatmentName,
     desc: 'Professional treatment custom-tailored to suit your clinical requirements.',
     benefits: ['State-of-the-art equipment', 'Comfortable environment', 'Highly trained specialists'],

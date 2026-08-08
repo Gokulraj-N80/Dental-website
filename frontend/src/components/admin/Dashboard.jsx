@@ -78,16 +78,16 @@ function DonutChart({ segments, centerValue, centerLabel }) {
   );
 }
 
-export default function Dashboard({ onNavigateToSection }) {
+export default function Dashboard({ onNavigateToSection, appointments = [] }) {
   const today = new Date().toISOString().split('T')[0];
 
-  const todayAppts = APPOINTMENTS.filter((a) => a.date === today);
+  const todayAppts = appointments.filter((a) => a.date === today);
   const upcomingToday = [...todayAppts]
     .sort((a, b) => (a.time || '').localeCompare(b.time || ''))
     .slice(0, 5);
 
   const totalPatients = PATIENTS.length;
-  const totalRevenue = APPOINTMENTS.filter((a) => a.status === 'Completed').reduce(
+  const totalRevenue = appointments.filter((a) => a.status === 'Completed').reduce(
     (sum, a) => sum + (a.fee || 0),
     0,
   );
@@ -141,7 +141,7 @@ export default function Dashboard({ onNavigateToSection }) {
 
       <div className="admin-v2-dashboard-hero">
         <div className="admin-v2-dashboard-hero-content">
-          <span className="admin-v2-page-eyebrow">Clinical overview</span>
+          <span className="admin-v2-page-eyebrow" style={{ color: '#2563eb' }}>Clinical overview</span>
           <h2 className="admin-v2-dashboard-hero-title">Your practice, today</h2>
           <p className="admin-v2-page-subtitle">
             Schedule, patient growth, and collections — updated from live clinic data.
@@ -150,7 +150,7 @@ export default function Dashboard({ onNavigateToSection }) {
         <div className="admin-v2-dashboard-hero-actions">
           <button
             type="button"
-            className="admin-v2-btn admin-v2-btn-primary"
+            className="admin-v2-btn admin-v2-btn-primary btn-blue"
             onClick={() => onNavigateToSection?.('appointments')}
           >
             <Calendar size={16} />

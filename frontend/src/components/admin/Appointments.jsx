@@ -3,8 +3,7 @@ import { Search, Trash2, Calendar, Filter } from 'lucide-react';
 import { APPOINTMENTS } from './data/mockAppointments';
 import { DOCTORS } from './data/mockDoctors';
 
-export default function Appointments({ searchGlobal }) {
-  const [appointments, setAppointments] = useState(APPOINTMENTS);
+export default function Appointments({ searchGlobal, appointments = [], onStatusChange, onDelete }) {
   const [statusFilter, setStatusFilter] = useState('all');
   const [doctorFilter, setDoctorFilter] = useState('all');
   const [searchLocal, setSearchLocal] = useState('');
@@ -25,13 +24,11 @@ export default function Appointments({ searchGlobal }) {
   });
 
   const handleStatusChange = (id, newStatus) => {
-    setAppointments(prev => prev.map(a => a.id === id ? { ...a, status: newStatus } : a));
+    if (onStatusChange) onStatusChange(id, newStatus);
   };
 
   const handleDelete = (id) => {
-    if(window.confirm('Delete this appointment record?')) {
-      setAppointments(prev => prev.filter(a => a.id !== id));
-    }
+    if (onDelete) onDelete(id);
   };
 
   return (
